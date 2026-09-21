@@ -1,0 +1,245 @@
+Puzzle:
+      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    *    *  |
+    --------------------
+Hints:
+0. The shape Linguine was not the sauce Carbonara 
+1. Either the shape Elbow is the sauce Pesto or the shape Bowtie is the sauce Tomato 
+2. The shape Bowtie is the sauce Alfredo 
+
+User Move 1 (correct):       Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    X    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_NOT - [((shape, sauce, 'Linguine', 'Carbonara'), 'X')]1:APPLY_OR - [((shape, sauce, 'Elbow', 'Pesto'), 'Y'), ((shape, sauce, 'Bowtie', 'Tomato'), 'Y')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    X    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The shape Linguine was not the sauce Carbonara" - APPLY_NOT
+Likely Reasoning: hint:The shape Linguine was not the sauce Carbonara:APPLY_NOT (insight)
+
+
+User Move 2 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    X    X  |
+    --------------------
+
+Available Moves: 
+1:APPLY_OR - [((shape, sauce, 'Elbow', 'Pesto'), 'Y'), ((shape, sauce, 'Bowtie', 'Tomato'), 'Y')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    x    X  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 3 (correct):       Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  O    *    *    *  |
+Car|  *    *    X    X  |
+    --------------------
+
+Available Moves: 
+1:APPLY_OR - [((shape, sauce, 'Elbow', 'Pesto'), 'Y'), ((shape, sauce, 'Bowtie', 'Tomato'), 'Y')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  O    *    *    *  |
+Car|  *    *    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 4 (correct):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    *    *    *  |
+Alf|  X    *    *    *  |
+Pes|  O    *    *    *  |
+Car|  X    *    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Linguine', 'Pesto'), 'X'), ((shape, sauce, 'Shell', 'Pesto'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Carbonara'), 'X')]1:APPLY_OR - [((shape, sauce, 'Bowtie', 'Tomato'), 'X')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]-2:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]-3:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]1:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  X    *    *    *  |
+Alf|  X    *    *    *  |
+Pes|  o    *    *    *  |
+Car|  X    *    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 5 (correct):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    *    *    *  |
+Alf|  X    *    *    *  |
+Pes|  O    X    X    X  |
+Car|  X    *    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Linguine', 'Pesto'), 'X'), ((shape, sauce, 'Shell', 'Pesto'), 'X')]1:APPLY_OR - [((shape, sauce, 'Bowtie', 'Tomato'), 'X')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]-2:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]1:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    *    *    *  |
+Alf|  x    *    *    *  |
+Pes|  o    X    X    X  |
+Car|  x    *    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 6 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    *    *    *  |
+Alf|  X    *    *    *  |
+Pes|  O    X    X    X  |
+Car|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]1:APPLY_OR - [((shape, sauce, 'Bowtie', 'Tomato'), 'X')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]1:OPENING - [((shape, sauce, 'Bowtie', 'Carbonara'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    *    *    *  |
+Alf|  x    *    *    *  |
+Pes|  o    x    x    x  |
+Car|  x    O    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: hint - "Either the shape Elbow is the sauce Pesto or the shape Bowtie is the sauce Tomato" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 7 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    X    *    *  |
+Alf|  X    X    *    *  |
+Pes|  O    X    X    X  |
+Car|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Alfredo'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X')]1:APPLY_OR - [((shape, sauce, 'Bowtie', 'Tomato'), 'X')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    X    *    *  |
+Alf|  x    X    *    *  |
+Pes|  o    x    x    x  |
+Car|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 8 (correct):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    X    *    *  |
+Alf|  X    X    X    *  |
+Pes|  O    X    X    X  |
+Car|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    *    *  |
+Alf|  x    x    X    *  |
+Pes|  o    x    x    x  |
+Car|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 9 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    X    *    *  |
+Alf|  X    X    X    O  |
+Pes|  O    X    X    X  |
+Car|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    *    *  |
+Alf|  x    x    x    O  |
+Pes|  o    x    x    x  |
+Car|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 10 (correct):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    X    *    X  |
+Alf|  X    X    X    O  |
+Pes|  O    X    X    X  |
+Car|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Shell', 'Tomato'), 'X'), ((shape, sauce, 'Shell', 'Pesto'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]-2:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    *    X  |
+Alf|  x    x    x    o  |
+Pes|  o    x    x    x  |
+Car|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 11 (correct):       Elb  Bow  Lin  She
+    --------------------
+Tom|  X    X    O    X  |
+Alf|  X    X    X    O  |
+Pes|  O    X    X    X  |
+Car|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]2:APPLY_IS - [((shape, sauce, 'Bowtie', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    O    x  |
+Alf|  x    x    x    o  |
+Pes|  o    x    x    x  |
+Car|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+

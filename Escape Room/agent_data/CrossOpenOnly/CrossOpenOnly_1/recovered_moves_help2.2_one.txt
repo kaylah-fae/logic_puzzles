@@ -1,0 +1,247 @@
+Puzzle:
+      Ful  Par  Par  Ful
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    *    *    *  |
+    --------------------
+Hints:
+0. Either the light Full Shade or the light Partial Sun is the plant Potatoes 
+1. Either the light Full Shade is the plant Eggplant or the light Full Shade is the plant Broccoli 
+2. The plant Broccoli is the light Partial Shade 
+
+User Move 1 (correct):       Ful  Par  Par  Ful
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  X    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_OR - [((light, plant, 'Full Shade', 'Potatoes'), 'Y'), ((light, plant, 'Partial Sun', 'Potatoes'), 'Y')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]1:APPLY_OR - [((plant, light, 'Eggplant', 'Full Shade'), 'Y'), ((plant, light, 'Broccoli', 'Full Shade'), 'Y')]1:SIMPLE_OR_SAME_CAT - [((plant, light, 'Potatoes', 'Full Shade'), 'X')]1:SIMPLE_OR_SAME_CAT - [((plant, light, 'Green Onions', 'Full Shade'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  X    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 2 (correct):       Ful  Par  Par  Ful
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  O    *    *    *  |
+Bro|  X    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_OR - [((light, plant, 'Full Shade', 'Potatoes'), 'Y'), ((light, plant, 'Partial Sun', 'Potatoes'), 'Y')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]1:APPLY_OR - [((plant, light, 'Eggplant', 'Full Shade'), 'O')]1:SIMPLE_OR_SAME_CAT - [((plant, light, 'Potatoes', 'Full Shade'), 'X')]1:SIMPLE_OR_SAME_CAT - [((plant, light, 'Green Onions', 'Full Shade'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  O    *    *    *  |
+Bro|  x    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "Either the light Full Shade is the plant Eggplant or the light Full Shade is the plant Broccoli" - APPLY_OR
+Likely Reasoning: hint:Either the light Full Shade is the plant Eggplant or the light Full Shade is the plant Broccoli:APPLY_OR (insight)
+
+
+User Move 3 (correct):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    *    *    *  |
+Gre|  X    *    *    *  |
+Egg|  O    *    *    *  |
+Bro|  X    *    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((light, plant, 'Partial Shade', 'Eggplant'), 'X'), ((light, plant, 'Partial Sun', 'Eggplant'), 'X'), ((light, plant, 'Full Sun', 'Eggplant'), 'X')]-2:CROSS_OUT - [((light, plant, 'Full Shade', 'Potatoes'), 'X'), ((light, plant, 'Full Shade', 'Green Onions'), 'X'), ((light, plant, 'Full Shade', 'Broccoli'), 'X')]0:APPLY_OR - [((light, plant, 'Full Shade', 'Potatoes'), 'Y'), ((light, plant, 'Partial Sun', 'Potatoes'), 'Y')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  X    *    *    *  |
+Gre|  X    *    *    *  |
+Egg|  o    *    *    *  |
+Bro|  x    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 4 (correct):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    *    *    *  |
+Gre|  X    *    *    *  |
+Egg|  O    X    X    X  |
+Bro|  X    *    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((light, plant, 'Partial Shade', 'Eggplant'), 'X'), ((light, plant, 'Partial Sun', 'Eggplant'), 'X'), ((light, plant, 'Full Sun', 'Eggplant'), 'X')]0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    *    *    *  |
+Gre|  x    *    *    *  |
+Egg|  o    X    X    X  |
+Bro|  x    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 5 (incorrect):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    *    *    *  |
+Gre|  X    *    O    *  |
+Egg|  O    X    X    X  |
+Bro|  X    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    *    *    *  |
+Gre|  x    *    O    *  |
+Egg|  o    x    x    x  |
+Bro|  x    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 6 (incorrect):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    *    X    *  |
+Gre|  X    *    O    *  |
+Egg|  O    X    X    X  |
+Bro|  X    *    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((light, plant, 'Full Shade', 'Green Onions'), 'X'), ((light, plant, 'Partial Shade', 'Green Onions'), 'X'), ((light, plant, 'Full Sun', 'Green Onions'), 'X')]-2:CROSS_OUT - [((light, plant, 'Partial Sun', 'Potatoes'), 'X'), ((light, plant, 'Partial Sun', 'Eggplant'), 'X'), ((light, plant, 'Partial Sun', 'Broccoli'), 'X')]0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Broccoli'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    *    X    *  |
+Gre|  x    *    o    *  |
+Egg|  o    x    x    x  |
+Bro|  x    *    X    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 7 (incorrect):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    *    X    *  |
+Gre|  X    X    O    X  |
+Egg|  O    X    X    X  |
+Bro|  X    *    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((light, plant, 'Full Shade', 'Green Onions'), 'X'), ((light, plant, 'Partial Shade', 'Green Onions'), 'X'), ((light, plant, 'Full Sun', 'Green Onions'), 'X')]0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Broccoli'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    *    x    *  |
+Gre|  x    X    o    X  |
+Egg|  o    x    x    x  |
+Bro|  x    *    x    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 8 (correct):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    X    X    *  |
+Gre|  X    X    O    X  |
+Egg|  O    X    X    X  |
+Bro|  X    *    X    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'X')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Broccoli'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    X    x    *  |
+Gre|  x    x    o    x  |
+Egg|  o    x    x    x  |
+Bro|  x    *    x    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "Either the light Full Shade or the light Partial Sun is the plant Potatoes" - SIMPLE_OR_SAME_CAT
+Likely Reasoning: hint:Either the light Full Shade or the light Partial Sun is the plant Potatoes:SIMPLE_OR_SAME_CAT (insight)
+
+
+User Move 9 (correct):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    X    X    *  |
+Gre|  X    X    O    X  |
+Egg|  O    X    X    X  |
+Bro|  X    O    X    *  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]-3:OPENING - [((light, plant, 'Partial Shade', 'Broccoli'), 'O')]0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]2:APPLY_IS - [((plant, light, 'Broccoli', 'Partial Shade'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Partial Shade', 'Broccoli'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Broccoli'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    x    x    *  |
+Gre|  x    x    o    x  |
+Egg|  o    x    x    x  |
+Bro|  x    O    x    *  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: hint - "The plant Broccoli is the light Partial Shade" - APPLY_IS
+3: hint - "Either the light Full Shade or the light Partial Sun is the plant Potatoes" - SIMPLE_OR_SAME_CAT
+4: hint - "Either the light Full Shade or the light Partial Sun is the plant Potatoes" - SIMPLE_OR_SAME_CAT
+Likely Reasoning: hint:The plant Broccoli is the light Partial Shade:APPLY_IS (insight)
+
+
+User Move 10 (correct):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    X    X    *  |
+Gre|  X    X    O    X  |
+Egg|  O    X    X    X  |
+Bro|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]-2:CROSS_OUT - [((light, plant, 'Full Shade', 'Broccoli'), 'X'), ((light, plant, 'Partial Sun', 'Broccoli'), 'X'), ((light, plant, 'Full Sun', 'Broccoli'), 'X')]0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]-2:CROSS_OUT - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Broccoli'), 'O')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    x    x    *  |
+Gre|  x    x    o    x  |
+Egg|  o    x    x    x  |
+Bro|  x    o    x    X  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 11 (incorrect):       Ful  Par  Par  Ful
+    --------------------
+Pot|  X    X    X    O  |
+Gre|  X    X    O    X  |
+Egg|  O    X    X    X  |
+Bro|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((light, plant, 'Full Sun', 'Potatoes'), 'O')]0:APPLY_OR - [((light, plant, 'Partial Sun', 'Potatoes'), 'O')]0:SIMPLE_OR_SAME_CAT - [((light, plant, 'Full Sun', 'Potatoes'), 'X')]      Ful  Par  Par  Ful
+    --------------------
+Pot|  x    x    x    O  |
+Gre|  x    x    o    x  |
+Egg|  o    x    x    x  |
+Bro|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+

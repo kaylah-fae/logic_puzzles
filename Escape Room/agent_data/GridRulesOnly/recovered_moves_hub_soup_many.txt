@@ -1,0 +1,1194 @@
+Puzzle:
+      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    *  |
+Pas|  *    *    *    *  | *    *    *    *  |
+Tom|  *    *    *    *  | *    *    *    *  |
+Car|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    *  |
+4 c|  *    *    *    *  |
+    --------------------
+Hints:
+0. The ingredient Pasta is 2 orders before the ingredient Beans 
+1. The ingredient Tomatoes is 2 cups before the ingredient Beans 
+2. The ingredient Tomatoes is the order 4th 
+3. The ingredient Beans is 1 cups before the ingredient Carrots 
+
+User Move 1 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    *  |
+Pas|  *    *    *    *  | *    *    *    *  |
+Tom|  *    *    *    *  | *    *    *    *  |
+Car|  *    *    *    *  | *    *    *    O  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    *  |
+4 c|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:BEFORE_NOINFO - [((ingredient, cup, 'Carrots', '1 cup'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Beans', '4 cups'), 'X'), ((ingredient, cup, 'Carrots', '1 cup'), 'X')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    *  |
+Pas|  *    *    *    *  | *    *    *    *  |
+Tom|  *    *    *    *  | *    *    *    *  |
+Car|  *    *    *    *  | *    *    *    O  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    *  |
+4 c|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 2 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    *    *  | *    *    *    O  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    *  |
+4 c|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((cup, ingredient, '1 cup', 'Carrots'), 'X'), ((cup, ingredient, '2 cups', 'Carrots'), 'X'), ((cup, ingredient, '3 cups', 'Carrots'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '4 cups', 'Beans'), 'X'), ((cup, ingredient, '4 cups', 'Pasta'), 'X'), ((cup, ingredient, '4 cups', 'Tomatoes'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_NOINFO - [((ingredient, cup, 'Carrots', '1 cup'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Beans', '4 cups'), 'X'), ((ingredient, cup, 'Carrots', '1 cup'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    *    *  | *    *    *    o  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    *  |
+4 c|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 3 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    *    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    *  |
+4 c|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((cup, ingredient, '1 cup', 'Carrots'), 'X'), ((cup, ingredient, '2 cups', 'Carrots'), 'X'), ((cup, ingredient, '3 cups', 'Carrots'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_NOINFO - [((ingredient, cup, 'Carrots', '1 cup'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Beans', '4 cups'), 'X'), ((ingredient, cup, 'Carrots', '1 cup'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    *    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    *    *  | X    X    X    o  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    *  |
+4 c|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 4 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    *    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    X  |
+4 c|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    *    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    *    *  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    X  |
+4 c|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 5 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    X  |
+4 c|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    *    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    X    *  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    *    *    x  |
+4 c|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 6 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    O    *    X  |
+4 c|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    *    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    *  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    *    *    *  |
+2 c|  *    *    *    *  |
+3 c|  *    O    *    x  |
+4 c|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 7 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    *    *  |
+3 c|  *    O    *    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '3rd', '3 cups'), 'X'), ((order, cup, '4th', '3 cups'), 'X')]-2:CROSS_OUT - [((order, cup, '2nd', '1 cup'), 'X'), ((order, cup, '2nd', '2 cups'), 'X'), ((order, cup, '2nd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    *    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    *  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    *    *  |
+3 c|  *    o    *    x  |
+4 c|  *    X    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 8 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    *    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '3rd', '3 cups'), 'X'), ((order, cup, '4th', '3 cups'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    *    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    *  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    *    *  |
+3 c|  X    o    X    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 9 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    *    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    *    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    *  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    X    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 10 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    X    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    *  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    X    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    *  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 11 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    X    *  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    x    *  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    X  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 12 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  *    *    X    O  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  *    *    x    O  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 13 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    *    *  | *    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, ingredient, '1st', 'Pasta'), 'X'), ((order, ingredient, '2nd', 'Pasta'), 'X'), ((order, ingredient, '3rd', 'Pasta'), 'X')]-2:CROSS_OUT - [((order, ingredient, '4th', 'Beans'), 'X'), ((order, ingredient, '4th', 'Tomatoes'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '4 cups'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    *  | *    *    *    x  |
+Pas|  X    X    x    o  | *    *    *    x  |
+Tom|  *    *    *    *  | *    *    *    x  |
+Car|  *    *    x    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 14 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    *    X  | *    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, ingredient, '4th', 'Beans'), 'X'), ((order, ingredient, '4th', 'Tomatoes'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '4 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    X  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    *    X  | *    *    *    x  |
+Car|  *    *    x    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 15 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    *    X  | X    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    *  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '4 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    *    x  | X    *    *    x  |
+Car|  *    *    x    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 16 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    *    X  | X    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  *    X    *    X  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '4 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]-1:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    *    x  | x    *    *    x  |
+Car|  *    *    x    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  *    x    *    X  |
+    --------------------
+Possible Reasonings: 
+1: openings - TRANS_SETS
+Likely Reasoning: openings::TRANS_SETS (insight)
+
+
+User Move 17 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    *    X  | X    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    *    X  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]-1:OPENING - [((order, cup, '1st', '4 cups'), 'O')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]-1:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    *    x  | x    *    *    x  |
+Car|  *    *    x    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  X    x    *    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 18 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    *    X  | X    *    *    X  |
+Car|  *    *    X    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((order, cup, '3rd', '4 cups'), 'O')]-1:TRANS_SETS - [((order, ingredient, '1st', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '4 cups'), 'X')]-1:TRANS_SETS - [((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, cup, '3rd', '4 cups'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Carrots'), 'O')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]-1:OPENING - [((order, cup, '3rd', '1 cup'), 'O')]-1:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, cup, '3rd', '4 cups'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]1:OPENING - [((order, cup, '3rd', '4 cups'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((order, cup, '3rd', '4 cups'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    *    x  | x    *    *    x  |
+Car|  *    *    x    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    O    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: openings - OPENING
+3: hint - "The ingredient Pasta is 2 orders before the ingredient Beans" - OPENING
+4: hint - "The ingredient Tomatoes is 2 cups before the ingredient Beans" - OPENING
+5: hint - "The ingredient Beans is 1 cups before the ingredient Carrots" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 19 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    *    X  | X    *    *    X  |
+Car|  *    *    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '3rd', '1 cup'), 'X'), ((order, cup, '3rd', '2 cups'), 'X'), ((order, cup, '3rd', '3 cups'), 'X')]-1:TRANS_ABC_TRUE - [((order, ingredient, '3rd', 'Carrots'), 'O')]-1:TRANS_ABC_FALSE - [((order, ingredient, '3rd', 'Beans'), 'X')]-1:TRANS_ABC_FALSE - [((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, order, 'Carrots', '1st'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, order, 'Carrots', '2nd'), 'X')]-1:TRANS_SETS - [((order, ingredient, '1st', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]-1:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Carrots'), 'O')]-1:OPENING - [((order, ingredient, '1st', 'Carrots'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '3rd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:TRANS_SETS - [((order, ingredient, '3rd', 'Beans'), 'X')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    *    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    *    x  | x    *    *    x  |
+Car|  *    *    O    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: openings - TRANS_ABC_TRUE
+Likely Reasoning: openings::TRANS_ABC_TRUE (insight)
+
+
+User Move 20 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    X    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    X    X  | X    *    *    X  |
+Car|  *    *    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '3rd', '1 cup'), 'X'), ((order, cup, '3rd', '2 cups'), 'X'), ((order, cup, '3rd', '3 cups'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '2nd', 'Carrots'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-2:CROSS_OUT - [((order, ingredient, '3rd', 'Beans'), 'X'), ((order, ingredient, '3rd', 'Pasta'), 'X'), ((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_ABC_FALSE - [((order, ingredient, '3rd', 'Beans'), 'X')]-1:TRANS_ABC_FALSE - [((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '3rd', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, order, 'Carrots', '1st'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, order, 'Carrots', '2nd'), 'X')]-1:TRANS_SETS - [((order, ingredient, '1st', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '3rd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Beans', '4th'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Beans', '3rd'), 'X'), ((ingredient, order, 'Pasta', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]0:OPENING - [((order, ingredient, '3rd', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    X    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    X    x  | x    *    *    x  |
+Car|  *    *    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 21 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    X    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    X    X  | X    *    *    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    *    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '3rd', '1 cup'), 'X'), ((order, cup, '3rd', '2 cups'), 'X'), ((order, cup, '3rd', '3 cups'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '2nd', 'Carrots'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '3rd', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, order, 'Carrots', '1st'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, order, 'Carrots', '2nd'), 'X')]-1:TRANS_SETS - [((order, ingredient, '1st', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '1 cup'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]0:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    x    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    x    x  | x    *    *    x  |
+Car|  X    X    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    *    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 22 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    X    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    X    X  | X    *    *    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '3rd', '1 cup'), 'X'), ((order, cup, '3rd', '2 cups'), 'X'), ((order, cup, '3rd', '3 cups'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '3rd', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '3rd', '1 cup'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]0:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    x    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    x    x  | x    *    *    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    X    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 23 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    X    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    X    X  | X    *    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]0:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    x    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    x    x  | x    *    X    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 24 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    X    X  | *    *    *    X  |
+Pas|  X    X    X    O  | *    *    *    X  |
+Tom|  *    *    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]-1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '2 cups', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    x    x  | *    *    *    x  |
+Pas|  x    x    x    o  | *    *    *    x  |
+Tom|  *    *    x    x  | x    O    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: openings - OPENING
+3: hint - "The ingredient Pasta is 2 orders before the ingredient Beans" - OPENING
+4: hint - "The ingredient Tomatoes is 2 cups before the ingredient Beans" - OPENING
+5: hint - "The ingredient Beans is 1 cups before the ingredient Carrots" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 25 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    X    X  | *    X    *    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  *    *    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((cup, ingredient, '2 cups', 'Beans'), 'X'), ((cup, ingredient, '2 cups', 'Pasta'), 'X'), ((cup, ingredient, '2 cups', 'Carrots'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, cup, '1st', '2 cups'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  *    *    x    x  | *    X    *    x  |
+Pas|  x    x    x    o  | *    X    *    x  |
+Tom|  *    *    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 26 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    *    X    X  | *    X    *    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  *    *    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-1:OPENING - [((order, cup, '1st', '2 cups'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    *    x    x  | *    x    *    x  |
+Pas|  x    x    x    o  | *    x    *    x  |
+Tom|  *    *    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The ingredient Pasta is 2 orders before the ingredient Beans" - BEFORE_NOINFO
+Likely Reasoning: hint:The ingredient Pasta is 2 orders before the ingredient Beans:BEFORE_NOINFO (insight)
+
+
+User Move 27 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    *    X    X  | *    X    *    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  O    *    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-3:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((order, cup, '1st', '2 cups'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-1:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]-1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]1:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]3:OPENING - [((order, ingredient, '1st', 'Tomatoes'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    *    x    x  | *    x    *    x  |
+Pas|  x    x    x    o  | *    x    *    x  |
+Tom|  O    *    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: openings - OPENING
+3: hint - "The ingredient Pasta is 2 orders before the ingredient Beans" - OPENING
+4: hint - "The ingredient Tomatoes is 2 cups before the ingredient Beans" - OPENING
+5: hint - "The ingredient Beans is 1 cups before the ingredient Carrots" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 28 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | *    X    *    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  O    *    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Tomatoes'), 'X'), ((order, ingredient, '3rd', 'Tomatoes'), 'X'), ((order, ingredient, '4th', 'Tomatoes'), 'X')]-1:TRANS_ABC_TRUE - [((order, cup, '1st', '2 cups'), 'O')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((cup, order, '2 cups', '4th'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-2:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((order, cup, '1st', '2 cups'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]-1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((order, ingredient, '2nd', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    O    x    x  | *    x    *    x  |
+Pas|  x    x    x    o  | *    x    *    x  |
+Tom|  o    *    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: cross outs - OPENING
+3: openings - OPENING
+4: hint - "The ingredient Tomatoes is 2 cups before the ingredient Beans" - OPENING
+5: hint - "The ingredient Beans is 1 cups before the ingredient Carrots" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 29 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | *    X    O    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  O    *    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  *    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, ingredient, '2nd', 'Tomatoes'), 'X'), ((order, ingredient, '3rd', 'Tomatoes'), 'X'), ((order, ingredient, '4th', 'Tomatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Pasta'), 'X'), ((order, ingredient, '2nd', 'Tomatoes'), 'X'), ((order, ingredient, '2nd', 'Carrots'), 'X')]-1:TRANS_ABC_TRUE - [((order, cup, '1st', '2 cups'), 'O')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((cup, order, '2 cups', '4th'), 'X')]-1:TRANS_ABC_TRUE - [((cup, ingredient, '3 cups', 'Beans'), 'O')]-1:TRANS_ABC_FALSE - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, cup, 'Beans', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((ingredient, cup, 'Beans', '3 cups'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((order, cup, '1st', '2 cups'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((cup, ingredient, '3 cups', 'Beans'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | *    x    O    x  |
+Pas|  x    x    x    o  | *    x    *    x  |
+Tom|  o    *    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  *    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: openings - TRANS_ABC_TRUE
+2: hint - "The ingredient Beans is 1 cups before the ingredient Carrots" - APPLY_BEFORE_ONE_SPOT
+3: openings - OPENING
+4: hint - "The ingredient Tomatoes is 2 cups before the ingredient Beans" - OPENING
+5: hint - "The ingredient Beans is 1 cups before the ingredient Carrots" - OPENING
+Likely Reasoning: openings::OPENING (insight)
+
+
+User Move 30 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | *    X    O    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  O    *    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  O    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, ingredient, '2nd', 'Tomatoes'), 'X'), ((order, ingredient, '3rd', 'Tomatoes'), 'X'), ((order, ingredient, '4th', 'Tomatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Pasta'), 'X'), ((order, ingredient, '2nd', 'Tomatoes'), 'X'), ((order, ingredient, '2nd', 'Carrots'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '1 cup', 'Beans'), 'X'), ((cup, ingredient, '2 cups', 'Beans'), 'X'), ((cup, ingredient, '4 cups', 'Beans'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '3 cups', 'Pasta'), 'X'), ((cup, ingredient, '3 cups', 'Tomatoes'), 'X'), ((cup, ingredient, '3 cups', 'Carrots'), 'X')]-1:TRANS_ABC_TRUE - [((order, cup, '1st', '2 cups'), 'O')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_ABC_FALSE - [((cup, order, '2 cups', '4th'), 'X')]-1:TRANS_ABC_FALSE - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, cup, 'Beans', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-2:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((order, cup, '1st', '2 cups'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | *    x    o    x  |
+Pas|  x    x    x    o  | *    x    *    x  |
+Tom|  o    *    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  O    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: openings - TRANS_ABC_TRUE
+2: openings - OPENING
+Likely Reasoning: openings::OPENING (insight)
+
+
+User Move 31 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | *    X    O    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  O    X    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  O    X    X    *  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '2nd', '2 cups'), 'X'), ((order, cup, '3rd', '2 cups'), 'X'), ((order, cup, '4th', '2 cups'), 'X')]-2:CROSS_OUT - [((order, cup, '1st', '1 cup'), 'X'), ((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '1st', '4 cups'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Tomatoes'), 'X'), ((order, ingredient, '3rd', 'Tomatoes'), 'X'), ((order, ingredient, '4th', 'Tomatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Pasta'), 'X'), ((order, ingredient, '2nd', 'Tomatoes'), 'X'), ((order, ingredient, '2nd', 'Carrots'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '1 cup', 'Beans'), 'X'), ((cup, ingredient, '2 cups', 'Beans'), 'X'), ((cup, ingredient, '4 cups', 'Beans'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '3 cups', 'Pasta'), 'X'), ((cup, ingredient, '3 cups', 'Tomatoes'), 'X'), ((cup, ingredient, '3 cups', 'Carrots'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_ABC_FALSE - [((cup, order, '2 cups', '4th'), 'X')]-1:TRANS_ABC_FALSE - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, cup, 'Beans', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Tomatoes'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-2:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-2:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, ingredient, '2nd', 'Tomatoes'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-3:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, cup, '4th', '1 cup'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | *    x    o    x  |
+Pas|  x    x    x    o  | *    x    *    x  |
+Tom|  o    X    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  o    x    x    *  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 32 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | *    X    O    X  |
+Pas|  X    X    X    O  | *    X    *    X  |
+Tom|  O    X    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  O    X    X    X  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((order, cup, '2nd', '2 cups'), 'X'), ((order, cup, '3rd', '2 cups'), 'X'), ((order, cup, '4th', '2 cups'), 'X')]-2:CROSS_OUT - [((order, cup, '1st', '1 cup'), 'X'), ((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '1st', '4 cups'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '1 cup', 'Beans'), 'X'), ((cup, ingredient, '2 cups', 'Beans'), 'X'), ((cup, ingredient, '4 cups', 'Beans'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '3 cups', 'Pasta'), 'X'), ((cup, ingredient, '3 cups', 'Tomatoes'), 'X'), ((cup, ingredient, '3 cups', 'Carrots'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((cup, order, '2 cups', '4th'), 'X')]-1:TRANS_ABC_FALSE - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, cup, 'Beans', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '4th', '2 cups'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-2:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-2:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-3:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, cup, '4th', '1 cup'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | *    x    o    x  |
+Pas|  x    x    x    o  | *    x    *    x  |
+Tom|  o    x    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  o    x    x    X  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 33 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | *    X    O    X  |
+Pas|  X    X    X    O  | *    X    X    X  |
+Tom|  O    X    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  O    X    X    X  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-2:CROSS_OUT - [((order, cup, '1st', '1 cup'), 'X'), ((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '1st', '4 cups'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '1 cup', 'Beans'), 'X'), ((cup, ingredient, '2 cups', 'Beans'), 'X'), ((cup, ingredient, '4 cups', 'Beans'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '3 cups', 'Pasta'), 'X'), ((cup, ingredient, '3 cups', 'Tomatoes'), 'X'), ((cup, ingredient, '3 cups', 'Carrots'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, cup, 'Beans', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '3 cups', 'Pasta'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-2:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-2:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, cup, '4th', '1 cup'), 'O')]1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]1:OPENING - [((cup, ingredient, '3 cups', 'Pasta'), 'O')]3:OPENING - [((order, cup, '4th', '1 cup'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | *    x    o    x  |
+Pas|  x    x    x    o  | *    x    X    x  |
+Tom|  o    x    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  o    x    x    x  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 34 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | X    X    O    X  |
+Pas|  X    X    X    O  | *    X    X    X  |
+Tom|  O    X    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    *  |
+2 c|  O    X    X    X  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-2:CROSS_OUT - [((order, cup, '1st', '1 cup'), 'X'), ((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '1st', '4 cups'), 'X')]-2:CROSS_OUT - [((cup, ingredient, '1 cup', 'Beans'), 'X'), ((cup, ingredient, '2 cups', 'Beans'), 'X'), ((cup, ingredient, '4 cups', 'Beans'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, cup, 'Beans', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((cup, ingredient, '1 cup', 'Beans'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((ingredient, cup, 'Tomatoes', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '4 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]3:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Carrots', '3 cups'), 'X'), ((ingredient, cup, 'Beans', '1 cup'), 'X'), ((ingredient, cup, 'Beans', '2 cups'), 'X')]-2:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-2:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, cup, '4th', '1 cup'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Beans'), 'O')]3:OPENING - [((order, cup, '4th', '1 cup'), 'O')]3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | X    x    o    x  |
+Pas|  x    x    x    o  | *    x    x    x  |
+Tom|  o    x    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    *  |
+2 c|  o    x    x    x  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 35 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | X    X    O    X  |
+Pas|  X    X    X    O  | *    X    X    X  |
+Tom|  O    X    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  *    X    X    O  |
+2 c|  O    X    X    X  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-2:CROSS_OUT - [((order, cup, '1st', '1 cup'), 'X'), ((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '1st', '4 cups'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]-2:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-2:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((order, cup, '4th', '1 cup'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((order, cup, '4th', '1 cup'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | x    x    o    x  |
+Pas|  x    x    x    o  | *    x    x    x  |
+Tom|  o    x    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  *    x    x    O  |
+2 c|  o    x    x    x  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: cross outs - OPENING
+3: openings - OPENING
+4: hint - "The ingredient Pasta is 2 orders before the ingredient Beans" - OPENING
+5: hint - "The ingredient Tomatoes is 2 cups before the ingredient Beans" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 36 (correct):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | X    X    O    X  |
+Pas|  X    X    X    O  | *    X    X    X  |
+Tom|  O    X    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  X    X    X    O  |
+2 c|  O    X    X    X  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-2:CROSS_OUT - [((order, cup, '1st', '1 cup'), 'X'), ((order, cup, '2nd', '1 cup'), 'X'), ((order, cup, '3rd', '1 cup'), 'X')]-2:CROSS_OUT - [((order, cup, '1st', '1 cup'), 'X'), ((order, cup, '1st', '3 cups'), 'X'), ((order, cup, '1st', '4 cups'), 'X')]-1:TRANS_ABC_FALSE - [((order, cup, '1st', '1 cup'), 'X')]-1:TRANS_ABC_TRUE - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:TRANS_SETS - [((order, cup, '1st', '1 cup'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]-2:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | x    x    o    x  |
+Pas|  x    x    x    o  | *    x    x    x  |
+Tom|  o    x    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  X    x    x    o  |
+2 c|  o    x    x    x  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 37 (incorrect):       1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  X    O    X    X  | X    X    O    X  |
+Pas|  X    X    X    O  | O    X    X    X  |
+Tom|  O    X    X    X  | X    O    X    X  |
+Car|  X    X    O    X  | X    X    X    O  |
+    ----------------------------------------
+1 c|  X    X    X    O  |
+2 c|  O    X    X    X  |
+3 c|  X    O    X    X  |
+4 c|  X    X    O    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]-1:TRANS_ABC_TRUE - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Pasta', '3rd'), 'X'), ((ingredient, order, 'Pasta', '4th'), 'X'), ((ingredient, order, 'Beans', '1st'), 'X'), ((ingredient, order, 'Beans', '2nd'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, cup, 'Beans', '3 cups'), 'X'), ((ingredient, cup, 'Tomatoes', '2 cups'), 'X')]2:APPLY_IS - [((ingredient, order, 'Tomatoes', '4th'), 'O')]0:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]1:OPENING - [((cup, ingredient, '1 cup', 'Pasta'), 'O')]      1st  2nd  3rd  4th  1 c  2 c  3 c  4 c
+    ----------------------------------------
+Bea|  x    o    x    x  | x    x    o    x  |
+Pas|  x    x    x    o  | O    x    x    x  |
+Tom|  o    x    x    x  | x    o    x    x  |
+Car|  x    x    o    x  | x    x    x    o  |
+    ----------------------------------------
+1 c|  x    x    x    o  |
+2 c|  o    x    x    x  |
+3 c|  x    o    x    x  |
+4 c|  x    x    o    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: openings - TRANS_ABC_TRUE
+3: hint - "The ingredient Pasta is 2 orders before the ingredient Beans" - OPENING
+4: hint - "The ingredient Tomatoes is 2 cups before the ingredient Beans" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+

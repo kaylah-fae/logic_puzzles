@@ -100,3 +100,6 @@ def get_insight_problem(puzzle, hints, insight):
             return None, None, "diff_insights"
 
     return puzzle_before_insight, move, ""
+
+
+def rand_insight_problem(categories, insight):

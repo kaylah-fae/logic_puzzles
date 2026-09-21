@@ -1,0 +1,1 @@
+{"py/object": "insights.SolutionMapElites.EliteGrid", "width": 10, "cell_capacity": 1, "grid": [], "total_children": [], "feas_count": 0, "insight_sets": {}, "pop_size": 0, "height": 0}

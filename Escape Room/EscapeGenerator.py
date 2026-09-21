@@ -58,7 +58,7 @@ experiments = [
         "folder": "NewEscape/SoupSimple",
         "puzzle": soup,
         "required_insights": {
-            Insight.BEFORE_N_SPOTS_SHIFT,
+            Insight.BEFORE_N_SPOTS_NOINFO, Insight.SIMPLE_OR_DIFF_CAT,
         },
         "forbidden_insights": set(),
     },
@@ -67,7 +67,7 @@ experiments = [
 
 starting = 0
 num_trials = 1
-gen_len = 1000
+gen_len = 100
 pop_size = 300
 mut_rate = 0.8
 x_rate = 0.6

@@ -1,0 +1,307 @@
+Puzzle:
+      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    *    *    *  |
+3|  *    *    *    *  |
+4|  *    *    *    *  |
+    --------------------
+Hints:
+0. The shapes Bowtie is 2 orders before the shapes Shell 
+1. Either the shapes Bowtie or the shapes Linguine is the order 2 
+2. The shapes Bowtie is the order 1 
+
+User Move 1 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    *    *    *  |
+3|  *    X    *    *  |
+4|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Bowtie', '2'), 'Y'), ((shapes, order, 'Linguine', '2'), 'Y')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    *    *    *  |
+3|  *    X    *    *  |
+4|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_NOINFO
+2: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_NOINFO
+Likely Reasoning: hint:The shapes Bowtie is 2 orders before the shapes Shell:BEFORE_NOINFO (insight)
+
+
+User Move 2 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    *    X    *  |
+3|  *    X    *    *  |
+4|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Bowtie', '2'), 'Y'), ((shapes, order, 'Linguine', '2'), 'Y')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    *    X    *  |
+3|  *    x    *    *  |
+4|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 3 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    *    X    *  |
+3|  X    X    *    *  |
+4|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Bowtie', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    *    x    *  |
+3|  X    x    *    *  |
+4|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 4 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    X    X    *  |
+3|  X    X    *    *  |
+4|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Bowtie', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    *    *  |
+2|  *    X    x    *  |
+3|  x    x    *    *  |
+4|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 5 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    X    *  |
+2|  *    X    X    *  |
+3|  X    X    *    *  |
+4|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    X    *  |
+2|  *    x    x    *  |
+3|  x    x    *    *  |
+4|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 6 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    X    *  |
+2|  *    X    X    *  |
+3|  X    X    *    *  |
+4|  O    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    x    *  |
+2|  *    x    x    *  |
+3|  x    x    *    *  |
+4|  O    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 7 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    X    *  |
+2|  *    X    X    *  |
+3|  X    X    *    *  |
+4|  O    X    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Linguine', '4'), 'X'), ((shapes, order, 'Shell', '4'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Elbow', '2'), 'X'), ((shapes, order, 'Elbow', '3'), 'X')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Bowtie', '1'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Linguine', '3'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]-3:OPENING - [((shapes, order, 'Shell', '2'), 'O')]-3:OPENING - [((shapes, order, 'Bowtie', '1'), 'O')]-3:OPENING - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Shell', '3'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Linguine', '3'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    x    *  |
+2|  *    x    x    *  |
+3|  x    x    *    *  |
+4|  o    X    X    X  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 8 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+1|  *    *    X    *  |
+2|  *    X    X    *  |
+3|  X    X    O    *  |
+4|  O    X    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shapes, order, 'Bowtie', '1'), 'O')]-3:OPENING - [((shapes, order, 'Linguine', '3'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Elbow', '2'), 'X'), ((shapes, order, 'Elbow', '3'), 'X')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Shell', '2'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Bowtie', '1'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Shell', '3'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Linguine', '3'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]-3:OPENING - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Linguine', '3'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Shell', '3'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Linguine', '3'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    *    x    *  |
+2|  *    x    x    *  |
+3|  x    x    O    *  |
+4|  o    x    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: cross outs - CROSS_OUT
+3: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_NOINFO
+4: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_NOINFO
+5: hint - "Either the shapes Bowtie or the shapes Linguine is the order 2" - SIMPLE_OR_SAME_CAT
+6: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_NOINFO
+7: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_NOINFO
+8: hint - "Either the shapes Bowtie or the shapes Linguine is the order 2" - SIMPLE_OR_SAME_CAT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 9 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  *    O    X    *  |
+2|  *    X    X    *  |
+3|  X    X    O    *  |
+4|  O    X    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shapes, order, 'Bowtie', '1'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '3'), 'X'), ((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '3'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Elbow', '2'), 'X'), ((shapes, order, 'Elbow', '3'), 'X')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]2:APPLY_IS - [((shapes, order, 'Bowtie', '1'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Bowtie', '1'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Shell', '3'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]-3:OPENING - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Bowtie', '2'), 'X'), ((shapes, order, 'Bowtie', '1'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Bowtie', '1'), 'X'), ((shapes, order, 'Bowtie', '2'), 'X')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '1'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '1'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '1'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Bowtie', '1'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '1'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    O    x    *  |
+2|  *    x    x    *  |
+3|  x    x    o    *  |
+4|  o    x    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: hint - "The shapes Bowtie is the order 1" - APPLY_IS
+3: cross outs - CROSS_OUT
+4: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_NOINFO
+5: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_NOINFO
+6: hint - "Either the shapes Bowtie or the shapes Linguine is the order 2" - SIMPLE_OR_SAME_CAT
+7: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_NOINFO
+8: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_NOINFO
+9: hint - "Either the shapes Bowtie or the shapes Linguine is the order 2" - SIMPLE_OR_SAME_CAT
+Likely Reasoning: hint:The shapes Bowtie is the order 1:APPLY_IS (insight)
+
+
+User Move 10 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+1|  *    O    X    *  |
+2|  *    X    X    *  |
+3|  X    X    O    X  |
+4|  O    X    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Linguine', '1'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '3'), 'X'), ((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '3'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Elbow', '2'), 'X'), ((shapes, order, 'Elbow', '3'), 'X')]0:APPLY_BEFORE_N_SPOTS - [((shapes, order, 'Shell', '3'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Shell', '3'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]-3:OPENING - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Bowtie', '2'), 'X'), ((shapes, order, 'Bowtie', '1'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Bowtie', '1'), 'X'), ((shapes, order, 'Bowtie', '2'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '2'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  *    o    x    *  |
+2|  *    x    x    *  |
+3|  x    x    o    X  |
+4|  o    x    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 11 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  X    O    X    X  |
+2|  *    X    X    *  |
+3|  X    X    O    X  |
+4|  O    X    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Linguine', '1'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Elbow', '2'), 'X'), ((shapes, order, 'Elbow', '3'), 'X')]0:BEFORE_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Shell', '1'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Bowtie', '2'), 'X'), ((shapes, order, 'Bowtie', '1'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Bowtie', '1'), 'X'), ((shapes, order, 'Bowtie', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_NOINFO - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '1'), 'O')]-3:OPENING - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '2'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  X    o    x    X  |
+2|  *    x    x    *  |
+3|  x    x    o    x  |
+4|  o    x    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 12 (correct):       Elb  Bow  Lin  She
+    --------------------
+1|  X    O    X    X  |
+2|  X    X    X    *  |
+3|  X    X    O    X  |
+4|  O    X    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shapes, order, 'Shell', '2'), 'O')]-2:CROSS_OUT - [((shapes, order, 'Elbow', '1'), 'X'), ((shapes, order, 'Elbow', '2'), 'X'), ((shapes, order, 'Elbow', '3'), 'X')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Bowtie', '2'), 'X'), ((shapes, order, 'Bowtie', '1'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Bowtie', '1'), 'X'), ((shapes, order, 'Bowtie', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'X')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]-2:CROSS_OUT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Elbow', '2'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '2'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  x    o    x    x  |
+2|  X    x    x    *  |
+3|  x    x    o    x  |
+4|  o    x    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+2: hint - "Either the shapes Bowtie or the shapes Linguine is the order 2" - SIMPLE_OR_SAME_CAT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 13 (incorrect):       Elb  Bow  Lin  She
+    --------------------
+1|  X    O    X    X  |
+2|  X    X    X    O  |
+3|  X    X    O    X  |
+4|  O    X    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_NOINFO - [((shapes, order, 'Bowtie', '3'), 'X'), ((shapes, order, 'Bowtie', '4'), 'X'), ((shapes, order, 'Shell', '1'), 'X'), ((shapes, order, 'Shell', '2'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Bowtie', '2'), 'X'), ((shapes, order, 'Bowtie', '1'), 'X')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Bowtie', '1'), 'X'), ((shapes, order, 'Bowtie', '2'), 'X')]1:APPLY_OR - [((shapes, order, 'Linguine', '2'), 'O')]1:SIMPLE_OR_SAME_CAT - [((shapes, order, 'Shell', '2'), 'X')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_SHIFT - [((shapes, order, 'Shell', '2'), 'O')]0:BEFORE_N_SPOTS_CROSSCHECK - [((shapes, order, 'Shell', '2'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+1|  x    o    x    x  |
+2|  x    x    x    O  |
+3|  x    x    o    x  |
+4|  o    x    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_SHIFT
+3: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_CROSSCHECK
+4: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_SHIFT
+5: hint - "The shapes Bowtie is 2 orders before the shapes Shell" - BEFORE_N_SPOTS_CROSSCHECK
+Likely Reasoning: transitives::OPENING (insight)
+
+

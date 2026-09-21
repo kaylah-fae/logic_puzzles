@@ -1,0 +1,357 @@
+Puzzle:
+      Gre  Car  Kal  Pot
+    --------------------
+20o|  *    *    *    *  |
+40o|  *    *    *    *  |
+60o|  *    *    *    *  |
+80o|  *    *    *    *  |
+    --------------------
+Hints:
+0. The plants Carrots is the amounts 40oz 
+1. The plants Green Onions is at least 1 amounts before the plants Carrots 
+2. Either the plants Green Onions or the plants Potatoes is the amounts 80oz 
+
+User Move 1 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  *    *    *    *  |
+40o|  *    *    X    *  |
+60o|  *    *    *    *  |
+80o|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Kale', '80oz'), 'X')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  *    *    *    *  |
+40o|  *    *    X    *  |
+60o|  *    *    *    *  |
+80o|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 2 (incorrect):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    *  |
+40o|  *    *    X    *  |
+60o|  *    *    *    *  |
+80o|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Kale', '80oz'), 'X')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    *  |
+40o|  *    *    x    *  |
+60o|  *    *    *    *  |
+80o|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 3 (incorrect):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    *  |
+40o|  *    *    X    *  |
+60o|  *    *    *    *  |
+80o|  *    O    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((plants, amounts, 'Carrots', '40oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Kale', '80oz'), 'X')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    *  |
+40o|  *    *    x    *  |
+60o|  *    *    *    *  |
+80o|  *    O    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 4 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    *  |
+40o|  *    *    X    *  |
+60o|  *    *    *    *  |
+80o|  *    O    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '80oz'), 'X')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'Y'), ((plants, amounts, 'Green Onions', '60oz'), 'Y')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((plants, amounts, 'Carrots', '40oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Kale', '80oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    *  |
+40o|  *    *    x    *  |
+60o|  *    *    *    *  |
+80o|  *    o    X    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "Either the plants Green Onions or the plants Potatoes is the amounts 80oz" - SIMPLE_OR_SAME_CAT
+Likely Reasoning: hint:Either the plants Green Onions or the plants Potatoes is the amounts 80oz:SIMPLE_OR_SAME_CAT (insight)
+
+
+User Move 5 (incorrect):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    *    X    *  |
+60o|  *    *    *    *  |
+80o|  *    O    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '80oz'), 'X')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'Y'), ((plants, amounts, 'Green Onions', '60oz'), 'Y')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((plants, amounts, 'Carrots', '40oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    O  |
+40o|  *    *    x    *  |
+60o|  *    *    *    *  |
+80o|  *    o    x    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 6 (incorrect):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    X    X    *  |
+60o|  *    *    *    *  |
+80o|  *    O    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '80oz'), 'X')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'Y'), ((plants, amounts, 'Green Onions', '60oz'), 'Y')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((plants, amounts, 'Carrots', '40oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Kale', '60oz'), 'O')]-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-3:OPENING - [((plants, amounts, 'Kale', '60oz'), 'O')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:OPENING - [((plants, amounts, 'Kale', '60oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  *    X    x    *  |
+60o|  *    *    *    *  |
+80o|  *    o    x    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The plants Green Onions is at least 1 amounts before the plants Carrots" - BEFORE_N_SPOTS_SHIFT
+Likely Reasoning: hint:The plants Green Onions is at least 1 amounts before the plants Carrots:BEFORE_N_SPOTS_SHIFT (insight)
+
+
+User Move 7 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    X    X    *  |
+60o|  *    *    O    *  |
+80o|  *    O    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '80oz'), 'X')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'Y'), ((plants, amounts, 'Green Onions', '60oz'), 'Y')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Kale', '60oz'), 'O')]-2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-3:OPENING - [((plants, amounts, 'Kale', '60oz'), 'O')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:OPENING - [((plants, amounts, 'Kale', '60oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  *    x    x    *  |
+60o|  *    *    O    *  |
+80o|  *    o    x    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - OPENING
+2: transitives - OPENING
+3: hint - "Either the plants Green Onions or the plants Potatoes is the amounts 80oz" - OPENING
+Likely Reasoning: cross outs::OPENING (insight)
+
+
+User Move 8 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    X    X    *  |
+60o|  X    *    O    *  |
+80o|  *    O    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '60oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '80oz'), 'X')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'Y'), ((plants, amounts, 'Green Onions', '60oz'), 'Y')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  *    x    x    *  |
+60o|  X    *    o    *  |
+80o|  *    o    x    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 9 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    X    X    *  |
+60o|  X    *    O    X  |
+80o|  *    O    X    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '60oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  *    x    x    *  |
+60o|  x    *    o    X  |
+80o|  *    o    x    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 10 (incorrect):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    X    X    *  |
+60o|  X    *    O    X  |
+80o|  *    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '60oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'Y'), ((plants, amounts, 'Potatoes', '80oz'), 'Y')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  *    x    x    *  |
+60o|  x    *    o    x  |
+80o|  *    o    x    X  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 11 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    X    X    *  |
+60o|  X    *    O    X  |
+80o|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '60oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Green Onions', '80oz'), 'O')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '80oz'), 'O')]-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  *    x    x    *  |
+60o|  x    *    o    x  |
+80o|  X    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 12 (incorrect):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  *    X    X    O  |
+60o|  X    *    O    X  |
+80o|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '60oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  *    x    x    O  |
+60o|  x    *    o    x  |
+80o|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 13 (incorrect):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  O    X    X    O  |
+60o|  X    *    O    X  |
+80o|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '40oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '20oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '60oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]-2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]2:OPENING - [((plants, amounts, 'Green Onions', '40oz'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Carrots', '80oz'), 'X')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  O    x    x    o  |
+60o|  x    *    o    x  |
+80o|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: hint - "The plants Green Onions is at least 1 amounts before the plants Carrots" - APPLY_BEFORE_UNDEFINED_SPOTS
+3: cross outs - OPENING
+4: hint - "The plants Green Onions is at least 1 amounts before the plants Carrots" - OPENING
+5: hint - "Either the plants Green Onions or the plants Potatoes is the amounts 80oz" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 14 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    *    O  |
+40o|  O    X    X    O  |
+60o|  X    X    O    X  |
+80o|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '60oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X')]1:APPLY_BEFORE_UNDEFINED_SPOTS - [((plants, amounts, 'Carrots', '60oz'), 'Y')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    *    o  |
+40o|  o    x    x    o  |
+60o|  x    X    o    x  |
+80o|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 15 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    *    X    O  |
+40o|  O    X    X    O  |
+60o|  X    X    O    X  |
+80o|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Kale', '20oz'), 'X'), ((plants, amounts, 'Kale', '40oz'), 'X'), ((plants, amounts, 'Kale', '80oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]2:OPENING - [((plants, amounts, 'Carrots', '20oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    *    X    o  |
+40o|  o    x    x    o  |
+60o|  x    x    o    x  |
+80o|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+2: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 16 (correct):       Gre  Car  Kal  Pot
+    --------------------
+20o|  X    X    X    O  |
+40o|  O    X    X    O  |
+60o|  X    X    O    X  |
+80o|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((plants, amounts, 'Green Onions', '20oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Kale', '20oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Potatoes', '40oz'), 'X'), ((plants, amounts, 'Potatoes', '60oz'), 'X'), ((plants, amounts, 'Potatoes', '80oz'), 'X')]-2:CROSS_OUT - [((plants, amounts, 'Carrots', '20oz'), 'X'), ((plants, amounts, 'Carrots', '40oz'), 'X'), ((plants, amounts, 'Carrots', '60oz'), 'X')]0:APPLY_IS - [((plants, amounts, 'Carrots', '40oz'), 'O')]1:BEFORE_NOINFO - [((plants, amounts, 'Carrots', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plants, amounts, 'Green Onions', '80oz'), 'X'), ((plants, amounts, 'Carrots', '20oz'), 'X')]2:APPLY_OR - [((plants, amounts, 'Potatoes', '80oz'), 'O')]2:SIMPLE_OR_SAME_CAT - [((plants, amounts, 'Carrots', '80oz'), 'X')]2:OPENING - [((plants, amounts, 'Carrots', '20oz'), 'O')]      Gre  Car  Kal  Pot
+    --------------------
+20o|  x    X    x    o  |
+40o|  o    x    x    o  |
+60o|  x    x    o    x  |
+80o|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+2: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+

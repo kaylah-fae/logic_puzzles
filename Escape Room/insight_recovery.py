@@ -7,9 +7,14 @@ import re
 from pathlib import Path
 import csv
 from random import randint
-from statistics import fmean as mean
+from statistics import fmean as mean, stdev
 import arrow
 from datetime import timezone
+import re
+from collections import defaultdict
+from scipy.stats import tukey_hsd, f_oneway, ttest_ind, false_discovery_control
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 ultraimport("__dir__/../LogicPuzzles.py", package="main")
@@ -219,16 +224,36 @@ def get_solver_moves(puzzle, hints):
     SOLVER.apply_cross_out(opened_puzzle, True)
     _, s_moves = SOLVER.get_available_moves(puzzle, hints)
     _, opened_moves = SOLVER.get_available_moves(opened_puzzle, hints)
-    s_moves.extend(opened_moves)
     for move in s_moves:
+        move["source"] = "original"
+    for move in opened_moves:
+        move["source"] = "augmentation"
+    for move in deepcopy(s_moves):
         if all_x(move["moves"]):
             # Also, if a move of xs creates an opening, the user may skip ahead to that O.
             applied_puzzle = deepcopy(puzzle)
             SOLVER.apply_multi_move(applied_puzzle, move)
             _, applied_openings = SOLVER.apply_opening(applied_puzzle, True)
             for o_move in applied_openings:
-                o_move["hint_idx"] = -3
+                o_move["insight"] = move["insight"]
+                o_move["hint_idx"] = move["hint_idx"]
+                o_move["source"] = "augmentation"
             s_moves.extend(applied_openings)
+
+    for move in deepcopy(opened_moves):
+        move["source"] = "augmentation"
+        if all_x(move["moves"]):
+            applied_puzzle = deepcopy(opened_puzzle)
+            SOLVER.apply_multi_move(applied_puzzle, move)
+            _, applied_openings = SOLVER.apply_opening(applied_puzzle, True)
+            for o_move in applied_openings:
+                o_move["insight"] = move["insight"]
+                o_move["hint_idx"] = move["hint_idx"]
+                o_move["source"] = "augmentation"
+            opened_moves.extend(applied_openings)
+
+    s_moves.extend(opened_moves)
+
     d_moves = dedupe_moves(s_moves)
     return d_moves
 
@@ -261,7 +286,7 @@ def choose_likeliest_move(moves):
         if best_move["insight"] == None and move["insight"] != None:
             # Prefer labeling moves.
             best_move = move
-        elif move["insight"] and best_move["insight"]:
+        elif move["insight"] != None and best_move["insight"] != None:
             if len(move["min_moves"]) > len(best_move["min_moves"]):
                 # Prefer longer move sequences.
                 best_move = move
@@ -278,43 +303,58 @@ def choose_likeliest_move(moves):
 # How to account for this? We get available moves at a certain move,
 # and replace n moves ONLY IF THEY ALL MATCH...then we must skip those moves.
 def get_possible_labeled_moves_at_state(
-    curr_state, u_move_idx, available_moves, match_on_one=False
+    curr_state, u_move_idx, available_moves, match_on_one
 ):
+    match_on_two = True
     possible_moves = []
     recovered = False
 
     u_moves, i = u_move_idx
-    (_, _, next_rec_moves) = u_moves[i]
+    (_, _, next_u_moves) = u_moves[i]
+
+    real_u_moves = []
+    test = deepcopy(curr_state)
+    for u_move in next_u_moves:
+        u_changed, _ = test.answer(*u_move)
+        if u_changed:
+            real_u_moves.append(u_move)
+    if len(real_u_moves) > 1:
+        match_on_one = False
+        match_on_two = False
 
     for s_multi_move in available_moves:
         changed = False
-        update = deepcopy(curr_state)
         s_moves = s_multi_move["moves"]
         real_s_moves = []
+        test = deepcopy(curr_state)
         for s_move in s_moves:
-            s_changed, _ = update.answer(*s_move)
+            s_changed, _ = test.answer(*s_move)
             changed = changed or s_changed
             if s_changed:
                 real_s_moves.append(s_move)
         if not changed:
             continue
-        if len(next_rec_moves) > 1 and len(real_s_moves) != len(next_rec_moves):
+
+        if len(next_u_moves) > 1 and len(real_s_moves) != len(real_u_moves):
+            # only accept user multi-moves if they align directly with a solver move
             continue
 
         check_moves_ok = True
         check_moves = []
-        if len(next_rec_moves) > 1:
-            check_moves = next_rec_moves
+        if len(next_u_moves) > 1:
+            check_moves = deepcopy(real_u_moves)
         else:
-            if i + len(real_s_moves) > len(u_moves) - 1:
-                continue
             for m in range(i, i + len(real_s_moves)):
+                if m > len(u_moves) - 1:
+                    check_moves_ok = False
+                    break
                 (_, _, rec_moves) = u_moves[m]
                 if len(rec_moves) > 1:
+                    # one of the next moves is a multi move
                     check_moves_ok = False
                     break
                 check_moves.append(rec_moves[0])
-        if not check_moves_ok:
+        if not check_moves_ok and not match_on_two:
             continue
 
         match_all = True
@@ -330,25 +370,38 @@ def get_possible_labeled_moves_at_state(
                 match_all = False
                 break
 
-        if num_matches == 0 or (not match_all and not match_on_one):
+        if num_matches == 0:
+            continue
+
+        if not match_all and not match_on_two:
+            continue
+
+        if not match_all and not match_on_one and num_matches < 2:
             continue
 
         # the sequence of user moves starting at i (or the recorded moves for one user move) matches the sequence of solver moves
 
-        next_u_moves = []
-        if len(next_rec_moves) > 1:
-            next_u_moves = [u_moves[i]]
+        match_u_moves = []
+        if len(next_u_moves) > 1:
+            match_u_moves = [u_moves[i]]
+            check_moves = real_u_moves
         else:
-            next_u_moves = u_moves[i : i + num_matches]
+            match_u_moves = u_moves[i : i + num_matches]
+            check_moves = check_moves[0:num_matches]
+
+        update = deepcopy(curr_state)
+        for u_move in check_moves[0:num_matches]:
+            update.answer(*u_move)
 
         poss_move = {
             "hint_idx": s_multi_move["hint_idx"],
             "insight": s_multi_move["insight"],
-            "full_moves": next_u_moves,
+            "full_moves": match_u_moves,
             "min_moves": check_moves,
             "violation": False,
             "confidence": "confident",
             "result": update,
+            "source": s_multi_move["source"]
         }
         if "indexed_hint" in s_multi_move:
             poss_move["indexed_hint"] = s_multi_move["indexed_hint"]
@@ -357,17 +410,18 @@ def get_possible_labeled_moves_at_state(
         possible_moves.append(poss_move)
         recovered = True
     if not recovered:
-        (_, _, next_rec_moves) = u_moves[i]
+        (_, _, next_u_moves) = u_moves[i]
         update = deepcopy(curr_state)
-        SOLVER.apply_multi_move(update, {"moves": next_rec_moves})
+        SOLVER.apply_multi_move(update, {"moves": next_u_moves})
         possible_moves.append({
             "hint_idx": -100,
             "insight": None,
             "full_moves": [u_moves[i]],
-            "min_moves": next_rec_moves,
+            "min_moves": next_u_moves,
             "violation": False,
             "confidence": "unknown",
             "result": update,
+            "source": None
         })
 
     return possible_moves
@@ -470,7 +524,8 @@ def recover_moves(
     action_json,
     session_id,
     session_outcome_json,
-    match_on_one=False,
+    match_on_one,
+    multi_moves_dict,
 ):
     u_moves = dedupe_user_moves(puzzle, u_moves)
 
@@ -495,10 +550,18 @@ def recover_moves(
 
     solution, _, _ = SOLVER.apply_hints(puzzle, hints)
 
+    count_multi_moves = 0
+    count_single_moves = 0
+
     r_moves = []
     mi = 0
     i = 0
+    j = 0
     while i < len(u_moves):
+        j += 1
+        if j >= 500:
+            print(f"{len(u_moves)} - {i}")
+        assert j < 500
         # for i, (time, raw_str, rec_moves) in enumerate(u_moves):
         # Copy that will have moves applied.
         result = deepcopy(puzzle)
@@ -549,6 +612,7 @@ def recover_moves(
                 "value": move_value,
                 "likely_move_str": f"clear",
                 "likely_move": None,
+                "likely_source": None
             }
 
             r_moves.append((time, raw_str, r_move))
@@ -556,18 +620,59 @@ def recover_moves(
             continue
 
         possible_moves = get_possible_labeled_moves_at_state(
-            result, (u_moves, i), available_moves, match_on_one=match_on_one
+            result, (u_moves, i), available_moves, match_on_one
         )
         likely_move = choose_likeliest_move(possible_moves)
 
-        for t, raw_s, rec_moves in likely_move["full_moves"]:
+        move_count = len(likely_move["min_moves"])
+
+        if match_on_one:
+            alt_possible = get_possible_labeled_moves_at_state(
+                result, (u_moves, i), available_moves, not match_on_one
+            )
+            alt_likely_move = choose_likeliest_move(alt_possible)
+            if move_count > 1 and len(likely_move["full_moves"]) != len(
+                alt_likely_move["full_moves"]
+            ):
+                print("somehow move counts are different")
+                print(f"single likely move: {likely_move}")
+                print(f"multi likely move: {alt_likely_move}")
+                print(f"next user move: {u_moves[i]}")
+                _ = input("continue:")
+
+        if likely_move["insight"] != None:
+            if move_count > 1:
+                count_multi_moves += 1
+            else:
+                count_single_moves += 1
+
+        for j, (t, raw_s, rec_moves) in enumerate(likely_move["full_moves"]):
             move_value = get_move_list_value(result, rec_moves, solution)
+            if j > 0:
+                available_moves = get_solver_moves(puzzle, hints)  # All solver-aware moves
+                possible_moves = get_possible_labeled_moves_at_state(
+                    result, (u_moves, i), available_moves, match_on_one
+                )
+
+            available_insights = []
+            possible_insights = []
+
+            for move in available_moves:
+                if move["insight"] != None and move["insight"].name not in available_insights:
+                    available_insights.append(move["insight"].name)
+            for move in possible_moves:
+                if move["insight"] != None and move["insight"].name not in possible_insights:
+                    possible_insights.append(move["insight"].name)
+
             SOLVER.apply_multi_move(result, {"moves": rec_moves})
             r_move = {
                 "puzzle_state": deepcopy(result),
                 "board_state": result.print_grid(),
                 "u_moves": rec_moves,
                 "possible_moves": possible_moves,
+                "available_moves": available_moves,
+                "possible_insights": possible_insights,
+                "available_insights": available_insights,
                 "value": move_value,
             }
 
@@ -579,7 +684,7 @@ def recover_moves(
             move_id = f"{solver_value}:{move_str}"
 
             # Move index from action json
-            move_idx = 0
+            move_idx = -1
             for m, move_data in enumerate(action_json[session_id]):
                 if move_data["time"] == t:
                     move_idx = m
@@ -587,10 +692,12 @@ def recover_moves(
 
             action_json[session_id][move_idx]["insight"] = None
             likely_insight = None
+            likely_source = None
             if likely_move != None:
                 hint_idx = likely_move["hint_idx"]
                 typestr = get_type_str(hint_idx)
                 likely_insight = likely_move["insight"]
+                likely_source = likely_move["source"]
                 insight_str = f"{likely_insight}"
                 hint_str = ""
                 if typestr == "hint":
@@ -605,8 +712,15 @@ def recover_moves(
             r_move["likely_move_str"] = f"{move_id} ({solver_value})"
             r_move["likely_move"] = likely_move
             r_move["likely_insight"] = likely_insight
+            r_move["likely_source"] = likely_source
+            if j > 1:
+                r_move["likely_source"] = "multi_move"
+
             action_json[session_id][move_idx]["solver_value"] = solver_value
             action_json[session_id][move_idx]["move_value"] = move_value
+
+            action_json[session_id][move_idx]["available_insights"] = available_insights
+            action_json[session_id][move_idx]["possible_insights"] = possible_insights
 
             curr_grid_value = "correct"
             contradiction, _ = SOLVER.repair(result, solution, False)
@@ -683,6 +797,26 @@ def recover_moves(
     }
 
     edge_df.loc[len(edge_df)] = edge_row
+
+    howmany = "many"
+    if match_on_one:
+        howmany = "one"
+
+    if puzzle_id not in multi_moves_dict:
+        multi_moves_dict[puzzle_id] = {}
+    if user_id not in multi_moves_dict[puzzle_id]:
+        multi_moves_dict[puzzle_id][user_id] = {
+            "many": {
+                "multi": 0,
+                "single": 1,
+            },
+            "one": {
+                "multi": 0,
+                "single": 1,
+            },
+        }
+    multi_moves_dict[puzzle_id][user_id][howmany]["multi"] = count_multi_moves
+    multi_moves_dict[puzzle_id][user_id][howmany]["single"] = count_single_moves
     return u_success, r_moves
 
 
@@ -908,6 +1042,7 @@ def _clean_vr_moves__spoke_sunlight(raw_moves):
                 else:
                     xout.append((loc, "X"))
             ordered_moves.append((time, f"{raw_move} (cross out)", xout))
+
         for i, move in enumerate(ordered_moves):
             move = list(move)
             time = move[0]
@@ -1341,6 +1476,7 @@ def load_online_data(dir):
         user_id = row["userId"]
         session_id = row["_id"]
         puzzle_id = row["pid"]
+        time_spent = row["totalTime"]
         if session_id not in action_json:
             print(f"{user_id}:{session_id} for {puzzle_id} not in action json")
             continue
@@ -1364,13 +1500,14 @@ def load_online_data(dir):
             "moves": cleaned_moves,
             "success": user_success,
             "session_id": session_id,
+            "time_spent": time_spent
         }
     return clean_data, action_json
 
 
 def gen_data_views(dir, edge_df, node_df):
-    print("generating data views")
-    print(edge_df)
+    # print("generating data views")
+    # print(edge_df)
     edge_view = edge_df.copy()
     view_name = "ALL"
     node_view_name = f"nodegraph{view_name}"
@@ -2048,7 +2185,7 @@ def inc_insight_counts(insight_counts, puzzle_id, success, moves):
             insight_counts[puzzle_id][insight][success] += 1
 
 
-def insight_recovery__vr(vr_dir, match_on_one=False):
+def insight_recovery__vr(vr_dir, match_on_one, multi_moves_dict):
     howmany = "many"
     if match_on_one:
         howmany = "one"
@@ -2075,7 +2212,7 @@ def insight_recovery__vr(vr_dir, match_on_one=False):
     vr_users = [f.name for f in os.scandir("user_data/vr_study") if f.is_dir()]
     vr_session_outcome_json = {}
     vr_action_json = {}
-    for user in vr_users[:2]:
+    for user in vr_users:
         print(user)
         userfile = f"{vr_dir}/{user}/{user}_PuzzleLogs.csv"
         raw_df, start_time = load_vr_data(userfile)
@@ -2106,7 +2243,8 @@ def insight_recovery__vr(vr_dir, match_on_one=False):
                 vr_action_json,
                 session_id,
                 vr_session_outcome_json,
-                match_on_one=match_on_one,
+                match_on_one,
+                multi_moves_dict,
             )
             assert "end_state" not in counts[puzzle_id]["user_stats"][user]
             counts[puzzle_id]["user_stats"][user]["end_state"] = u_success
@@ -2139,6 +2277,7 @@ def insight_recovery__vr(vr_dir, match_on_one=False):
     vr_success_lookup = gen_data_views(vr_dir, vr_edge_df, vr_node_df)
     with open(f"{vr_dir}/insight_contexts.json", "w") as f:
         json.dump(insight_contexts, f)
+
     vr_action_json = None
     vr_session_outcome_json = None
 
@@ -2163,16 +2302,18 @@ def insight_recovery__vr(vr_dir, match_on_one=False):
             inc_insight_counts(insight_counts, puzzle_id, success, moves)
             available_at_end = vr_session_outcome_json[session_id]["available_insights"]
             counts[puzzle_id]["user_stats"][user]["available_at_end"] = available_at_end
+            insights_seen = set()
             for insight in available_at_end:
-                insight_counts[puzzle_id]["user_stats"][insight][
-                    "available_at_concede"
-                ] += 1
+                if insight in insights_seen:
+                    continue
+                insights_seen.add(insight)
+                insight_counts[puzzle_id][insight]["available_at_concede"] += 1
     with open(f"{vr_dir}/insight_counts_{howmany}.json", "w") as f:
         json.dump(insight_counts, f)
     return counts
 
 
-def insight_recovery__online(online_dir, match_on_one=False):
+def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
     counts = {}
     howmany = "many"
     if match_on_one:
@@ -2201,6 +2342,8 @@ def insight_recovery__online(online_dir, match_on_one=False):
     for user_id, user_data in on_clean_data.items():
         print(user_id)
         for puzzle_id, session in user_data["puzzles"].items():
+            if len(session["moves"]) == 0:
+                continue
             print(f"{user_id}:{puzzle_id}")
             if puzzle_id not in counts:
                 counts[puzzle_id] = {"user_stats": {}}
@@ -2221,11 +2364,20 @@ def insight_recovery__online(online_dir, match_on_one=False):
                 on_action_json,
                 session["session_id"],
                 on_session_outcome_json,
-                match_on_one=match_on_one,
+                match_on_one,
+                multi_moves_dict,
             )
+            assert len(recovered_moves) > 0
             assert "end_state" not in counts[puzzle_id]["user_stats"][user_id]
-            counts[puzzle_id]["user_stats"][user_id]["end_state"] = u_success
-            counts[puzzle_id]["user_stats"][user_id]["counts"] = get_counts(
+            rec_success = u_success
+            if rec_success != "success":
+                rec_success = "failure"
+            counts[puzzle_id]["user_stats"][user_id]["end_state"] = rec_success
+            if "Z" in session["time_spent"]:
+                counts[puzzle_id]["user_stats"][user_id]["tot_time_spent"] = 0
+            else:
+                counts[puzzle_id]["user_stats"][user_id]["tot_time_spent"] = int(session["time_spent"])
+            counts[puzzle_id]["user_stats"][user_id]["counts"] = get_user_counts(
                 recovered_moves
             )
             output_path = f"{online_dir}/recovered_moves/{user_id}/recovered_moves_{puzzle_id}_{howmany}.txt"
@@ -2253,13 +2405,15 @@ def insight_recovery__online(online_dir, match_on_one=False):
     on_success_lookup = gen_data_views(online_dir, on_edge_df, on_node_df)
     on_action_json = None
     on_session_outcome_json = None
-    with open(f"{online_dir}/updated_action_data.json") as f:
+    with open(f"{online_dir}/updated_action_data_{howmany}.json") as f:
         on_action_json = json.load(f)
     with open(f"{online_dir}/session_outcome.json") as f:
         on_session_outcome_json = json.load(f)
     insight_counts = {}
     for user_id, user_data in on_clean_data.items():
         for puzzle_id, session in user_data["puzzles"].items():
+            if len(session["moves"]) == 0:
+                continue
             session_id = session["session_id"]
             if session_id not in on_session_outcome_json:
                 continue
@@ -2282,29 +2436,36 @@ def insight_recovery__online(online_dir, match_on_one=False):
                 if insight in insights_seen:
                     continue
                 insights_seen.add(insight)
-                insight_counts[puzzle_id]["user_stats"][insight][
-                    "available_at_concede"
-                ] += 1
+                insight_counts[puzzle_id][insight]["available_at_concede"] += 1
     with open(f"{online_dir}/insight_counts_{howmany}.json", "w") as f:
         json.dump(insight_counts, f)
     return counts
 
 
-def insight_recovery__agents(agent_dir, agents, puzzles, match_on_one=False):
-    ground_truth = {}
+def insight_recovery__agents(agent_dir, agents, puzzles, multi_moves_dict, num_trials = 20):
+    counts = {}
     for agent in agents:
-        ground_truth[agent.name] = {}
+        ground_truth = {}
         for puzzle_id, puzzle_info in puzzles.items():
-            moves = agent.play_puzzle(
-                puzzle_info["puzzle"], puzzle_info["solution"], puzzle_info["hints"]
-            )
-            ground_truth[agent.name][puzzle_id] = moves
-    insight_recovery__ground_truth_data(
-        agent_dir, ground_truth, puzzles, match_on_one=match_on_one
-    )
+            for t in range(num_trials):
+                moves = agent.play_puzzle(
+                    puzzle_info["puzzle"], puzzle_info["solution"], puzzle_info["hints"]
+                )
+                r__get_default(ground_truth, [f"{agent.name}_{t}"], {})
+                ground_truth[f"{agent.name}_{t}"][puzzle_id] = moves
+        agent_counts_one = insight_recovery__ground_truth_data(
+            f"{agent_dir}/{agent.name}", ground_truth, puzzles, True, multi_moves_dict
+        )
+        agent_counts_many = insight_recovery__ground_truth_data(
+            f"{agent_dir}/{agent.name}", ground_truth, puzzles, False, multi_moves_dict
+        )
+        counts[agent.name] = {"one": agent_counts_one, "many": agent_counts_many}
+    return counts
 
 
-def insight_recovery__experts(expert_dir, experts, puzzles, match_on_one=False):
+def insight_recovery__experts(
+    expert_dir, experts, puzzles, match_on_one, multi_moves_dict
+):
     ground_truth = {}
     for expert in experts:
         ground_truth[expert] = {}
@@ -2328,23 +2489,19 @@ def insight_recovery__experts(expert_dir, experts, puzzles, match_on_one=False):
                         cat1 = cat
                     if cat.title == cat2_title:
                         cat2 = cat
-                move["move"] = ((cat1, cat2, ent1, ent2), sy)
-                {
-                    "insight": None,
-                    "move": move,
-                    "repair": False,
-                    "hint_idx": None,
-                }
+                move["moves"] = [((cat1, cat2, ent1, ent2), sy)]
                 trace.append(move)
             ground_truth[expert][puzzle_id] = trace
-    insight_recovery__ground_truth_data(
-        expert_dir, ground_truth, puzzles, match_on_one=match_on_one
+    counts = insight_recovery__ground_truth_data(
+        expert_dir, ground_truth, puzzles, match_on_one, multi_moves_dict
     )
+    return counts
 
 
 def insight_recovery__ground_truth_data(
-    ground_dir, ground_truth, puzzles, match_on_one=False
+    ground_dir, ground_truth, puzzles, match_on_one, multi_moves_dict
 ):
+    counts = {}
     howmany = "many"
     if match_on_one:
         howmany = "one"
@@ -2362,6 +2519,7 @@ def insight_recovery__ground_truth_data(
             "UserSuccess",
             "SolverValue",
             "MoveValue",
+            "LabeledInsight",
             "PromptMode",
             "LevelMode",
         ]
@@ -2375,20 +2533,49 @@ def insight_recovery__ground_truth_data(
         "cnt_total_moves": 0,
         "cnt_total_moves_recovered": 0,
         "pct_total_moves_recovered": 0,
+        "calc_pct_total_moves_recovered": {
+            "num": 0,
+            "den": 0,
+        },
         "cnt_random_moves": 0,
         "cnt_random_moves_recovered": 0,
         "pct_random_moves_recovered": 0,
+        "calc_pct_random_moves_recovered": {
+            "num": 0,
+            "den": 0,
+        },
         "cnt_insight_moves": 0,
         "cnt_insight_moves_recovered": 0,
         "pct_insight_moves_recovered": 0,
+        "calc_pct_insight_moves_recovered": {
+            "num": 0,
+            "den": 0,
+        },
         "cnt_moves_by_insight": deepcopy(blank_by_insight),
         "cnt_moves_by_insight_recovered": deepcopy(blank_by_insight),
         "pct_moves_by_insight_recovered": deepcopy(blank_by_insight),
+        "cnt_insight_moves_wrong_label": 0,
+        "cnt_lower_than_ground": 0,
+        "cnt_higher_than_ground": 0,
+        "pct_lower_than_ground": 0,
+        "pct_higher_than_ground": 0,
+        "calc_pct_lower_than_ground": {
+            "num": 0,
+            "den": 0,
+        },
+        "calc_pct_higher_than_ground": {
+            "num": 0,
+            "den": 0,
+        },
     }
     for agent_name, agent_data in ground_truth.items():
         print(f"recovering data for {agent_name}")
         recovery_data = {"totals": deepcopy(blank_recovery_data)}
         for puzzle_id, moves in agent_data.items():
+            if puzzle_id not in counts:
+                counts[puzzle_id] = {"user_stats": {}}
+            if agent_name not in counts[puzzle_id]:
+                counts[puzzle_id]["user_stats"][agent_name] = {}
             recovery_data[puzzle_id] = deepcopy(blank_recovery_data)
             session_id = f"{agent_name}:{puzzle_id}"
             print(f"recovering {session_id}")
@@ -2397,11 +2584,14 @@ def insight_recovery__ground_truth_data(
             clean_moves = []
             curr_state = deepcopy(puzzle_info["puzzle"])
             for i, move in enumerate(moves):
-                curr_state.answer(*move["move"])
-                clean_moves.append((f"{i}", curr_state.print_grid(), [move["move"]]))
+                SOLVER.apply_multi_move(curr_state, move)
+                clean_moves.append((f"{i}", curr_state.print_grid(), move["moves"]))
 
             g_action_json[session_id] = action_json_movelist_from_moves(clean_moves)
 
+            solution, _, _ = SOLVER.apply_hints(
+                puzzle_info["puzzle"], puzzle_info["hints"]
+            )
             contradiction, _ = SOLVER.repair(curr_state, solution, False)
             correct = not contradiction
             agent_success = "failure"
@@ -2426,7 +2616,14 @@ def insight_recovery__ground_truth_data(
                 g_action_json,
                 session_id,
                 g_session_outcome_json,
-                match_on_one=match_on_one,
+                match_on_one,
+                multi_moves_dict,
+            )
+
+            assert "end_state" not in counts[puzzle_id]["user_stats"][agent_name]
+            counts[puzzle_id]["user_stats"][agent_name]["end_state"] = agent_success
+            counts[puzzle_id]["user_stats"][agent_name]["counts"] = get_user_counts(
+                recovered_moves
             )
 
             output_path = (
@@ -2446,11 +2643,9 @@ def insight_recovery__ground_truth_data(
                 ground_truth = moves[i]
                 compare_to = r_move["likely_move"]
 
-                recovered = False
                 if ground_truth["insight"] == None:
                     recovery_data[puzzle_id]["cnt_random_moves"] += 1
                     if compare_to == None:
-                        recovered = True
                         recovery_data[puzzle_id]["cnt_random_moves_recovered"] += 1
 
                 elif compare_to != None:
@@ -2461,15 +2656,20 @@ def insight_recovery__ground_truth_data(
                         compare_to["insight"] == ground_truth["insight"]
                         and compare_to["hint_idx"] == ground_truth["hint_idx"]
                     ):
-                        recovered = True
                         recovery_data[puzzle_id]["cnt_moves_by_insight_recovered"][
                             ground_truth["insight"].name
                         ] += 1
+                    elif compare_to["insight"] != None:
+                        recovery_data[puzzle_id]["cnt_insight_moves_wrong_label"] += 1
+                        if compare_to["insight"] < ground_truth["insight"]:
+                            recovery_data[puzzle_id]["cnt_lower_than_ground"] += 1
+                        else:
+                            recovery_data[puzzle_id]["cnt_higher_than_ground"] += 1
 
-                if not recovered:
-                    print(f"Ground truth: {ground_truth}")
-                    print(f"Tracked move: {compare_to}")
-                    _ = input("continue: ")
+                # if not recovered:
+                # print(f"Ground truth: {ground_truth}")
+                # print(f"Tracked move: {compare_to}")
+                # _ = input("continue: ")
 
             for insight in Insight.ALL_INSIGHTS:
                 if recovery_data[puzzle_id]["cnt_moves_by_insight"][insight.name] > 0:
@@ -2506,6 +2706,15 @@ def insight_recovery__ground_truth_data(
                 recovery_data[puzzle_id]["cnt_random_moves_recovered"]
                 + recovery_data[puzzle_id]["cnt_insight_moves_recovered"]
             )
+            recovery_data[puzzle_id]["pct_total_moves_recovered"] = (
+                recovery_data[puzzle_id]["cnt_total_moves_recovered"]
+                / recovery_data[puzzle_id]["cnt_total_moves"]
+            )
+
+            recovery_data["totals"][f"calc_pct_total_moves_recovered"][
+                "num"
+            ] += recovery_data[puzzle_id][f"pct_total_moves_recovered"]
+            recovery_data["totals"][f"calc_pct_total_moves_recovered"]["den"] += 1
 
             for move_type in ["total", "random", "insight"]:
                 if recovery_data[puzzle_id][f"cnt_{move_type}_moves"] > 0:
@@ -2514,12 +2723,55 @@ def insight_recovery__ground_truth_data(
                         / recovery_data[puzzle_id][f"cnt_{move_type}_moves"]
                     )
 
+                    recovery_data["totals"][f"calc_pct_{move_type}_moves_recovered"][
+                        "num"
+                    ] += recovery_data[puzzle_id][f"pct_{move_type}_moves_recovered"]
+                    recovery_data["totals"][f"calc_pct_{move_type}_moves_recovered"][
+                        "den"
+                    ] += 1
+
                 recovery_data["totals"][f"cnt_{move_type}_moves"] += recovery_data[
                     puzzle_id
                 ][f"cnt_{move_type}_moves"]
                 recovery_data["totals"][
                     f"cnt_{move_type}_moves_recovered"
                 ] += recovery_data[puzzle_id][f"cnt_{move_type}_moves_recovered"]
+
+            if recovery_data[puzzle_id][f"cnt_insight_moves"] > 0:
+                if recovery_data[puzzle_id]["cnt_insight_moves_wrong_label"] > 0:
+                    recovery_data[puzzle_id][f"pct_lower_than_ground"] = (
+                        recovery_data[puzzle_id][f"cnt_lower_than_ground"]
+                        / recovery_data[puzzle_id]["cnt_insight_moves_wrong_label"]
+                    )
+                    recovery_data[puzzle_id][f"pct_higher_than_ground"] = (
+                        recovery_data[puzzle_id][f"cnt_higher_than_ground"]
+                        / recovery_data[puzzle_id]["cnt_insight_moves_wrong_label"]
+                    )
+
+                    recovery_data["totals"][f"calc_pct_lower_than_ground"][
+                        "num"
+                    ] += recovery_data[puzzle_id][f"pct_lower_than_ground"]
+                    recovery_data["totals"][f"calc_pct_lower_than_ground"]["den"] += 1
+                    recovery_data["totals"][f"calc_pct_higher_than_ground"][
+                        "num"
+                    ] += recovery_data[puzzle_id][f"pct_higher_than_ground"]
+                    recovery_data["totals"][f"calc_pct_higher_than_ground"]["den"] += 1
+
+                    recovery_data["totals"][f"cnt_lower_than_ground"] += recovery_data[
+                        puzzle_id
+                    ][f"cnt_lower_than_ground"]
+                    recovery_data["totals"][f"pct_lower_than_ground"] += recovery_data[
+                        puzzle_id
+                    ][f"cnt_lower_than_ground"]
+                    recovery_data["totals"][f"cnt_higher_than_ground"] += recovery_data[
+                        puzzle_id
+                    ][f"cnt_higher_than_ground"]
+                    recovery_data["totals"][f"pct_higher_than_ground"] += recovery_data[
+                        puzzle_id
+                    ][f"cnt_higher_than_ground"]
+                    recovery_data["totals"][
+                        "cnt_insight_moves_wrong_label"
+                    ] += recovery_data[puzzle_id]["cnt_insight_moves_wrong_label"]
 
         for insight in Insight.ALL_INSIGHTS:
             if recovery_data["totals"]["cnt_moves_by_insight"][insight.name] > 0:
@@ -2538,6 +2790,33 @@ def insight_recovery__ground_truth_data(
                     recovery_data["totals"][f"cnt_{move_type}_moves_recovered"]
                     / recovery_data["totals"][f"cnt_{move_type}_moves"]
                 )
+                recovery_data["totals"][f"avg_pct_{move_type}_moves_recovered"] = (
+                    recovery_data["totals"][f"calc_pct_{move_type}_moves_recovered"][
+                        "num"
+                    ]
+                    / recovery_data["totals"][f"calc_pct_{move_type}_moves_recovered"][
+                        "den"
+                    ]
+                )
+
+        if recovery_data["totals"][f"cnt_insight_moves_wrong_label"] > 0:
+            recovery_data["totals"][f"pct_lower_than_ground"] = (
+                recovery_data["totals"][f"cnt_lower_than_ground"]
+                / recovery_data["totals"][f"cnt_insight_moves_wrong_label"]
+            )
+            recovery_data["totals"][f"pct_higher_than_ground"] = (
+                recovery_data["totals"][f"cnt_higher_than_ground"]
+                / recovery_data["totals"][f"cnt_insight_moves_wrong_label"]
+            )
+
+            recovery_data["totals"][f"avg_pct_lower_than_ground"] = (
+                recovery_data["totals"][f"calc_pct_lower_than_ground"]["num"]
+                / recovery_data["totals"][f"calc_pct_lower_than_ground"]["den"]
+            )
+            recovery_data["totals"][f"avg_pct_higher_than_ground"] = (
+                recovery_data["totals"][f"calc_pct_higher_than_ground"]["num"]
+                / recovery_data["totals"][f"calc_pct_higher_than_ground"]["den"]
+            )
 
         with open(f"{ground_dir}/{agent_name}/recovery_data_{howmany}.json", "w") as f:
             json.dump(recovery_data, f)
@@ -2571,6 +2850,9 @@ def insight_recovery__ground_truth_data(
             success = g_session_outcome_json[session_id]["outcome"]
             inc_insight_counts(insight_counts, puzzle_id, success, moves)
             available_at_end = g_session_outcome_json[session_id]["available_insights"]
+            counts[puzzle_id]["user_stats"][agent_name][
+                "available_at_end"
+            ] = available_at_end
             insights_seen = set()
             for insight in available_at_end:
                 if insight in insights_seen:
@@ -2580,8 +2862,11 @@ def insight_recovery__ground_truth_data(
     with open(f"{ground_dir}/insight_counts_{howmany}.json", "w") as f:
         json.dump(insight_counts, f)
 
-    return
+    return counts
 
+move_values = ["correct", "incorrect", "neutral"]
+end_states = ["success", "concede", "partial"]
+sources = ["original", "augmentation", "multi_move"]
 
 def new_stat_block():
     new_stat_block = {
@@ -2589,29 +2874,85 @@ def new_stat_block():
         "cnt_labelled": 0,
         "cnt_unlabelled": 0,
         "label_breakdown": {},
+        "available_label_breakdown": {},
+        "possible_label_matrix": {}
     }
     for insight in Insight.ALL_INSIGHTS:
         new_stat_block["label_breakdown"][f"cnt_{insight.name}"] = 0
+        new_stat_block["available_label_breakdown"][f"cnt_{insight.name}"] = 0
+        new_stat_block["possible_label_matrix"][insight.name] = {}
+        for ins in Insight.ALL_INSIGHTS:
+            new_stat_block["possible_label_matrix"][insight.name][f"cnt_{ins}"] = 0
+    for source in sources:
+        new_stat_block[f"cnt_{source}"] = 0
     return new_stat_block
 
 
-move_values = ["correct", "incorrect", "neutral"]
-end_states = ["success", "concede", "partial"]
+def r__set(dict, keys, val):
+    d = dict
+    for key in keys[:-1]:
+        if key in d:
+            d = d[key]
+        else:
+            d = d.setdefault(key, {})
+    d[keys[-1]] = val
+    return d
+
+# Returns value (or the default)
+def r__get_default(dict, keys, default, create=True):
+    if len(keys) == 0:
+        return dict
+    d = dict
+    for key in keys[:-1]:
+        if key in d:
+            d = d[key]
+        else:
+            d = d.setdefault(key, {})
+    if keys[-1] in d:
+        return d[keys[-1]]
+    elif not create:
+        return default
+    else:
+        d[keys[-1]] = default
+    return d[keys[-1]]
 
 
-def get_counts(moves):
-    counts = new_stat_block()
-    for val in move_values:
-        counts[val] = new_stat_block()
-        counts[f"cnt_{val}"] = 0
-        for insight in Insight.ALL_INSIGHTS:
-            counts[val]["label_breakdown"][f"cnt_{insight.name}"] = 0
+def r__add(dict, keys, val):
+    curr = r__get_default(dict, keys, 0)
+    r__set(dict, keys, curr + val)
+
+def get_default_insight_counts():
+    cnts = {}
+    for insight in Insight.ALL_INSIGHTS:
+        cnts[f"tot_{insight.name}"] = 0
+    return cnts
+
+# Get the base counts for a user, from which all other stats may be calculated
+def get_user_counts(moves):
+    counts = {}
+    assert len(moves) > 0
     for _, _, move in moves:
         insight = move["likely_insight"]
+        value = move["value"]
+        source = move["likely_source"]
+        available_insights = move["available_insights"]
+        for ins in available_insights:
+            r__add(counts, [f"grp_{value}", "grp_available_label_breakdown", f"tot_{ins}"], 1)
         if insight == None:
-            counts[move["value"]]["cnt_unlabelled"] += 1
+            r__add(counts, [f"grp_{value}", "grp_label_status", "tot_unlabelled"], 1)
         else:
-            counts[move["value"]]["label_breakdown"][f"cnt_{insight.name}"] += 1
+            r__add(counts, [f"grp_{value}", "grp_label_breakdown", f"tot_{insight.name}"], 1)
+            r__add(counts, [f"grp_{value}", "grp_insight_source", f"tot_{source}"], 1)
+            
+            possible_insights = move["possible_insights"]
+            for insa in possible_insights:
+                grp_insa = r__get_default(counts, [f"grp_{value}", "grp_possible_label_matrix", f"grp_{insa}"], get_default_insight_counts())
+                for insb in possible_insights:
+                    grp_insa[f"tot_{insb}"] += 1
+    for grp, cnts in deepcopy(counts).items():
+        label_breakdown = r__get_default(cnts, ["grp_label_breakdown"], {"default": 0})
+        r__set(counts[grp], ["grp_label_status", "tot_labelled"], sum(label_breakdown.values()))
+        r__set(counts[grp], ["tot_moves"], r__get_default(counts[grp], ["grp_label_status", "tot_unlabelled"], 0) + r__get_default(counts[grp], ["grp_label_status", "tot_labelled"], 0))
     return counts
 
 
@@ -2621,676 +2962,658 @@ def div0(num, den):
     else:
         return None
 
+# Take all totals found in from_grp and add them to the current totals in to_grp, 
+# preserving the inner hierarchy of from_grp
+def r__add_tots(from_grp, to_grp):
+    for key, val in from_grp.items():
+        if key.startswith("grp_"):
+            r__add_tots(val, r__get_default(to_grp, [key], {}))
+        elif key.startswith("tot_"):
+            r__add(to_grp, [key], val)
 
-def gen_stats(stats, dir, match_on_one=False):
+# Make sure each insa has all possible insbs.
+def r__init_possible_label_matrix(grp):
+    for key, val in grp.items():
+        if key == "grp_possible_label_matrix":
+            for insa_grp in val.values():
+                for insight in Insight.ALL_INSIGHTS:
+                    r__get_default(insa_grp, [f"tot_{insight.name}"], 0)
+        elif key.startswith("grp_"):
+            r__init_possible_label_matrix(val)
+
+def safe_stdev(vals):
+    if len(vals) < 2:
+        return None
+    return stdev(vals)
+
+def safe_mean(vals):
+    if len(vals) == 0:
+        return 0
+    return mean(vals)
+
+def r__calc_avgs(grp):
+    for key, val in grp.items():
+        if key.startswith("grp_"):
+            r__calc_avgs(val)
+        elif key.startswith("calc_"):
+            vals = val["vals"]
+            val["avg"] = safe_mean(vals)
+            val["sd"] = safe_stdev(vals)
+
+def r__collect_vals(from_grp, to_grp):
+    for key, val in from_grp.items():
+        if key.startswith("grp_"):
+            r__collect_vals(val, r__get_default(to_grp, [key], {}))
+        elif key.startswith("tot_") or key.startswith("pct_"):
+            r__extend(to_grp, [f"calc_{key}", "vals"], [val])
+        elif key.startswith("calc_"):
+            statname = key.removeprefix("calc_")
+            r__extend(to_grp, [f"calc_avg_{statname}", "vals"], [val["avg"]])
+
+def r__init_statnames(from_grp, to_grp, grp_key = ""):
+    for key, val in from_grp.items():
+        if key.startswith("grp_"):
+            r__init_statnames(val, r__get_default(to_grp, [key], {}), key)
+        if "label" not in grp_key:
+            continue
+        # Available label breakdown percentages only apply to users that actually saw the label available.
+        elif key.startswith("tot_") or (key.startswith("pct_") and "avail" not in grp_key):
+            r__get_default(to_grp, [f"calc_{key}", "vals"], [])
+        elif key.startswith("calc_"):
+            statname = key.removeprefix("calc_")
+            r__get_default(to_grp, [f"calc_avg_{statname}", "vals"], [])
+
+def r__init_labelnames(root_grp, depth, grp_key = ""):
+    from_grp = r__get_default(root_grp, depth, {})
+    for key in deepcopy(from_grp).keys():
+        if key.startswith("grp_"):
+            new_depth = deepcopy(depth)
+            new_depth.append(key)
+            r__init_labelnames(root_grp, new_depth, key)
+        if "available_label_breakdown" not in grp_key:
+            continue
+        # Available label breakdown percentages only apply to users that actually saw the label available.
+        elif key.startswith("tot_") or key.startswith("pct_"):
+            new_depth = depth[:-1]
+            new_depth.extend(["grp_label_breakdown", key])
+            r__get_default(root_grp, new_depth, 0)
+            new_depth = depth[:-2]
+            new_depth.extend(["grp_available_at_end", key])
+            r__get_default(root_grp, new_depth, 0)
+
+# Fill value lists with 0s so their lengths are as expected
+def r__norm_val_lists(grp, norm_cnt):
+    for key, val in grp.items():
+        if key.startswith("grp_") and "label" not in key and "available_at_end" not in key:
+            r__norm_val_lists(val, norm_cnt)
+        elif key.startswith("calc_"):
+            vals = r__get_default(val, ["vals"], [])
+            for _ in range(norm_cnt - len(vals)):
+                vals.append(0.0)
+
+def r__calc_pcts(root_grp, depth, root_to_grp, to_depth):
+    from_grp = r__get_default(root_grp, depth, {})
+    for key, val in deepcopy(from_grp).items():
+        if key.startswith("grp_"):
+            new_depth = deepcopy(depth)
+            new_depth.append(key)
+            new_to_depth = deepcopy(to_depth)
+            new_to_depth.append(key)
+            r__calc_pcts(root_grp, new_depth, root_to_grp, new_to_depth)
+        elif key.startswith("tot_"):
+            stat_name = key.removeprefix("tot_")
+            num = val
+            den = -1
+            pct_name = f"pct_{stat_name}"
+            new_to_depth = deepcopy(to_depth)
+            new_to_depth.append(pct_name)
+            if depth[-1] == "grp_label_status":
+                den_keys = depth[:-1]
+                den_keys.append("tot_moves")
+                den = r__get_default(root_grp, den_keys, 0)
+            elif depth[-1] in ["grp_label_breakdown", "grp_label_source"]:
+                den_keys = depth[:-1]
+                den_keys.extend(["grp_label_status", "tot_labelled"])
+                den = r__get_default(root_grp, den_keys, 0)
+            elif depth[-1] == "grp_end_states":
+                den_keys = depth[:-1]
+                den_keys.append("tot_users")
+                den = r__get_default(root_grp, den_keys, 0)
+            elif depth[-1] == "grp_available_label_breakdown":
+                den = val
+                num_keys = depth[:-1]
+                num_keys.extend(["grp_label_breakdown", key])
+                num = r__get_default(root_grp, num_keys, 0)
+            elif depth[-2] == "grp_possible_label_matrix":
+                den_keys = deepcopy(depth)
+                insa = depth[-1].removeprefix("grp_")
+                den_keys.extend([f"tot_{insa}"])
+                den = r__get_default(root_grp, den_keys, 0)
+            elif stat_name == "moves":
+                grp = depth[-1].removeprefix("grp_")
+                if grp in move_values:
+                    den_keys = depth[:-1]
+                    den_keys.extend(["grp_all", "tot_moves"])
+                    den = r__get_default(root_grp, den_keys, 0)
+                    new_to_depth = to_depth[:-1]
+                    new_to_depth.extend(["grp_all", f"pct_{grp}"])
+            if den > 0:
+                r__set(root_to_grp, new_to_depth, div0(num, den))
+
+def r__extend(dict, keys, vals):
+    all_vals = r__get_default(dict, keys, [])
+    all_vals.extend(vals)
+    r__set(dict, keys, all_vals)
+
+def r__calc_val_lists(from_grp, to_grp):
+    for key, val in from_grp.items():
+        if key.startswith("grp_"):
+            r__calc_val_lists(val, r__get_default(to_grp, [key], {}))
+        elif key.startswith("tot_") or key.startswith("pct_"):
+            r__extend(to_grp, [f"calc_{key}", "values"], [val])
+
+    
+def gen_stats(stats, dir, match_on_one):
     howmany = "many"
     if match_on_one:
         howmany = "one"
+
     for puzzle, puzzle_stats in deepcopy(stats).items():
-        puzzle_stats["counts"] = new_stat_block()
-        puzzle_counts = puzzle_stats["counts"]
-        puzzle_counts["success"] = new_stat_block()
-        puzzle_counts["concede"] = new_stat_block()
-        puzzle_stats["agg_counts"] = {
-            "cnt_success": 0,
-            "cnt_concede": 0,
-            "insight_agreement": {
-                "success": {},
-                "concede": {},
-                "available_at_concede": {},
-            },
-        }
-        puzzle_agg_counts = puzzle_stats["agg_counts"]
-        puzzle_user_stats = puzzle_stats["user_stats"]
-        for user, user_stats in deepcopy(puzzle_user_stats).items():
-            user_counts = user_stats["counts"]
-            for key, key_counts in deepcopy(user_counts).items():
-                if key not in move_values:
-                    continue
-                key_counts["cnt_labelled"] = sum(key_counts["label_breakdown"].values())
-                key_counts["total_moves"] = (
-                    key_counts["cnt_unlabelled"] + key_counts["cnt_labelled"]
-                )
-                user_counts["total_moves"] += key_counts["total_moves"]
-                user_counts[f"cnt_{key}"] = key_counts["total_moves"]
-                user_counts[f"cnt_unlabelled"] += key_counts["cnt_unlabelled"]
-                user_counts[f"cnt_labelled"] += key_counts["cnt_labelled"]
-                for insight, insight_count in deepcopy(
-                    key_counts["label_breakdown"]
-                ).items():
-                    stat_name = insight.removeprefix("cnt_")
-                    key_counts["label_breakdown"][f"pct_{stat_name}"] = div0(
-                        insight_count, key_counts["cnt_labelled"]
-                    )
-                    user_counts["label_breakdown"][insight] += insight_count
-                for label, cnt in deepcopy(key_counts).items():
-                    if label.startswith("cnt_"):
-                        stat_name = label.removeprefix("cnt_")
-                        key_counts[f"pct_{stat_name}"] = div0(
-                            cnt, key_counts["total_moves"]
-                        )
-                user_counts[key] = key_counts
-
+        merged_counts = r__get_default(stats, ["calc_merged_counts"], {})
+        merged_pcts = r__get_default(stats, ["calc_merged_pcts"], {})
+        overall_insight_agreement = r__get_default(stats, ["calc_merged_pcts", "insight_agreement"], {"vals": []})
+        merged_counts_all = r__get_default(merged_counts, ["grp_all"], {})
+        merged_pcts_all = r__get_default(merged_pcts, ["grp_all"], {})
+        insight_agreement = r__get_default(stats[puzzle], ["insight_agreement"], {})
+        for user, user_stats in puzzle_stats["user_stats"].items():
+            user_all = r__get_default(stats[puzzle]["user_stats"][user]["counts"], ["grp_all"], {})
+            for key in user_stats["counts"].keys():
+                if key.startswith("grp_"):
+                    val = stats[puzzle]["user_stats"][user]["counts"][key]
+                    r__init_possible_label_matrix(val)
+                    r__add_tots(val, user_all)
             end_state = user_stats["end_state"]
-            if end_state != "success":
-                end_state = "concede"
-            puzzle_agg_counts[f"cnt_{end_state}"] += 1
-            for key, key_counts in deepcopy(user_counts).items():
-                if key in move_values:
-                    if key not in puzzle_counts:
-                        puzzle_counts[key] = new_stat_block()
-                        puzzle_counts["success"][key] = new_stat_block()
-                        puzzle_counts["concede"][key] = new_stat_block()
-                    for label, cnt in deepcopy(key_counts).items():
-                        if label.startswith("cnt_") or label.startswith("total_"):
-                            puzzle_counts[key][label] += cnt
-                            puzzle_counts[end_state][key][label] += cnt
-                    for insight, insight_count in deepcopy(
-                        key_counts["label_breakdown"]
-                    ).items():
-                        if insight.startswith("cnt_"):
-                            puzzle_counts[key]["label_breakdown"][
-                                insight
-                            ] += insight_count
-                            puzzle_counts[end_state]["label_breakdown"][
-                                insight
-                            ] += insight_count
-                            puzzle_counts[end_state][key]["label_breakdown"][
-                                insight
-                            ] += insight_count
-                else:
-                    if key.startswith("cnt_") or key.startswith("total_"):
-                        if key not in puzzle_counts:
-                            puzzle_counts[key] = 0
-                        if key not in puzzle_counts[end_state]:
-                            puzzle_counts[end_state][key] = 0
-                        puzzle_counts[key] += key_counts
-                        puzzle_counts[end_state][key] += key_counts
-                        if key.startswith("cnt"):
-                            stat_name = key.removeprefix("cnt_")
-                            user_counts[f"pct_{stat_name}"] = (
-                                key_counts / user_counts["total_moves"]
-                            )
+            puzz_end_state = r__get_default(stats[puzzle], ["counts", f"grp_{end_state}"], {})
+            available_at_end = user_stats["available_at_end"]
+            stats_avail_at_end = r__get_default(stats[puzzle]["user_stats"][user]["counts"],["grp_available_at_end"], {})
+            for ins in available_at_end:
+                stats_avail_at_end[f"tot_{ins}"] = 1
 
-            for insight, insight_count in deepcopy(
-                user_counts["label_breakdown"]
-            ).items():
-                stat_name = insight.removeprefix("cnt_")
-                if insight.startswith("cnt_"):
-                    puzzle_counts["label_breakdown"][insight] += insight_count
-                    user_counts["label_breakdown"][f"pct_{stat_name}"] = div0(
-                        insight_count, user_counts["cnt_labelled"]
-                    )
-                if insight_count > 0:
-                    if (
-                        stat_name
-                        not in puzzle_agg_counts["insight_agreement"][end_state]
-                    ):
-                        puzzle_agg_counts["insight_agreement"][end_state][insight] = 0
-                    puzzle_agg_counts["insight_agreement"][end_state][insight] += 1
+            if end_state == "success":
+                label_breakdown = stats[puzzle]["user_stats"][user]["counts"]["grp_all"]["grp_label_breakdown"]
+                for ins, cnt in label_breakdown.items():
+                    if cnt > 0:
+                        r__add(insight_agreement, ["ins_counts", ins], 1)
+                r__add(insight_agreement, ["tot_users"], 1)
 
-            puzzle_user_stats[user] = user_stats
+            user_counts = stats[puzzle]["user_stats"][user]["counts"]
+            r__get_default(user_counts, ["grp_correct", "tot_moves"], 0)
+            r__get_default(user_counts, ["grp_incorrect", "tot_moves"], 0)
+            r__get_default(user_counts, ["grp_neutral", "tot_moves"], 0)
+            r__init_labelnames(user_counts, [])
+            
+            r__add_tots(stats[puzzle]["user_stats"][user], puzz_end_state)
+            r__add_tots(stats[puzzle]["user_stats"][user]["counts"], puzz_end_state)
 
-        puzzle_stats["user_stats"] = puzzle_user_stats
+            end_all = r__get_default(stats[puzzle]["counts"], ["grp_all"], {})
+            r__add(end_all, ["grp_end_states", f"tot_{end_state}"], 1)
+            r__add(end_all, [f"tot_users"], 1)
+            user_pcts = r__get_default(stats[puzzle]["user_stats"][user], ["pcts"], {})
 
-        for key, val in deepcopy(puzzle_counts).items():
-            if key.startswith("cnt_"):
-                stat_name = key.removeprefix("cnt_")
-                puzzle_counts[f"pct_{stat_name}"] = div0(
-                    val, puzzle_counts["total_moves"]
-                )
-            elif key in move_values or key in end_states or key == "label_breakdown":
-                for key2, val2 in deepcopy(val).items():
-                    if key2.startswith("cnt_"):
-                        total_moves = 0
-                        if key == "label_breakdown":
-                            total_moves = puzzle_counts["cnt_labelled"]
-                        else:
-                            total_moves = val["total_moves"]
-                        stat_name = key2.removeprefix("cnt_")
-                        puzzle_counts[key][f"pct_{stat_name}"] = div0(val2, total_moves)
-                    elif key2 in move_values or key2 == "label_breakdown":
-                        for key3, val3 in deepcopy(val2).items():
-                            if key3.startswith("cnt_"):
-                                total_moves = 0
-                                if key2 == "label_breakdown":
-                                    total_moves = val["cnt_labelled"]
-                                else:
-                                    total_moves = val2["total_moves"]
-                                stat_name = key3.removeprefix("cnt_")
-                                puzzle_counts[key][key2][f"pct_{stat_name}"] = div0(
-                                    val3, total_moves
-                                )
-                            elif key3 == "label_breakdown":
-                                for key4, val4 in deepcopy(val3).items():
-                                    if key4.startswith("cnt_"):
-                                        stat_name = key4.removeprefix("cnt_")
-                                        puzzle_counts[key][key2][key3][
-                                            f"pct_{stat_name}"
-                                        ] = div0(val4, val2["cnt_labelled"])
+            r__calc_pcts(stats[puzzle]["user_stats"][user], ["counts"], user_pcts, [])
+            puzz_calc_counts_end = r__get_default(stats[puzzle], ["calc_counts", f"grp_{end_state}"], {})
+            puzz_calc_counts_all = r__get_default(stats[puzzle], ["calc_counts", "grp_all"], {})
+            puzz_calc_pcts_end = r__get_default(stats[puzzle], ["calc_pcts", f"grp_{end_state}"], {})
+            puzz_calc_pcts_all = r__get_default(stats[puzzle], ["calc_pcts", "grp_all"], {})
+            merged_counts_end = r__get_default(merged_counts, [f"grp_{end_state}"], {})
+            merged_pcts_end = r__get_default(merged_pcts, [f"grp_{end_state}"], {})
+            r__collect_vals(user_counts, puzz_calc_counts_end)
+            r__collect_vals(user_counts, puzz_calc_counts_all)
+            r__collect_vals(user_counts, merged_counts_end)
+            r__collect_vals(user_counts, merged_counts_all)
+            r__collect_vals(user_pcts, puzz_calc_pcts_end)
+            r__collect_vals(user_pcts, puzz_calc_pcts_all)
+            r__collect_vals(user_pcts, merged_pcts_end)
+            r__collect_vals(user_pcts, merged_pcts_all)            
+            
+            alt_end_state = "success"
+            if end_state == "success":
+                alt_end_state = "failure"
 
-        puzzle_agg_counts["total_users"] = (
-            puzzle_agg_counts["cnt_success"] + puzzle_agg_counts["cnt_concede"]
-        )
-        for key, cnt in deepcopy(puzzle_agg_counts).items():
-            if key.startswith("cnt_"):
-                stat_name = key.removeprefix("cnt_")
-                puzzle_agg_counts[f"pct_{stat_name}"] = div0(
-                    cnt, puzzle_agg_counts["total_users"]
-                )
+            puzz_calc_counts_alt = r__get_default(stats[puzzle], ["calc_counts", f"grp_{alt_end_state}"], {})
+            puzz_calc_pcts_alt = r__get_default(stats[puzzle], ["calc_pcts", f"grp_{alt_end_state}"], {})
+            r__init_statnames(user_counts, puzz_calc_counts_alt)
+            r__init_statnames(user_pcts, puzz_calc_pcts_alt)
 
-        for user, user_stats in puzzle_user_stats.items():
-            end_state = user_stats["end_state"]
-            user_counts = user_stats["counts"]
-            for key, val in user_counts.items():
-                if key.startswith("pct_"):
-                    if f"calc_{key}" not in puzzle_agg_counts:
-                        puzzle_agg_counts[f"calc_{key}"] = {"num": 0, "den": 0}
-                    if f"calc_{key}" not in puzzle_agg_counts[end_state]:
-                        puzzle_agg_counts[end_state][f"calc_{key}"] = {
-                            "num": 0,
-                            "den": 0,
-                        }
-                    if val != None:
-                        puzzle_agg_counts[f"calc_{key}"]["num"] += val
-                        puzzle_agg_counts[end_state][f"calc_{key}"]["num"] += val
-                        puzzle_agg_counts[f"calc_{key}"]["den"] += 1
-                        puzzle_agg_counts[end_state][f"calc_{key}"]["den"] += 1
-                elif key in move_values:
-                    for label, cnt in val.items():
-                        if label.startswith("pct_"):
-                            if key not in puzzle_agg_counts:
-                                puzzle_agg_counts[key] = {}
-                            if f"calc_{label}" not in puzzle_agg_counts[key]:
-                                puzzle_agg_counts[key][f"calc_{label}"] = {
-                                    "num": 0,
-                                    "den": 0,
-                                }
-                            if end_state not in puzzle_agg_counts:
-                                puzzle_agg_counts[end_state] = {}
-                            if key not in puzzle_agg_counts[end_state]:
-                                puzzle_agg_counts[end_state][key] = {}
-                            if f"calc_{label}" not in puzzle_agg_counts[end_state][key]:
-                                puzzle_agg_counts[end_state][key][f"calc_{label}"] = {
-                                    "num": 0,
-                                    "den": 0,
-                                }
-                            if cnt != None:
-                                puzzle_agg_counts[key][f"calc_{label}"]["num"] += cnt
-                                puzzle_agg_counts[end_state][key][f"calc_{label}"][
-                                    "num"
-                                ] += cnt
-                                puzzle_agg_counts[key][f"calc_{label}"]["den"] += 1
-                                puzzle_agg_counts[end_state][key][f"calc_{label}"][
-                                    "den"
-                                ] += 1
-                    for insight, insight_count in val["label_breakdown"].items():
-                        if insight.startswith("pct_"):
-                            if "label_breakdown" not in puzzle_agg_counts[key]:
-                                puzzle_agg_counts[key]["label_breakdown"] = {}
-                            if (
-                                f"calc_{insight}"
-                                not in puzzle_agg_counts[key]["label_breakdown"]
-                            ):
-                                puzzle_agg_counts[key]["label_breakdown"][
-                                    f"calc_{insight}"
-                                ] = {"num": 0, "den": 0}
+        for ins, cnt in insight_agreement["ins_counts"].items():
+            r__get_default(insight_agreement, ["ins_pcts", ins], cnt/insight_agreement["tot_users"])
+        insight_agreement["avg"] = mean(insight_agreement["ins_pcts"].values())
+        overall_insight_agreement["vals"].append(insight_agreement["avg"])
 
-                            if end_state not in puzzle_agg_counts:
-                                puzzle_agg_counts[end_state] = {}
-                            if key not in puzzle_agg_counts[end_state]:
-                                puzzle_agg_counts[end_state][key] = {}
-                            if (
-                                "label_breakdown"
-                                not in puzzle_agg_counts[end_state][key]
-                            ):
-                                puzzle_agg_counts[end_state][key][
-                                    "label_breakdown"
-                                ] = {}
-                            if (
-                                f"calc_{insight}"
-                                not in puzzle_agg_counts[end_state][key][
-                                    "label_breakdown"
-                                ]
-                            ):
-                                puzzle_agg_counts[end_state][key]["label_breakdown"][
-                                    f"calc_{insight}"
-                                ] = {"num": 0, "den": 0}
+        puzz_calc_counts_all = stats[puzzle]["calc_counts"]["grp_all"]
+        num_users_all = stats[puzzle]["counts"]["grp_all"]["tot_users"]
+        r__norm_val_lists(puzz_calc_counts_all, num_users_all)
+        r__norm_val_lists(puzz_calc_pcts_all, num_users_all)
+        for end_state in ["success", "failure"]:
+            puzz_calc_counts_end = r__get_default(stats[puzzle]["calc_counts"], [f"grp_{end_state}"], {})
+            puzz_calc_pcts_end = r__get_default(stats[puzzle]["calc_pcts"], [f"grp_{end_state}"], {})
+            num_users_end = r__get_default(stats[puzzle]["counts"]["grp_all"]["grp_end_states"], [f"tot_{end_state}"], 0)
+            r__norm_val_lists(puzz_calc_counts_end, num_users_end)
+            r__norm_val_lists(puzz_calc_pcts_end, num_users_end)
 
-                            if insight_count != None:
-                                puzzle_agg_counts[key]["label_breakdown"][
-                                    f"calc_{insight}"
-                                ]["num"] += insight_count
-                                puzzle_agg_counts[end_state][key]["label_breakdown"][
-                                    f"calc_{insight}"
-                                ]["num"] += insight_count
-                                puzzle_agg_counts[key]["label_breakdown"][
-                                    f"calc_{insight}"
-                                ]["den"] += 1
-                                puzzle_agg_counts[end_state][key]["label_breakdown"][
-                                    f"calc_{insight}"
-                                ]["den"] += 1
+        r__calc_avgs(stats[puzzle]["calc_counts"])
+        r__calc_avgs(stats[puzzle]["calc_pcts"])
 
-            for insight, insight_count in user_counts["label_breakdown"].items():
-                if insight.startswith("pct_"):
-                    if "label_breakdown" not in puzzle_agg_counts:
-                        puzzle_agg_counts["label_breakdown"] = {}
-                    if f"calc_{insight}" not in puzzle_agg_counts["label_breakdown"]:
-                        puzzle_agg_counts["label_breakdown"][f"calc_{insight}"] = {
-                            "num": 0,
-                            "den": 0,
-                        }
+        end_all = r__get_default(stats[puzzle]["counts"], ["grp_all"], {})
+        for key, val in deepcopy(stats[puzzle]["counts"]).items():
+            if key.startswith("grp_") and key != "grp_all":
+                r__add_tots(val, end_all)
+        all_counts = r__get_default(stats, ["counts"], {})
+        r__add_tots(stats[puzzle]["counts"], all_counts)
+        puzz_pcts = r__get_default(stats[puzzle], ["pcts"], {})
+        r__calc_pcts(stats[puzzle], ["counts"], puzz_pcts, [])
 
-                    if "label_breakdown" not in puzzle_agg_counts[end_state]:
-                        puzzle_agg_counts[end_state]["label_breakdown"] = {}
-                    if (
-                        f"calc_{insight}"
-                        not in puzzle_agg_counts[end_state]["label_breakdown"]
-                    ):
-                        puzzle_agg_counts[end_state]["label_breakdown"][
-                            f"calc_{insight}"
-                        ] = {"num": 0, "den": 0}
-                    puzzle_agg_counts[end_state]["label_breakdown"][f"calc_{insight}"][
-                        "num"
-                    ] += insight_count
-                    puzzle_agg_counts["label_breakdown"][f"calc_{insight}"][
-                        "num"
-                    ] += insight_count
-                    puzzle_agg_counts[end_state]["label_breakdown"][f"calc_{insight}"][
-                        "den"
-                    ] += 1
-                    puzzle_agg_counts["label_breakdown"][f"calc_{insight}"]["den"] += 1
+        overall_calc_counts = r__get_default(stats, ["calc_counts"], {})
+        overall_calc_pcts = r__get_default(stats, ["calc_pcts"], {})
+        puzz_counts = stats[puzzle]["counts"]
+        r__collect_vals(puzz_counts, overall_calc_counts)
+        r__collect_vals(puzz_pcts, overall_calc_pcts)
 
-        for key, val in deepcopy(puzzle_agg_counts).items():
-            if key.startswith("calc_"):
-                stat_name = key.removeprefix("calc_")
-                puzzle_agg_counts[f"avg_{stat_name}"] = div0(val["num"], val["den"])
-            elif key in move_values or key in end_states:
-                for label, cnt in val.items():
-                    if label.startswith("calc_"):
-                        stat_name = label.removeprefix("calc_")
-                        puzzle_agg_counts[key][f"avg_{stat_name}"] = div0(
-                            cnt["num"], cnt["den"]
-                        )
-                    elif label in move_values:
-                        for sub_label, sub_cnt in cnt.items():
-                            if sub_label.startswith("calc_"):
-                                stat_name = sub_label.removeprefix("calc_")
-                                puzzle_agg_counts[key][label][f"avg_{stat_name}"] = (
-                                    div0(sub_cnt["num"], sub_cnt["den"])
-                                )
-                        for insight, insight_count in cnt["label_breakdown"].items():
-                            if insight.startswith("calc_"):
-                                stat_name = insight.removeprefix("calc_")
-                                puzzle_agg_counts[key][label]["label_breakdown"][
-                                    f"avg_{stat_name}"
-                                ] = div0(insight_count["num"], insight_count["den"])
-                for insight, insight_count in val["label_breakdown"].items():
-                    if insight.startswith("calc_"):
-                        stat_name = insight.removeprefix("calc_")
-                        puzzle_agg_counts[key]["label_breakdown"][
-                            f"avg_{stat_name}"
-                        ] = div0(insight_count["num"], insight_count["den"])
+        overall_calc_avg_counts = r__get_default(stats, ["calc_avg_counts"], {})
+        overall_calc_avg_pcts = r__get_default(stats, ["calc_avg_pcts"], {})
+        r__collect_vals(stats[puzzle]["calc_counts"], overall_calc_avg_counts)
+        r__collect_vals(stats[puzzle]["calc_pcts"], overall_calc_avg_pcts)
 
-        for insight, insight_count in deepcopy(
-            puzzle_agg_counts["label_breakdown"]
-        ).items():
-            if insight.startswith("calc_"):
-                stat_name = insight.removeprefix("calc_")
-                puzzle_agg_counts["label_breakdown"][f"avg_{stat_name}"] = div0(
-                    insight_count["num"], insight_count["den"]
-                )
+    overall_insight_agreement = r__get_default(stats, ["calc_merged_pcts", "insight_agreement"], {"vals": []})
+    overall_insight_agreement["avg"] = mean(overall_insight_agreement["vals"])
 
-        for end_state, insight_agreement in deepcopy(
-            puzzle_agg_counts["insight_agreement"]
-        ).items():
-            insight_agreement["calc_pct"] = {"num": 0, "den": 0}
-            for insight, insight_count in deepcopy(insight_agreement).items():
-                if insight.startswith("cnt_"):
-                    stat_name = insight.removeprefix("cnt_")
-                    insight_agreement[f"pct_{stat_name}"] = div0(
-                        insight_count, puzzle_agg_counts[f"cnt_{end_state}"]
-                    )
-                    if insight_agreement[f"pct_{stat_name}"] != None:
-                        insight_agreement["calc_pct"]["num"] += insight_agreement[
-                            f"pct_{stat_name}"
-                        ]
-                        insight_agreement["calc_pct"]["den"] += 1
-            insight_agreement["avg_pct"] = div0(
-                insight_agreement["calc_pct"]["num"],
-                insight_agreement["calc_pct"]["den"],
-            )
-            puzzle_agg_counts["insight_agreement"][end_state] = insight_agreement
+    all_pcts = r__get_default(stats, ["pcts"], {})
+    r__calc_pcts(stats, ["counts"], all_pcts, [])    
 
-        puzzle_stats["agg_counts"] = puzzle_agg_counts
-        stats[puzzle] = puzzle_stats
+    num_puzzles = len(stats.keys()) - 8
+    overall_calc_counts = stats["calc_counts"]
+    overall_calc_pcts = stats["calc_pcts"]
+    overall_calc_avg_counts = stats["calc_avg_counts"]
+    overall_calc_avg_pcts = stats["calc_avg_pcts"]
+    r__norm_val_lists(overall_calc_counts, num_puzzles)
+    r__norm_val_lists(overall_calc_pcts, num_puzzles)
+    r__norm_val_lists(overall_calc_avg_counts, num_puzzles)
+    r__norm_val_lists(overall_calc_avg_pcts, num_puzzles)
 
-    stats["agg"] = {}
-    for puzzle, puzzle_stats in deepcopy(stats).items():
-        if puzzle == "agg":
-            continue
-        puzzle_counts = puzzle_stats["counts"]
-        puzzle_agg_counts = puzzle_stats["agg_counts"]
-        for key, val in puzzle_counts.items():
-            if key.startswith("cnt_") or key.startswith("total_"):
-                if key not in stats["agg"]:
-                    stats["agg"][key] = 0
-                stats["agg"][key] += val
-            elif key.startswith("pct_"):
-                if f"calc_{key}" not in stats["agg"]:
-                    stats["agg"][f"calc_{key}"] = {
-                        "num": 0,
-                        "den": 0,
-                    }
-                if val != None:
-                    stats["agg"][f"calc_{key}"]["num"] += val
-                    stats["agg"][f"calc_{key}"]["den"] += 1
-            elif key in move_values or key in end_states:
-                for key2, val2 in val.items():
-                    if key2.startswith("cnt_") or key2.startswith("total_"):
-                        if key not in stats["agg"]:
-                            stats["agg"][key] = {}
-                        if key2 not in stats["agg"][key]:
-                            stats["agg"][key][key2] = 0
-                        stats["agg"][key][key2] += val2
-                    elif key2.startswith("pct_"):
-                        if key not in stats["agg"]:
-                            stats["agg"][key] = {}
-                        if f"calc_{key2}" not in stats["agg"][key]:
-                            stats["agg"][key][f"calc_{key2}"] = {
-                                "num": 0,
-                                "den": 0,
-                            }
-                            if val2 != None:
-                                stats["agg"][key][f"calc_{key2}"]["num"] += val2
-                                stats["agg"][key][f"calc_{key2}"]["den"] += 1
-                    elif key2 in move_values:
-                        for key3, val3 in val2.items():
-                            if key3.startswith("cnt_") or key3.startswith("total_"):
-                                if key not in stats["agg"]:
-                                    stats["agg"][key] = {}
-                                if key2 not in stats["agg"][key]:
-                                    stats["agg"][key][key2] = {}
-                                if key3 not in stats["agg"][key][key2]:
-                                    stats["agg"][key][key2][key3] = 0
-                                stats["agg"][key][key2][key3] += val3
-                            elif key3.startswith("pct_"):
-                                if key not in stats["agg"]:
-                                    stats["agg"][key] = {}
-                                if key2 not in stats["agg"][key]:
-                                    stats["agg"][key][key2] = {}
-                                if f"calc_{key3}" not in stats["agg"][key][key2]:
-                                    stats["agg"][key][key2][f"calc_{key3}"] = {
-                                        "num": 0,
-                                        "den": 0,
-                                    }
-                                if val3 != None:
-                                    stats["agg"][key][key2][f"calc_{key3}"][
-                                        "num"
-                                    ] += val3
-                                    stats["agg"][key][key2][f"calc_{key3}"][
-                                        "den"
-                                    ] += val3
-                        for key3, val3 in val2["label_breakdown"].items():
-                            if key3.startswith("cnt_"):
-                                if key not in stats["agg"]:
-                                    stats["agg"][key] = {}
-                                if key2 not in stats["agg"][key]:
-                                    stats["agg"][key][key2] = {}
-                                if "label_breakdown" not in stats["agg"][key][key2]:
-                                    stats["agg"][key][key2]["label_breakdown"] = {}
-                                if (
-                                    key3
-                                    not in stats["agg"][key][key2]["label_breakdown"]
-                                ):
-                                    stats["agg"][key][key2]["label_breakdown"][key3] = 0
-                                stats["agg"][key][key2]["label_breakdown"][key3] += val3
-                            elif key3.startswith("pct_"):
-                                if key not in stats["agg"]:
-                                    stats["agg"][key] = {}
-                                if key2 not in stats["agg"][key]:
-                                    stats["agg"][key][key2] = {}
-                                if "label_breakdown" not in stats["agg"][key][key2]:
-                                    stats["agg"][key][key2]["label_breakdown"] = {}
-                                if (
-                                    f"calc_{key3}"
-                                    not in stats["agg"][key][key2]["label_breakdown"]
-                                ):
-                                    stats["agg"][key][key2]["label_breakdown"][
-                                        f"calc_{key3}"
-                                    ] = {"num": 0, "den": 0}
-                                if val3 != None:
-                                    stats["agg"][key][key2]["label_breakdown"][
-                                        f"calc_{key3}"
-                                    ]["num"] += val3
-                                    stats["agg"][key][key2]["label_breakdown"][
-                                        f"calc_{key3}"
-                                    ]["den"] += 1
-                for key2, val2 in val["label_breakdown"].items():
-                    if key2.startswith("cnt_"):
-                        if key not in stats["agg"]:
-                            stats["agg"][key] = {}
-                        if "label_breakdown" not in stats["agg"][key]:
-                            stats["agg"][key]["label_breakdown"] = {}
-                        if key2 not in stats["agg"][key]["label_breakdown"]:
-                            stats["agg"][key]["label_breakdown"][key2] = 0
-                        stats["agg"][key]["label_breakdown"][key2] += val2
-                    elif key2.startswith("pct_"):
-                        if key not in stats["agg"]:
-                            stats["agg"][key] = {}
-                        if "label_breakdown" not in stats["agg"][key]:
-                            stats["agg"][key]["label_breakdown"] = {}
-                        if f"calc_{key2}" not in stats["agg"][key]["label_breakdown"]:
-                            stats["agg"][key]["label_breakdown"][f"calc_{key2}"] = {
-                                "num": 0,
-                                "den": 0,
-                            }
-                        if val2 != None:
-                            stats["agg"][key]["label_breakdown"][f"calc_{key2}"][
-                                "num"
-                            ] += val2
-                            stats["agg"][key]["label_breakdown"][f"calc_{key2}"][
-                                "den"
-                            ] += val2
-        for key, val in puzzle_counts["label_breakdown"].items():
-            if key.startswith("cnt_"):
-                if "label_breakdown" not in stats["agg"]:
-                    stats["agg"]["label_breakdown"] = {}
-                if key not in stats["agg"]["label_breakdown"]:
-                    stats["agg"]["label_breakdown"][key] = 0
-                stats["agg"]["label_breakdown"][key] += val
-            elif key.startswith("pct_"):
-                if "label_breakdown" not in stats["agg"]:
-                    stats["agg"]["label_breakdown"] = {}
-                if f"calc_{key}" not in stats["agg"]["label_breakdown"]:
-                    stats["agg"]["label_breakdown"][f"calc_{key}"] = {
-                        "num": 0,
-                        "den": 0,
-                    }
-                if val != None:
-                    stats["agg"]["label_breakdown"][f"calc_{key}"]["num"] += val
-                    stats["agg"]["label_breakdown"][f"calc_{key}"]["den"] += 1
-        for key, val in puzzle_agg_counts.items():
-            if key.startswith("cnt_"):
-                if key not in stats["agg"]:
-                    stats["agg"][key] = 0
-                stats["agg"][key] += val
-            elif key.startswith("pct_") or key.startswith("avg_"):
-                if f"calc_{key}" not in stats["agg"]:
-                    stats["agg"][f"calc_{key}"] = {
-                        "num": 0,
-                        "den": 0,
-                    }
-                if val != None:
-                    stats["agg"][f"calc_{key}"]["num"] += val
-                    stats["agg"][f"calc_{key}"]["den"] += 1
-            elif key in end_states or key in move_values or key == "label_breakdown":
-                if key not in stats["agg"]:
-                    stats["agg"][key] = {}
-                for key2, val2 in val.items():
-                    if key2.startswith("avg_"):
-                        if f"calc_{key2}" not in stats["agg"][key]:
-                            stats["agg"][key][f"calc_{key2}"] = {
-                                "num": 0,
-                                "den": 0,
-                            }
-                        if val2 != None:
-                            stats["agg"][key][f"calc_{key2}"]["num"] += val2
-                            stats["agg"][key][f"calc_{key2}"]["den"] += 1
-                    elif key2 in move_values or key2 == "label_breakdown":
-                        if key2 not in stats["agg"][key]:
-                            stats["agg"][key][key2] = {}
-                        for key3, val3 in val2.items():
-                            if key3.startswith("avg_"):
-                                if f"calc_{key3}" not in stats["agg"][key][key2]:
-                                    stats["agg"][key][key2][f"calc_{key3}"] = {
-                                        "num": 0,
-                                        "den": 0,
-                                    }
-                                if val3 != None:
-                                    stats["agg"][key][key2][f"calc_{key3}"][
-                                        "num"
-                                    ] += val3
-                                    stats["agg"][key][key2][f"calc_{key3}"]["den"] += 1
-                            elif key3 == "label_breakdown":
-                                if key3 not in stats["agg"][key]:
-                                    stats["agg"][key][key2][key3] = {}
-                                for key4, val4 in val3.items():
-                                    if key4.startswith("avg_"):
-                                        if (
-                                            f"calc_{key4}"
-                                            not in stats["agg"][key][key2][key3]
-                                        ):
-                                            stats["agg"][key][key2][key3][
-                                                f"calc_{key4}"
-                                            ] = {
-                                                "num": 0,
-                                                "den": 0,
-                                            }
-                                        if val4 != None:
-                                            stats["agg"][key][key2][key3][
-                                                f"calc_{key4}"
-                                            ]["num"] += val4
-                                            stats["agg"][key][key2][key3][
-                                                f"calc_{key4}"
-                                            ]["den"] += 1
+    r__calc_avgs(stats["calc_counts"])
+    r__calc_avgs(stats["calc_pcts"])
+    r__calc_avgs(stats["calc_avg_counts"])
+    r__calc_avgs(stats["calc_avg_pcts"])
 
-        if "insight_agreement" not in stats["agg"]:
-            stats["agg"]["insight_agreement"] = {}
-        for key, vals in puzzle_agg_counts["insight_agreement"].items():
-            if key not in stats["agg"]["insight_agreement"]:
-                stats["agg"]["insight_agreement"][key] = {}
-            for key2, val2 in vals.items():
-                if key2.startswith("cnt_"):
-                    if key2 not in stats["agg"]["insight_agreement"][key]:
-                        stats["agg"]["insight_agreement"][key][key2] = 0
-                    stats["agg"]["insight_agreement"][key][key2] += val2
-                elif key2.startswith("avg"):
-                    if f"calc_{key2}" not in stats["agg"]["insight_agreement"][key]:
-                        stats["agg"]["insight_agreement"][key][f"calc_{key2}"] = {
-                            "num": 0,
-                            "den": 0,
-                        }
-                    if val2 != None:
-                        stats["agg"]["insight_agreement"][key][f"calc_{key2}"][
-                            "num"
-                        ] += val2
-                        stats["agg"]["insight_agreement"][key][f"calc_{key2}"][
-                            "den"
-                        ] += 1
+    num_users_all = stats["counts"]["grp_all"]["tot_users"]
+    r__norm_val_lists(merged_counts_all, num_users_all)
+    r__norm_val_lists(puzz_calc_pcts_all, num_users_all)
+    for end_state in ["success", "failure"]:
+        merged_counts_end = r__get_default(merged_counts, [f"grp_{end_state}"], {})
+        merged_pcts_end = r__get_default(merged_pcts, [f"grp_{end_state}"], {})
+        num_users_end = stats["counts"]["grp_all"]["grp_end_states"][f"tot_{end_state}"]
+        r__norm_val_lists(merged_counts_end, num_users_end)
+        r__norm_val_lists(merged_pcts_end, num_users_end)
 
-    for key, val in deepcopy(stats["agg"]).items():
-        if key.startswith("cnt_"):
-            stat_name = key.removeprefix("cnt_")
-            stats["agg"][f"pct_{stat_name}"] = div0(val, stats["agg"]["total_moves"])
-        elif key.startswith("calc_"):
-            stat_name = key.removeprefix("calc_")
-            stats["agg"][f"avg_{stat_name}"] = div0(val["num"], val["den"])
-        elif key in move_values or key in end_states or key == "label_breakdown":
-            for key2, val2 in val.items():
-                if key2.startswith("cnt_"):
-                    stat_name = key2.removeprefix("cnt_")
-                    total_moves = 0
-                    if key == "label_breakdown":
-                        total_moves = stats["agg"]["cnt_labelled"]
-                    else:
-                        total_moves = stats["agg"][key]["total_moves"]
-                    stats["agg"][key][f"pct_{stat_name}"] = div0(val2, total_moves)
-                elif key2.startswith("calc_"):
-                    stat_name = key2.removeprefix("calc_")
-                    stats["agg"][key][f"avg_{stat_name}"] = div0(
-                        val2["num"], val2["den"]
-                    )
-                elif key2 in move_values or key2 == "label_breakdown":
-                    for key3, val3 in val2.items():
-                        if key3.startswith("cnt_"):
-                            total_moves = 0
-                            if key2 == "label_breakdown":
-                                total_moves = stats["agg"][key]["cnt_labelled"]
-                            else:
-                                total_moves = stats["agg"][key][key2]["total_moves"]
-                            stat_name = key3.removeprefix("cnt_")
-                            stats["agg"][key][key2][f"pct_{stat_name}"] = div0(
-                                val3, total_moves
-                            )
-                        elif key3.startswith("calc_"):
-                            stat_name = key3.removeprefix("calc_")
-                            stats["agg"][key][key2][f"avg_{stat_name}"] = div0(
-                                val3["num"], val3["den"]
-                            )
-                        elif key3 == "label_breakdown":
-                            for key4, val4 in val3.items():
-                                if key4.startswith("cnt_"):
-                                    total_moves = 0
-                                    if key3 == "label_breakdown":
-                                        total_moves = stats["agg"][key][key2][
-                                            "cnt_labelled"
-                                        ]
-                                    else:
-                                        total_moves = stats["agg"][key][key2][key3][
-                                            "total_moves"
-                                        ]
-                                    stat_name = key4.removeprefix("cnt_")
-                                    stats["agg"][key][key2][key3][
-                                        f"pct_{stat_name}"
-                                    ] = div0(val4, total_moves)
-                                elif key4.startswith("calc_"):
-                                    stat_name = key4.removeprefix("calc_")
-                                    stats["agg"][key][key2][key3][
-                                        f"avg_{stat_name}"
-                                    ] = div0(val4["num"], val4["den"])
-
-    for end_state, vals in deepcopy(stats["agg"]["insight_agreement"]).items():
-        for key, val in vals.items():
-            if key.startswith("cnt_"):
-                stat_name = key.removeprefix("cnt_")
-                stats["agg"]["insight_agreement"][end_state][f"pct_{stat_name}"] = div0(
-                    val, stats["agg"][f"cnt_{end_state}"]
-                )
-            elif key.startswith("avg"):
-                if f"calc_{key}" not in stats["agg"]["insight_agreement"][end_state]:
-                    stats["agg"]["insight_agreement"][end_state][f"calc_{key}"] = {
-                        "num": 0,
-                        "den": 0,
-                    }
-                if val != None:
-                    stats["agg"]["insight_agreement"][end_state][f"calc_{key}"][
-                        "num"
-                    ] += val
-                    stats["agg"]["insight_agreement"][end_state][f"calc_{key}"][
-                        "den"
-                    ] += 1
-
-    for end_state, vals in deepcopy(stats["agg"]["insight_agreement"]).items():
-        for key, val in vals.items():
-            if key.startswith("calc_"):
-                stat_name = key.removeprefix("calc_")
-                stats["agg"]["insight_agreement"][end_state][f"avg_{stat_name}"] = div0(
-                    val["num"], val["den"]
-                )
+    r__calc_avgs(merged_counts)
+    r__calc_avgs(merged_pcts)
 
     with open(f"{dir}/stats_{howmany}.json", "w") as f:
         json.dump(stats, f)
+
+def significance_testing(match_on_one):
+    howmany = "one"
+    if not match_on_one:
+        howmany = "many"
+    online_dir = "user_data/online_puzzle_study"
+    agent_dir = "agent_data"
+    expert_dir = "expert_data"
+
+    anova_samples = []
+    group_labels = []
+
+    with open(f"{online_dir}/stats_{howmany}.json") as f:
+        online_stats = json.load(f)
+
+    for end_state in ["success", "failure"]:
+        e_stats = online_stats["calc_merged_pcts"][f"grp_{end_state}"]["grp_correct"]["grp_label_status"]["calc_pct_labelled"]["vals"]
+        anova_samples.append(e_stats)
+        group_labels.append(f"online_{end_state}")
+
+    with open(f"{expert_dir}/stats_{howmany}.json") as f:
+        expert_stats = json.load(f)
+    ex_stats = expert_stats["calc_merged_pcts"][f"grp_all"]["grp_correct"]["grp_label_status"]["calc_pct_labelled"]["vals"]
+    anova_samples.append(ex_stats)
+    group_labels.append(f"expert")
+
+    all_agent_stats = {}
+    for agent in ["RandomCorrect", "RandomProb"]:
+        with open(f"{agent_dir}/{agent}/stats_{howmany}.json") as f:
+            agent_stats = json.load(f)
+            all_agent_stats[agent] = agent_stats
+        anova_samples.append(agent_stats["calc_merged_pcts"][f"grp_all"]["grp_correct"]["grp_label_status"]["calc_pct_labelled"]["vals"])
+        group_labels.append(f"agent_{agent}")
+
+    print(anova_samples)
+
+    print("anova")
+    anova_res = f_oneway(*anova_samples, equal_var=False)
+    print(anova_res)
+    print("tukey")
+    tukey_res = tukey_hsd(*anova_samples, equal_var=False)
+    print(tukey_res)
+
+    print("bonferroni")
+    bonferroni_by_tactic = {}
+    bonferroni_results = {}
+    for insight in Insight.ALL_INSIGHTS:
+        if f"calc_tot_{insight.name}" not in online_stats["calc_merged_counts"][f"grp_success"]["grp_all"]["grp_label_breakdown"] or f"calc_tot_{insight.name}" not in online_stats["calc_merged_counts"][f"grp_failure"]["grp_all"]["grp_label_breakdown"]:
+            continue
+        bonferroni_by_tactic[insight.name] = {
+            "vals": [],
+        }
+        bonferroni_results[insight.name] = {}
+        bonferroni_by_tactic[insight.name]["avg"] = {}
+        bonferroni_results[insight.name]["avg"] = {}
+        for end_state in ["success", "failure"]:
+            e_stats = online_stats["calc_merged_counts"][f"grp_{end_state}"]["grp_all"]["grp_label_breakdown"][f"calc_tot_{insight.name}"]["vals"]
+            for i, val in enumerate(deepcopy(e_stats)):
+                if val > 1:
+                    e_stats[i] = 1
+            bonferroni_by_tactic[insight.name]["vals"].append(e_stats)
+            bonferroni_by_tactic[insight.name]["avg"][end_state] = safe_mean(e_stats)
+            bonferroni_results[insight.name]["avg"][end_state] = safe_mean(e_stats)
+
+        vals = bonferroni_by_tactic[insight.name]["vals"]
+        p = ttest_ind(*vals, equal_var=False).pvalue
+        bonferroni_by_tactic[insight.name]["p"] = p
+        bonferroni_results[insight.name]["p"] = p
+
+    p_names = []
+    ps = []
+    for key, val in bonferroni_results.items():
+        p_names.append(key)
+        ps.append(val["p"])
+    new_ps = false_discovery_control(ps)
+    for i, p in enumerate(new_ps):
+        bonferroni_by_tactic[p_names[i]]["corr_p"] = p
+        bonferroni_results[p_names[i]]["corr_p"] = p
+
+    bonferroni_avail_by_tactic = {}
+    bonferroni_avail_results = {}
+    for insight in Insight.ALL_INSIGHTS:
+        if f"calc_pct_{insight.name}" not in online_stats["calc_merged_pcts"][f"grp_success"]["grp_all"]["grp_available_label_breakdown"] or f"calc_pct_{insight.name}" not in online_stats["calc_merged_pcts"][f"grp_failure"]["grp_all"]["grp_available_label_breakdown"]:
+            continue
+        bonferroni_avail_by_tactic[insight.name] = {
+            "vals": [],
+        }
+        bonferroni_avail_results[insight.name] = {}
+        bonferroni_avail_by_tactic[insight.name]["avg"] = {}
+        bonferroni_avail_results[insight.name]["avg"] = {}
+        for end_state in ["success", "failure"]:
+            e_stats = online_stats["calc_merged_pcts"][f"grp_{end_state}"]["grp_all"]["grp_available_label_breakdown"][f"calc_pct_{insight.name}"]["vals"]
+            for i, val in enumerate(deepcopy(e_stats)):
+                if val > 1:
+                    e_stats[i] = 1
+            bonferroni_avail_by_tactic[insight.name]["vals"].append(e_stats)
+            bonferroni_avail_by_tactic[insight.name]["avg"][end_state] = safe_mean(e_stats)
+            bonferroni_avail_results[insight.name]["avg"][end_state] = safe_mean(e_stats)
+
+        vals = bonferroni_avail_by_tactic[insight.name]["vals"]
+        p = ttest_ind(*vals, equal_var=False).pvalue
+        bonferroni_avail_by_tactic[insight.name]["p"] = p
+        bonferroni_avail_results[insight.name]["p"] = p
+
+    p_names = []
+    ps = []
+    for key, val in bonferroni_avail_results.items():
+        p_names.append(key)
+        ps.append(val["p"])
+    new_ps = false_discovery_control(ps)
+    for i, p in enumerate(new_ps):
+        bonferroni_avail_by_tactic[p_names[i]]["corr_p"] = p
+        bonferroni_avail_results[p_names[i]]["corr_p"] = p
+
+    selected_stats = {}
+    pct_labelled_results = {
+        "online": {},
+        "expert": {},
+        "agent": {}
+    }
+    for grp in ["grp_all", "grp_success", "grp_failure"]:
+        pct_labelled_results["online"][grp] = {}
+        stats = online_stats["calc_merged_pcts"][grp]
+        for move_val in ["grp_all", "grp_correct", "grp_incorrect"]:
+            pct_labelled = stats[move_val]["grp_label_status"]["calc_pct_labelled"]["avg"]
+            pct_labelled_results["online"][grp][move_val] = pct_labelled
+
+    stats = expert_stats["calc_merged_pcts"]["grp_all"]
+    for move_val in ["grp_all", "grp_correct", "grp_incorrect"]:
+        pct_labelled = stats[move_val]["grp_label_status"]["calc_pct_labelled"]["avg"]
+        pct_labelled_results["expert"][move_val] = pct_labelled
+
+    for agent in ["RandomCorrect", "RandomProb"]:
+        pct_labelled_results["agent"][agent] = {}
+        stats = all_agent_stats[agent]["calc_merged_pcts"]["grp_all"]
+        for move_val in ["grp_all", "grp_correct", "grp_incorrect"]:
+            if move_val not in stats:
+                continue
+            pct_labelled = stats[move_val]["grp_label_status"]["calc_pct_labelled"]["avg"]
+            pct_labelled_results["agent"][agent][move_val] = pct_labelled
+
+    selected_stats["pct_labelled_results"] = pct_labelled_results
+
+    available_at_end = {}
+    avail_stats = online_stats["calc_merged_counts"]["grp_failure"]["grp_available_at_end"]
+    for insight in Insight.ALL_INSIGHTS:
+        if f"calc_tot_{insight.name}" not in avail_stats:
+            continue
+        available_at_end[insight.name] = avail_stats[f"calc_tot_{insight.name}"]["avg"]
+
+    selected_stats["available_at_end"] = available_at_end
+
+    with open(f"sig_tests.txt", "w") as f:
+        f.write(f"ANOVA: {anova_res}\n\nTUKEY: ")
+        f.write("Groups:\n")
+        for i, grp in enumerate(group_labels):
+            f.write(f"{i} - {grp}\n")
+        f.write(f"{tukey_res}\n{tukey_res.pvalue}")
+
+    selected_stats["bonferroni"] = bonferroni_results
+    selected_stats["bonferroni_avail"] = bonferroni_avail_results
+    with open(f"selected_stats.json", "w") as f:
+        json.dump(selected_stats, f)
+
+    possible_label_matrix = {}
+    poss_label_matrix_data = online_stats["calc_merged_pcts"][f"grp_all"]["grp_all"]["grp_possible_label_matrix"]
+    
+    all_insights = sorted(list(Insight.ALL_INSIGHTS))
+    all_ins_names = []
+    for insight in all_insights:
+        ins_name = insight.name
+        if f"grp_{ins_name}" not in poss_label_matrix_data:
+            continue
+        all_ins_names.append(ins_name)
+
+    friendly_names = []
+    for name in all_ins_names:
+        if name == "APPLY_IS":
+            friendly_names.append("APPLY_IS")
+        elif name == "OPENING":
+            friendly_names.append("OPENING")
+        elif name == "CROSS_OUT":
+            friendly_names.append("CROSS_OUT")
+        elif name == "APPLY_NOT":
+            friendly_names.append("APPLY_NOT")
+        elif name == "APPLY_OR":
+            friendly_names.append("APPLY_OR")
+        elif name == "APPLY_BEFORE_ONE_SPOT":
+            friendly_names.append("APP_BEF_ONE")
+        elif name == "APPLY_BEFORE_N_SPOTS":
+            friendly_names.append("APP_BEF_N")
+        elif name == "SIMPLE_OR_SAME_CAT":
+            friendly_names.append("OR_SAME_CAT")
+        elif name == "BEFORE_NOINFO":
+            friendly_names.append("BEF_NOINFO")
+        elif name == "TRANS_ABC_TRUE":
+            friendly_names.append("TRANS_TRUE")
+        elif name == "TRANS_ABC_FALSE":
+            friendly_names.append("TRANS_FALSE")
+        elif name == "BEFORE_DIFF_CAT":
+            friendly_names.append("BEF_DIFF_CAT")
+        elif name == "BEFORE_N_SPOTS_NOINFO":
+            friendly_names.append("BEF_N_NOINFO")
+        elif name == "BEFORE_N_SPOTS_SHIFT":
+            friendly_names.append("BEF_N_SHIFT")
+        elif name == "BEFORE_N_SPOTS_CROSSCHECK":
+            friendly_names.append("BEF_N_CROSS")
+        elif name == "TRANS_SETS":
+            friendly_names.append("TRANS_SETS")
+
+    for i, insa in enumerate(all_ins_names):
+        insa_vals = []
+        for insb in all_ins_names:
+            insa_vals.append(poss_label_matrix_data[f"grp_{insa}"][f"calc_pct_{insb}"]["avg"])
+        possible_label_matrix[friendly_names[i]] = insa_vals
+            
+    data = pd.DataFrame.from_dict(possible_label_matrix, orient="index", columns=friendly_names)
+    plt.figure(figsize = (10,8))
+    sns.set(font_scale=1.3)
+    ax = sns.heatmap(data, annot=False, square=True, fmt=".2f", linewidths=.5, vmin=0, vmax=1, annot_kws={"size": 12})
+    ax.set(xlabel="", ylabel="")
+    ax.xaxis.tick_top()
+    ax.tick_params(axis='x', labelrotation=90)
+    plt.savefig("heatmap.png", dpi=300, bbox_inches="tight")
+    plt.tight_layout()
+    plt.show()
+
+
+def gen_stats__agent(agent_counts, agent_dir):
+    for agent, agent_data in agent_counts.items():
+        gen_stats(agent_data["one"], f"{agent_dir}/{agent}", True)
+        gen_stats(agent_data["many"], f"{agent_dir}/{agent}", False)
+
+def get_online_timing_data(online_dir):
+    puzzle_timing_data = {
+        "hub": {
+            "puzzles": {}
+        },
+        "spoke": {
+            "puzzles": {}
+        },
+        "overall": {
+            "avg_times": {
+                "success": [],
+                "concede": [],
+                "all": []
+            },
+            "avg_avg_time": {}
+        }
+    }
+    on_clean_data, _ = load_online_data(online_dir)
+    for _, user_data in on_clean_data.items():
+        for puzzle_id, session in user_data["puzzles"].items():
+            if len(session["moves"]) == 0:
+                continue
+            success = session["success"]
+            if success != "success":
+                success = "concede"
+            group = "spoke"
+            if "hub" in puzzle_id:
+                group = "hub"
+            if puzzle_id not in puzzle_timing_data[group]["puzzles"]:
+                puzzle_timing_data[group]["puzzles"][puzzle_id] = {
+                    "user_times": {
+                        "success": [],
+                        "concede": [],
+                        "all": [],
+                    }
+                }
+            if "Z" not in session["time_spent"]:
+                puzzle_timing_data[group]["puzzles"][puzzle_id]["user_times"][success].append(int(session["time_spent"]))
+
+    puzzle_timing_data["overall"]["times"] = {
+        "success": [],
+        "concede": [],
+        "all": [],
+    }
+    for group in ["hub", "spoke"]:
+        puzzle_timing_data[group]["avg_times"] = {
+            "success": [],
+            "concede": [],
+            "all": [],
+        }
+        puzzle_timing_data[group]["times"] = {
+            "success": [],
+            "concede": [],
+            "all": [],
+        }
+        for puzzle_id, puzzle_data in puzzle_timing_data[group]["puzzles"].items():
+            puzzle_data["user_times"]["all"] = deepcopy(puzzle_data["user_times"]["success"])
+            puzzle_data["user_times"]["all"].extend(puzzle_data["user_times"]["concede"])
+            puzzle_timing_data[group]["times"]["success"].extend(puzzle_data["user_times"]["success"])
+            puzzle_timing_data[group]["times"]["concede"].extend(puzzle_data["user_times"]["concede"])
+            puzzle_timing_data[group]["times"]["all"].extend(puzzle_data["user_times"]["all"])
+            puzzle_timing_data["overall"]["times"]["success"].extend(puzzle_data["user_times"]["success"])
+            puzzle_timing_data["overall"]["times"]["concede"].extend(puzzle_data["user_times"]["concede"])
+            puzzle_timing_data["overall"]["times"]["all"].extend(puzzle_data["user_times"]["all"])
+            puzzle_data["avg_time"] = {}
+            for success in ["success", "concede", "all"]:
+                mean_success = mean(puzzle_data["user_times"][success])
+                puzzle_data["avg_time"][success] = mean_success
+                puzzle_timing_data[group]["avg_times"][success].append(mean_success)
+                puzzle_timing_data["overall"]["avg_times"][success].append(mean_success)
+        puzzle_timing_data[group]["times"]["avg_success"] = mean(puzzle_timing_data[group]["times"]["success"])
+        puzzle_timing_data[group]["times"]["avg_concede"] = mean(puzzle_timing_data[group]["times"]["concede"])
+        puzzle_timing_data[group]["times"]["avg_all"] = mean(puzzle_timing_data[group]["times"]["all"])
+        puzzle_timing_data[group]["avg_avg_time"] = {}
+        for success in ["success", "concede", "all"]:
+            puzzle_timing_data[group]["avg_avg_time"][success] = mean(puzzle_timing_data[group]["avg_times"][success])
+
+        puzzle_timing_data["overall"]["times"]["avg_success"] = mean(puzzle_timing_data["overall"]["times"]["success"])
+        puzzle_timing_data["overall"]["times"]["avg_concede"] = mean(puzzle_timing_data["overall"]["times"]["concede"])
+        puzzle_timing_data["overall"]["times"]["avg_all"] = mean(puzzle_timing_data["overall"]["times"]["all"])
+    for success in ["success", "concede", "all"]:
+        puzzle_timing_data["overall"]["avg_avg_time"][success] = mean(puzzle_timing_data["overall"]["avg_times"][success])
+
+    return puzzle_timing_data
+            
+
+def get_online_survey_data(online_dir):
+
+    on_clean_data, _ = load_online_data(online_dir)
+    survey_df = pd.read_csv(f"{online_dir}/user_data.csv")
+    survey_df = survey_df.reset_index()  # make sure indexes pair with number of rows
+
+    survey_data = {
+        "no_experience": 0,
+        "grid_no_logi": 0,
+        "logi_no_grid": 0,
+        "both": 0,
+    }
+    for user_id, user_data in on_clean_data.items():
+        for _, row in survey_df.iterrows():
+            if row["_id"] == user_id:
+                logicPuzzleExp = row["logicPuzzleExp"]
+                gridPuzzleExp = row["gridPuzzleExp"]
+                user_valid = False
+                for _, session in user_data["puzzles"].items():
+                    if len(session["moves"]) > 0:
+                        user_valid = True
+                if not user_valid:
+                    break
+                if logicPuzzleExp == 1 and gridPuzzleExp == 1:
+                    survey_data["no_experience"] += 1
+                elif logicPuzzleExp == 1 and gridPuzzleExp == 2:
+                    survey_data["grid_no_logi"] += 1
+                elif logicPuzzleExp == 2 and gridPuzzleExp == 1:
+                    survey_data["logi_no_grid"] += 1
+                elif logicPuzzleExp == 2 and gridPuzzleExp == 2:
+                    survey_data["both"] += 1
+                else:
+                    assert False
+                break
+    return survey_data
 
 
 if __name__ == "__main__":
@@ -3302,39 +3625,77 @@ if __name__ == "__main__":
     agents = PuzzleAgent.Agents.values()
     experts = ["e1_kf"]
 
-    puzzles = PUZZLE_DEFS | load_online_puzzles(online_dir)
+    puzzles = load_online_puzzles(online_dir)
     for puzzle_id, puzzle_info in puzzles.items():
         solution, _, _ = SOLVER.apply_hints(puzzle_info["puzzle"], puzzle_info["hints"])
         puzzles[puzzle_id]["solution"] = solution
 
-    expert_many_counts = insight_recovery__experts(
-        expert_dir, experts, puzzles, match_on_one=False
-    )
-    gen_stats(expert_many_counts, match_on_one=False)
+    multi_moves_dict = {}
 
-    expert_one_counts = insight_recovery__experts(
-        expert_dir, experts, puzzles, match_on_one=True
-    )
-    gen_stats(expert_one_counts, match_on_one=True)
+    # user_timing_data = get_online_timing_data(online_dir)
+    # with open(f"{online_dir}/timing_data.json", "w") as f:
+    #     json.dump(user_timing_data, f)
 
-    agent_many_counts = insight_recovery__agents(
-        agent_dir, agents, puzzles, match_on_one=False
-    )
-    gen_stats(agent_many_counts, match_on_one=False)
+    # user_survey_data = get_online_survey_data(online_dir)
+    # with open(f"{online_dir}/survey_data.json", "w") as f:
+    #     json.dump(user_survey_data, f)
 
-    agent_one_counts = insight_recovery__agents(
-        agent_dir, agents, puzzles, match_on_one=True
-    )
-    gen_stats(agent_one_counts, match_on_one=True)
+    # expert_many_counts = insight_recovery__experts(
+    #     expert_dir, experts, puzzles, False, multi_moves_dict
+    # )
+    # with open(f"{expert_dir}/counts_many.json", "w") as f:
+    #     json.dump(expert_many_counts, f)
+    # with open(f"{expert_dir}/counts_many.json") as f:
+    #     expert_many_counts = json.load(f)
+    # gen_stats(expert_many_counts, expert_dir, False)
 
-    vr_many_counts = insight_recovery__vr(vr_dir, match_on_one=False)
-    gen_stats(vr_many_counts, vr_dir, match_on_one=False)
+    # expert_one_counts = insight_recovery__experts(
+    #     expert_dir, experts, puzzles, True, multi_moves_dict
+    # )
+    # with open(f"{expert_dir}/counts_one.json", "w") as f:
+    #     json.dump(expert_one_counts, f)
+    # with open(f"{expert_dir}/counts_one.json") as f:
+    #     expert_one_counts = json.load(f)
+    # gen_stats(expert_one_counts, expert_dir, True)
 
-    vr_one_counts = insight_recovery__vr(vr_dir, match_on_one=True)
-    gen_stats(vr_one_counts, vr_dir, match_on_one=True)
+    # agent_counts = insight_recovery__agents(
+    #     agent_dir, agents, puzzles, multi_moves_dict
+    # )
+    # with open(f"{agent_dir}/counts.json", "w") as f:
+    #     json.dump(agent_counts, f)
+    # with open(f"{agent_dir}/counts.json") as f:
+    #     agent_counts = json.load(f)
+    # gen_stats__agent(agent_counts, agent_dir)
 
-    online_many_counts = insight_recovery__online(online_dir, match_on_one=False)
-    gen_stats(online_many_counts, online_dir, match_on_one=False)
+    # vr_many_counts = insight_recovery__vr(vr_dir, False, multi_moves_dict)
+    # with open(f"{vr_dir}/counts_many.json", "w") as f:
+    #     json.dump(vr_many_counts, f)
+    # with open(f"{vr_dir}/counts_many.json") as f:
+    #     vr_many_counts = json.load(f)
+    # gen_stats(vr_many_counts, vr_dir, False)
 
-    online_one_counts = insight_recovery__online(online_dir, match_on_one=True)
-    gen_stats(online_one_counts, online_dir, match_on_one=True)
+    # vr_one_counts = insight_recovery__vr(vr_dir, True, multi_moves_dict)
+    # with open(f"{vr_dir}/counts_one.json", "w") as f:
+    #     json.dump(vr_one_counts, f)
+    # with open(f"{vr_dir}/counts_one.json") as f:
+    #     vr_one_counts = json.load(f)
+    # gen_stats(vr_one_counts, vr_dir, True)
+
+    # online_many_counts = insight_recovery__online(online_dir, False, multi_moves_dict)
+    # with open(f"{online_dir}/counts_many.json", "w") as f:
+    #     json.dump(online_many_counts, f)
+    # with open(f"{online_dir}/counts_many.json") as f:
+    #     online_many_counts = json.load(f)
+    # gen_stats(online_many_counts, online_dir, False)
+
+    # online_one_counts = insight_recovery__online(online_dir, True, multi_moves_dict)
+    # with open(f"{online_dir}/counts_one.json", "w") as f:
+    #     json.dump(online_one_counts, f)
+    # with open(f"{online_dir}/counts_one.json") as f:
+    #     online_one_counts = json.load(f)
+    # gen_stats(online_one_counts, online_dir, True)
+
+    # with open(f"multi_moves.json", "w") as f:
+    #     json.dump(multi_moves_dict, f)
+
+    significance_testing(False)

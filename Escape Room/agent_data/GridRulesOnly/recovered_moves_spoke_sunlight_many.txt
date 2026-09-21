@@ -1,0 +1,268 @@
+Puzzle:
+      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  *    *    *    *  |
+Spi|  *    *    *    *  |
+Cau|  *    *    *    *  |
+Pum|  *    *    *    *  |
+    --------------------
+Hints:
+0. The plants Tomato is the hours 2hr 
+1. Either the plants Spinach is the hours 4hr or the plants Tomato is the hours 6hr 
+2. The plants Tomato is 2 hourss before the plants Cauliflower 
+
+User Move 1 (incorrect):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  *    *    *    *  |
+Spi|  *    X    *    *  |
+Cau|  *    *    *    *  |
+Pum|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Spinach', '4hr'), 'Y'), ((plants, hours, 'Tomato', '6hr'), 'Y')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  *    *    *    *  |
+Spi|  *    X    *    *  |
+Cau|  *    *    *    *  |
+Pum|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 2 (incorrect):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  *    *    *    *  |
+Spi|  O    X    *    *  |
+Cau|  *    *    *    *  |
+Pum|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  *    *    *    *  |
+Spi|  O    x    *    *  |
+Cau|  *    *    *    *  |
+Pum|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 3 (correct):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  *    *    *    *  |
+Spi|  O    X    X    X  |
+Cau|  *    *    *    *  |
+Pum|  *    *    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((hours, plants, '4hr', 'Spinach'), 'X'), ((hours, plants, '6hr', 'Spinach'), 'X'), ((hours, plants, '8hr', 'Spinach'), 'X')]-2:CROSS_OUT - [((hours, plants, '2hr', 'Tomato'), 'X'), ((hours, plants, '2hr', 'Cauliflower'), 'X'), ((hours, plants, '2hr', 'Pumpkin'), 'X')]0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  *    *    *    *  |
+Spi|  o    x    X    X  |
+Cau|  *    *    *    *  |
+Pum|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 4 (incorrect):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    *    *  |
+Spi|  O    X    X    X  |
+Cau|  X    *    *    *  |
+Pum|  X    *    *    *  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((hours, plants, '2hr', 'Tomato'), 'X'), ((hours, plants, '2hr', 'Cauliflower'), 'X'), ((hours, plants, '2hr', 'Pumpkin'), 'X')]0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    *    *  |
+Spi|  o    x    x    x  |
+Cau|  X    *    *    *  |
+Pum|  X    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 5 (incorrect):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    *    *  |
+Spi|  O    X    X    X  |
+Cau|  X    *    *    *  |
+Pum|  X    *    *    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    *    *    *  |
+Spi|  o    x    x    x  |
+Cau|  x    *    *    *  |
+Pum|  x    *    *    X  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 6 (correct):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    *    *  |
+Spi|  O    X    X    X  |
+Cau|  X    X    *    *  |
+Pum|  X    *    *    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '8hr', 'Cauliflower'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    *    *    *  |
+Spi|  o    x    x    x  |
+Cau|  x    X    *    *  |
+Pum|  x    *    *    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 7 (correct):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    *    *  |
+Spi|  O    X    X    X  |
+Cau|  X    X    O    *  |
+Pum|  X    *    *    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '8hr', 'Cauliflower'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    *    *    *  |
+Spi|  o    x    x    x  |
+Cau|  x    x    O    *  |
+Pum|  x    *    *    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 8 (correct):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    *    *  |
+Spi|  O    X    X    X  |
+Cau|  X    X    O    X  |
+Pum|  X    *    *    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((hours, plants, '2hr', 'Cauliflower'), 'X'), ((hours, plants, '4hr', 'Cauliflower'), 'X'), ((hours, plants, '8hr', 'Cauliflower'), 'X')]-2:CROSS_OUT - [((hours, plants, '6hr', 'Tomato'), 'X'), ((hours, plants, '6hr', 'Spinach'), 'X'), ((hours, plants, '6hr', 'Pumpkin'), 'X')]0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X')]-2:OPENING - [((hours, plants, '8hr', 'Tomato'), 'O')]-2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '8hr', 'Cauliflower'), 'O')]-3:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]-3:OPENING - [((hours, plants, '8hr', 'Tomato'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]2:OPENING - [((hours, plants, '8hr', 'Tomato'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    *    *    *  |
+Spi|  o    x    x    x  |
+Cau|  x    x    o    X  |
+Pum|  x    *    *    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 9 (incorrect):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    *    O  |
+Spi|  O    X    X    X  |
+Cau|  X    X    O    X  |
+Pum|  X    *    *    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((hours, plants, '8hr', 'Tomato'), 'O')]-2:CROSS_OUT - [((hours, plants, '6hr', 'Tomato'), 'X'), ((hours, plants, '6hr', 'Spinach'), 'X'), ((hours, plants, '6hr', 'Pumpkin'), 'X')]0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]-2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]-2:OPENING - [((hours, plants, '8hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '8hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]-3:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    *    *    O  |
+Spi|  o    x    x    x  |
+Cau|  x    x    o    x  |
+Pum|  x    *    *    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: cross outs - OPENING
+3: hint - "The plants Tomato is 2 hourss before the plants Cauliflower" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 10 (correct):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    *    X    O  |
+Spi|  O    X    X    X  |
+Cau|  X    X    O    X  |
+Pum|  X    *    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((hours, plants, '2hr', 'Tomato'), 'X'), ((hours, plants, '4hr', 'Tomato'), 'X'), ((hours, plants, '6hr', 'Tomato'), 'X')]-2:CROSS_OUT - [((hours, plants, '6hr', 'Tomato'), 'X'), ((hours, plants, '6hr', 'Spinach'), 'X'), ((hours, plants, '6hr', 'Pumpkin'), 'X')]0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]1:APPLY_OR - [((plants, hours, 'Tomato', '6hr'), 'O')]2:BEFORE_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]-2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]-3:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '8hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    *    X    o  |
+Spi|  o    x    x    x  |
+Cau|  x    x    o    x  |
+Pum|  x    *    X    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 11 (correct):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    X    X    O  |
+Spi|  O    X    X    X  |
+Cau|  X    X    O    X  |
+Pum|  X    *    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]-2:CROSS_OUT - [((hours, plants, '2hr', 'Tomato'), 'X'), ((hours, plants, '4hr', 'Tomato'), 'X'), ((hours, plants, '6hr', 'Tomato'), 'X')]0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]-2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]2:OPENING - [((hours, plants, '4hr', 'Tomato'), 'O')]2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '8hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    X    x    o  |
+Spi|  o    x    x    x  |
+Cau|  x    x    o    x  |
+Pum|  x    *    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 12 (incorrect):       2hr  4hr  6hr  8hr
+    --------------------
+Tom|  X    X    X    O  |
+Spi|  O    X    X    X  |
+Cau|  X    X    O    X  |
+Pum|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]0:APPLY_IS - [((plants, hours, 'Tomato', '2hr'), 'O')]2:BEFORE_N_SPOTS_NOINFO - [((plants, hours, 'Tomato', '6hr'), 'X'), ((plants, hours, 'Tomato', '8hr'), 'X'), ((plants, hours, 'Cauliflower', '2hr'), 'X'), ((plants, hours, 'Cauliflower', '4hr'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Cauliflower', '8hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plants, hours, 'Cauliflower', '6hr'), 'X'), ((plants, hours, 'Tomato', '4hr'), 'X')]2:OPENING - [((hours, plants, '4hr', 'Pumpkin'), 'O')]      2hr  4hr  6hr  8hr
+    --------------------
+Tom|  x    x    x    o  |
+Spi|  o    x    x    x  |
+Cau|  x    x    o    x  |
+Pum|  x    O    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: hint - "The plants Tomato is 2 hourss before the plants Cauliflower" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+

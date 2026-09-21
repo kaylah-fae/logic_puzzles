@@ -1,0 +1,295 @@
+Puzzle:
+      10g  15g  20g  25g
+    --------------------
+Fis|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    *    *  |
+    --------------------
+Hints:
+0. The food Eggs is the grams 15g 
+1. The food Fish is 1 gramss before the food Peanuts 
+
+User Move 1 (incorrect):       10g  15g  20g  25g
+    --------------------
+Fis|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    *    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_NOINFO - [((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((food, grams, 'Fish', '25g'), 'X'), ((food, grams, 'Peanuts', '10g'), 'X')]      10g  15g  20g  25g
+    --------------------
+Fis|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    *    X  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 2 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    *  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    *    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_NOINFO - [((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((food, grams, 'Fish', '25g'), 'X'), ((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Fish', '20g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Fish', '20g'), 'X')]      10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    *  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    *    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 3 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    X  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    *    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_NOINFO - [((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((food, grams, 'Fish', '25g'), 'X'), ((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    *    *    X  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    *    x  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The food Fish is 1 gramss before the food Peanuts" - BEFORE_N_SPOTS_NOINFO
+Likely Reasoning: hint:The food Fish is 1 gramss before the food Peanuts:BEFORE_N_SPOTS_NOINFO (insight)
+
+
+User Move 4 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    X  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    X    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_NOINFO - [((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((food, grams, 'Fish', '25g'), 'X'), ((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:OPENING - [((grams, food, '15g', 'Fish'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    *    *    x  |
+Egg|  *    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    X    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 5 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    X  |
+Egg|  X    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    X    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_NOINFO - [((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((food, grams, 'Fish', '25g'), 'X'), ((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:OPENING - [((grams, food, '15g', 'Peanuts'), 'O')]1:OPENING - [((grams, food, '10g', 'Peanuts'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    *    *    x  |
+Egg|  X    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  *    *    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 6 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    X  |
+Egg|  X    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  X    *    X    X  |
+    --------------------
+
+Available Moves: 
+0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_NOINFO - [((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((food, grams, 'Fish', '25g'), 'X'), ((food, grams, 'Peanuts', '10g'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:OPENING - [((grams, food, '15g', 'Peanuts'), 'O')]1:OPENING - [((grams, food, '10g', 'Tofu'), 'O')]1:OPENING - [((grams, food, '10g', 'Peanuts'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    *    *    x  |
+Egg|  x    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  X    *    x    x  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The food Fish is 1 gramss before the food Peanuts" - BEFORE_NOINFO
+2: hint - "The food Fish is 1 gramss before the food Peanuts" - BEFORE_N_SPOTS_NOINFO
+Likely Reasoning: hint:The food Fish is 1 gramss before the food Peanuts:BEFORE_NOINFO (insight)
+
+
+User Move 7 (incorrect):       10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    X  |
+Egg|  X    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((grams, food, '15g', 'Peanuts'), 'O')]-3:OPENING - [((grams, food, '10g', 'Tofu'), 'O')]0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:OPENING - [((grams, food, '10g', 'Tofu'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    *    *    x  |
+Egg|  x    *    *    *  |
+Tof|  *    *    *    *  |
+Pea|  x    O    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 8 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    *    *    X  |
+Egg|  X    *    *    *  |
+Tof|  O    *    *    *  |
+Pea|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((grams, food, '10g', 'Tofu'), 'O')]-2:CROSS_OUT - [((grams, food, '15g', 'Fish'), 'X'), ((grams, food, '15g', 'Eggs'), 'X'), ((grams, food, '15g', 'Tofu'), 'X')]0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]-2:OPENING - [((grams, food, '20g', 'Fish'), 'O')]-2:OPENING - [((grams, food, '10g', 'Tofu'), 'O')]1:OPENING - [((grams, food, '10g', 'Tofu'), 'O')]-3:OPENING - [((grams, food, '20g', 'Fish'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    *    *    x  |
+Egg|  x    *    *    *  |
+Tof|  O    *    *    *  |
+Pea|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: cross outs - OPENING
+3: hint - "The food Fish is 1 gramss before the food Peanuts" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 9 (incorrect):       10g  15g  20g  25g
+    --------------------
+Fis|  X    X    *    X  |
+Egg|  X    X    *    *  |
+Tof|  O    X    *    *  |
+Pea|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((grams, food, '15g', 'Tofu'), 'X'), ((grams, food, '20g', 'Tofu'), 'X'), ((grams, food, '25g', 'Tofu'), 'X')]-2:CROSS_OUT - [((grams, food, '15g', 'Fish'), 'X'), ((grams, food, '15g', 'Eggs'), 'X'), ((grams, food, '15g', 'Tofu'), 'X')]0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]-2:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]-2:OPENING - [((grams, food, '20g', 'Fish'), 'O')]-3:OPENING - [((grams, food, '20g', 'Fish'), 'O')]-3:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:OPENING - [((grams, food, '20g', 'Eggs'), 'O')]1:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    X    *    x  |
+Egg|  x    X    *    *  |
+Tof|  o    X    *    *  |
+Pea|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+2: hint - "The food Fish is 1 gramss before the food Peanuts" - BEFORE_N_SPOTS_SHIFT
+3: hint - "The food Fish is 1 gramss before the food Peanuts" - BEFORE_N_SPOTS_CROSSCHECK
+4: hint - "The food Fish is 1 gramss before the food Peanuts" - BEFORE_N_SPOTS_SHIFT
+5: hint - "The food Fish is 1 gramss before the food Peanuts" - BEFORE_N_SPOTS_CROSSCHECK
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 10 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    X    O    X  |
+Egg|  X    X    *    *  |
+Tof|  O    X    *    *  |
+Pea|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((grams, food, '20g', 'Fish'), 'O')]-2:CROSS_OUT - [((grams, food, '15g', 'Tofu'), 'X'), ((grams, food, '20g', 'Tofu'), 'X'), ((grams, food, '25g', 'Tofu'), 'X')]0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]-2:OPENING - [((grams, food, '20g', 'Fish'), 'O')]-2:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]-3:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]1:OPENING - [((grams, food, '20g', 'Eggs'), 'O')]1:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    x    O    x  |
+Egg|  x    x    *    *  |
+Tof|  o    x    *    *  |
+Pea|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: cross outs - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 11 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    X    O    X  |
+Egg|  X    X    *    *  |
+Tof|  O    X    X    X  |
+Pea|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((grams, food, '15g', 'Tofu'), 'X'), ((grams, food, '20g', 'Tofu'), 'X'), ((grams, food, '25g', 'Tofu'), 'X')]-2:CROSS_OUT - [((grams, food, '20g', 'Eggs'), 'X'), ((grams, food, '20g', 'Tofu'), 'X'), ((grams, food, '20g', 'Peanuts'), 'X')]0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]-2:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]-3:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]1:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    x    o    x  |
+Egg|  x    x    *    *  |
+Tof|  o    x    X    X  |
+Pea|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 12 (incorrect):       10g  15g  20g  25g
+    --------------------
+Fis|  X    X    O    X  |
+Egg|  X    X    *    O  |
+Tof|  O    X    X    X  |
+Pea|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-3:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]-2:CROSS_OUT - [((grams, food, '20g', 'Eggs'), 'X'), ((grams, food, '20g', 'Tofu'), 'X'), ((grams, food, '20g', 'Peanuts'), 'X')]0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]-2:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]1:OPENING - [((grams, food, '20g', 'Eggs'), 'O')]1:OPENING - [((grams, food, '25g', 'Eggs'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    x    o    x  |
+Egg|  x    x    *    O  |
+Tof|  o    x    x    x  |
+Pea|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: transitives - OPENING
+2: cross outs - OPENING
+3: hint - "The food Fish is 1 gramss before the food Peanuts" - OPENING
+Likely Reasoning: transitives::OPENING (insight)
+
+
+User Move 13 (correct):       10g  15g  20g  25g
+    --------------------
+Fis|  X    X    O    X  |
+Egg|  X    X    X    O  |
+Tof|  O    X    X    X  |
+Pea|  X    O    X    X  |
+    --------------------
+
+Available Moves: 
+-2:CROSS_OUT - [((grams, food, '10g', 'Eggs'), 'X'), ((grams, food, '15g', 'Eggs'), 'X'), ((grams, food, '20g', 'Eggs'), 'X')]-2:CROSS_OUT - [((grams, food, '20g', 'Eggs'), 'X'), ((grams, food, '20g', 'Tofu'), 'X'), ((grams, food, '20g', 'Peanuts'), 'X')]0:APPLY_IS - [((food, grams, 'Eggs', '15g'), 'O')]1:BEFORE_N_SPOTS_SHIFT - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((food, grams, 'Peanuts', '15g'), 'X'), ((food, grams, 'Peanuts', '20g'), 'X'), ((food, grams, 'Fish', '15g'), 'X'), ((food, grams, 'Fish', '20g'), 'X')]1:OPENING - [((grams, food, '20g', 'Eggs'), 'O')]      10g  15g  20g  25g
+    --------------------
+Fis|  x    x    o    x  |
+Egg|  x    x    X    o  |
+Tof|  o    x    x    x  |
+Pea|  x    o    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+

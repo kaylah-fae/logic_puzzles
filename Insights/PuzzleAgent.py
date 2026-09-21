@@ -29,7 +29,7 @@ class PuzzleAgent:
             _, available_moves = self.solver.get_available_moves(curr_state, hints)
             chosen_move = self.choose(available_moves, curr_state, solution)
             history.append(chosen_move)
-            curr_state.apply_multi_move(chosen_move)
+            self.solver.apply_multi_move(curr_state, chosen_move)
             i += 1
             pct_complete, _ = curr_state.percent_complete()
         pct_complete, _ = curr_state.percent_complete()
@@ -68,7 +68,7 @@ class PuzzleAgent:
     def _format_rand_move(move):
         return {
             "insight": None,
-            "move": move,
+            "moves": [move],
             "repair": False,
             "hint_idx": None,
         }

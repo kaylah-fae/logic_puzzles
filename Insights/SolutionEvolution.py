@@ -167,9 +167,10 @@ class HintSet:
             return True
         can_solve_without_required = False
         can_solve_without_forbidden = True
-        forbidden_solver = Solver(self.forbidden_insights)
+        
         if len(self.required_insights) > 0:
-            unmissable_insights = forbidden_solver.unmissable_insights(
+            solver = Solver()
+            unmissable_insights = solver.unmissable_insights(
                 self.blank_puzzle, self.clues()
             )
             for required_insight in self.required_insights:
@@ -178,10 +179,13 @@ class HintSet:
                     or required_insight not in unmissable_insights
                 )
         if len(self.forbidden_insights) > 0:
+            forbidden_solver = Solver(self.forbidden_insights)
             can_solve_without_forbidden = forbidden_solver.can_solve_without_forbidden(
                 self.blank_puzzle, self.clues()
             )
-        return not can_solve_without_required and can_solve_without_forbidden
+
+        feasible = not can_solve_without_required and can_solve_without_forbidden
+        return feasible
 
     # The set of insights for which the puzzle is not solvable without the sub dags, even with all others available (checked independently)
     def unmissable_insights(self):
