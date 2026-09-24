@@ -16,6 +16,7 @@ from scipy.stats import tukey_hsd, f_oneway, ttest_ind, false_discovery_control
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# This file handles tactic labelling. 
 
 ultraimport("__dir__/../LogicPuzzles.py", package="main")
 from main.LogicPuzzles import (
@@ -24,7 +25,6 @@ from main.LogicPuzzles import (
     Puzzle,
     Insight,
     CONFIDENT_MARKS,
-    TENTATIVE_MARKS,
     MOVE_MARKS,
     YES_MARKS,
     NO_MARKS,
@@ -53,7 +53,10 @@ from insights.PuzzleAgent import PuzzleAgent
 
 SOLVER = Solver(set(), True)
 
-
+# Get the value of a given multi move with respect to the solution.
+# "correct": All non-neutral cell changes are X when the solution is X and O when the solution is O
+# "neutral": All cell changes either erase a correct/tentative mark or are tentative marks (or there are no cell changes)
+# "incorrect": At least one cell change makes an X where the solution is O or an O where the solution is X
 def get_move_list_value(curr_state, moves, solution):
     value = "neutral"
     for move in moves:
@@ -64,8 +67,11 @@ def get_move_list_value(curr_state, moves, solution):
     return value
 
 
-# Determine whether move is correct, incorrect, or neutral,
-# with respect to the solution grid (not the solution-blind insights)
+# Determine whether a move is correct, incorrect, or neutral,
+# with respect to the solution grid (not the solution-blind tactics)
+# "correct": a cell change that aligns with the solution or erases a mistake
+# "incorrect": a cell change that contradicts the solution
+# "neutral": a cell change that does neither of the above
 def get_move_value(curr_state, move, solution):
     value = "neutral"
     loc, move_sy = move
@@ -93,7 +99,8 @@ def get_move_value(curr_state, move, solution):
 
     return value
 
-
+# From a diff of the grid before and after a move,
+# find all distinct cell changes.
 def breakdown_move(move_diff):
     breakdown = []
     for cat1 in move_diff.categories:
@@ -112,6 +119,7 @@ def breakdown_move(move_diff):
 
 
 # Get the node at grid_id, creating it if it does not already exist.
+# For the node state graph
 def get_grid_node_id(puzzle_id, grid_id, value, grid_to_label, node_df):
     if grid_id in grid_to_label:
         # Return the existing node
@@ -124,15 +132,16 @@ def get_grid_node_id(puzzle_id, grid_id, value, grid_to_label, node_df):
     node_df.loc[len(node_df)] = node_row
     return node_id
 
-
+# Generate a grid id for a given puzzle id and state
+# For the node state graph
 def get_grid_id(puzzle_id, state):
     grid_str = state.print_grid()
     grid_id = f"{puzzle_id}:{grid_str}"
     return grid_id
 
-
+# Moves that reach the same grid state are collapsed to only the move that is the highest in the insight DAG / lowest in the insight ordering
+# Used mainly for the node state graph
 def get_composite_moves(puzzle_id, curr_state, solution, multi_moves):
-    # Moves that reach the same grid state are collapsed to only the move that is the highest in the insight DAG / lowest in the insight ordering
     collapsed_moves = {}
     for multi_move in multi_moves:
         move_state = deepcopy(curr_state)
@@ -144,7 +153,7 @@ def get_composite_moves(puzzle_id, curr_state, solution, multi_moves):
         if grid_id in collapsed_moves:
             comparison_insight = collapsed_moves[grid_id]["insight"]
         if grid_id not in collapsed_moves or insight < comparison_insight:
-            # Keep the move with the lowest ranked insight, as before
+            # Keep the move with the lowest ranked insight
             grid_value = get_move_list_value(curr_state, multi_move["moves"], solution)
             collapsed_moves[grid_id] = {
                 "hint_idx": multi_move["hint_idx"],
@@ -152,10 +161,13 @@ def get_composite_moves(puzzle_id, curr_state, solution, multi_moves):
                 "state": move_state,
                 "grid_value": grid_value,
                 "moves": multi_move["moves"],
+                "solver_value": "insight"
             }
-            collapsed_moves[grid_id]["solver_value"] = "insight"
 
     # Find collapsed moves that are equivalent (same type, insight, hint, and solver_value, different grid ids)
+    # This is used to have players that use the same tactic but with different specific cell changes 
+    # (for example, starting a cross out in different places)
+    # be given the same node state.
     composite_moves = {}
     grid_id_to_comp_id = {}
     for grid_id, c_move in collapsed_moves.items():
@@ -179,7 +191,9 @@ def get_composite_moves(puzzle_id, curr_state, solution, multi_moves):
 
     return composite_moves, grid_id_to_comp_id
 
-
+# Remove duplicates from a set of moves.
+# Two moves are duplicates if they have the same tactic for the same hint,
+# and they make the exact same set of cell changes.
 def dedupe_moves(multi_moves):
     dedupe_moves = []
     for multi_move in multi_moves:
@@ -205,7 +219,7 @@ def dedupe_moves(multi_moves):
             dedupe_moves.append(multi_move)
     return dedupe_moves
 
-
+# Check whether all cell changes in a move are "X" marks
 def all_x(moves):
     for move in moves:
         _, sy = move
@@ -213,24 +227,24 @@ def all_x(moves):
             return False
     return True
 
-
+# Get all conceivable moves for the puzzle state.
+# Include moves from the "opened"(crossed out) version of the puzzle,
+# as the user could be holding this information in their head
+# (particularly if they are in a puzzle that doesn't allow X marks or a very easy puzzle),
+# and we want to catch as many possible insights as we can.
 def get_solver_moves(puzzle, hints):
-    # Get all conceivable moves for the puzzle state.
-    # Include moves from the "opened"(crossed out) version of the puzzle,
-    # as the user could be holding this information in their head
-    # (particularly if they are in a puzzle that doesn't allow X marks or a very easy puzzle),
-    # and we want to catch as many possible insights as we can.
     opened_puzzle = deepcopy(puzzle)
     SOLVER.apply_cross_out(opened_puzzle, True)
-    _, s_moves = SOLVER.get_available_moves(puzzle, hints)
-    _, opened_moves = SOLVER.get_available_moves(opened_puzzle, hints)
+    _, s_moves = SOLVER.get_available_moves(puzzle, hints) # Original set of moves
+    _, opened_moves = SOLVER.get_available_moves(opened_puzzle, hints) # Augmented moves from the crossed out puzzle
     for move in s_moves:
         move["source"] = "original"
     for move in opened_moves:
         move["source"] = "augmentation"
     for move in deepcopy(s_moves):
         if all_x(move["moves"]):
-            # Also, if a move of xs creates an opening, the user may skip ahead to that O.
+            # Also, if any (original or augmented) move of Xs only creates an opening, 
+            # the user may skip ahead to that opening move.
             applied_puzzle = deepcopy(puzzle)
             SOLVER.apply_multi_move(applied_puzzle, move)
             _, applied_openings = SOLVER.apply_opening(applied_puzzle, True)
@@ -243,6 +257,7 @@ def get_solver_moves(puzzle, hints):
     for move in deepcopy(opened_moves):
         move["source"] = "augmentation"
         if all_x(move["moves"]):
+            # Openings may also be done for augmented moves.
             applied_puzzle = deepcopy(opened_puzzle)
             SOLVER.apply_multi_move(applied_puzzle, move)
             _, applied_openings = SOLVER.apply_opening(applied_puzzle, True)
@@ -271,7 +286,7 @@ def loc_are_equal(loc_a, loc_b):
             return True
     return False
 
-
+# Check whether two moves are equal (same location and symbol)
 def moves_are_equal(move_a, move_b):
     loc_a, sy_a = move_a
     loc_b, sy_b = move_b
@@ -279,7 +294,8 @@ def moves_are_equal(move_a, move_b):
         return True
     return False
 
-
+# Choose the likeliest move given the set of possible moves.
+# Used to choose between different possible tactics for the same user move.
 def choose_likeliest_move(moves):
     best_move = moves[0]
     for move in moves:
@@ -294,14 +310,18 @@ def choose_likeliest_move(moves):
                 len(move["min_moves"]) == len(best_move["min_moves"])
                 and move["insight"] < best_move["insight"]
             ):
-                # Prefer insights lower in the DAG.
+                # Prefer tactics lower in the tactic ordering.
                 best_move = move
     return best_move
 
 
-# When checking a move, it could label that move + up to n future moves.
+# When checking a move, it could label that move up to n future moves.
 # How to account for this? We get available moves at a certain move,
 # and replace n moves ONLY IF THEY ALL MATCH...then we must skip those moves.
+# curr_state: the current puzzle state
+# u_move_idx: the list of all user moves for the puzzle, the index of the current move we are checking
+# available_moves: moves that were suggested by the oracle for this state.
+# match_on_one: Whether to allow labelling a single user move even if the oracle move makes multiple cell changes.
 def get_possible_labeled_moves_at_state(
     curr_state, u_move_idx, available_moves, match_on_one
 ):
@@ -312,9 +332,13 @@ def get_possible_labeled_moves_at_state(
     u_moves, i = u_move_idx
     (_, _, next_u_moves) = u_moves[i]
 
+    # Check if the current user move already makes multiple cell changes (such as when they clear the grid). 
+    # Then in order to label a tactic, that tactic must make the same set of cell changes.
+    # Usually, user moves only make a single cell change.
     real_u_moves = []
     test = deepcopy(curr_state)
     for u_move in next_u_moves:
+        # User cell changes only count if they change the grid
         u_changed, _ = test.answer(*u_move)
         if u_changed:
             real_u_moves.append(u_move)
@@ -328,6 +352,7 @@ def get_possible_labeled_moves_at_state(
         real_s_moves = []
         test = deepcopy(curr_state)
         for s_move in s_moves:
+            # Oracle cell changes also only count if they actually change the grid.
             s_changed, _ = test.answer(*s_move)
             changed = changed or s_changed
             if s_changed:
@@ -336,29 +361,36 @@ def get_possible_labeled_moves_at_state(
             continue
 
         if len(next_u_moves) > 1 and len(real_s_moves) != len(real_u_moves):
-            # only accept user multi-moves if they align directly with a solver move
+            # If the user made multiple changes, then the oracle needs to suggest the same changes
             continue
 
         check_moves_ok = True
         check_moves = []
         if len(next_u_moves) > 1:
+            # If the user already made multiple changes, we only check those.
             check_moves = deepcopy(real_u_moves)
         else:
+            # Check whether it is possible for the next user moves to exactly correspond with the 
+            # oracle cell changes
             for m in range(i, i + len(real_s_moves)):
                 if m > len(u_moves) - 1:
                     check_moves_ok = False
                     break
                 (_, _, rec_moves) = u_moves[m]
                 if len(rec_moves) > 1:
-                    # one of the next moves is a multi move
+                    # one of the next user moves makes multiple cell changes, 
+                    # it is not allowed to be mixed with single cell changes
                     check_moves_ok = False
                     break
                 check_moves.append(rec_moves[0])
         if not check_moves_ok and not match_on_two:
+            # Only exact matches are permitted, and we can't get an exact match.
             continue
 
         match_all = True
         num_matches = 0
+        # Find the number of consecutive user cell changes that are found anywhere in the list
+        # (consecutive or not) of oracle cell changes.
         for u_move in check_moves:
             match_found = False
             for s_move in real_s_moves:
@@ -371,25 +403,32 @@ def get_possible_labeled_moves_at_state(
                 break
 
         if num_matches == 0:
+            # None of the user cell changes match
             continue
 
         if not match_all and not match_on_two:
+            # Some matched, but not all, and we are not accepting partial matches 
+            # (the user made multiple cell changes in one move and must be matched exactly)
             continue
 
         if not match_all and not match_on_one and num_matches < 2:
+            # The oracle move makes at least two moves, 
+            # and there were less than two matches in the user moves.
+            # We don't label unless match_on_one is enabled
+            # Note that even if match_on_one is disabled, 
+            # a single user move can still be labelled if the oracle only suggested a single cell change
             continue
 
-        # the sequence of user moves starting at i (or the recorded moves for one user move) matches the sequence of solver moves
-
+        # the sequence of user cell changes starting at i matches the sequence of oracle cell changes
         match_u_moves = []
-        if len(next_u_moves) > 1:
-            match_u_moves = [u_moves[i]]
-            check_moves = real_u_moves
-        else:
-            match_u_moves = u_moves[i : i + num_matches]
-            check_moves = check_moves[0:num_matches]
+        if len(next_u_moves) > 1: # The user move made multiple cell changes
+            match_u_moves = [u_moves[i]] # It is the only move that is labelled
+            check_moves = real_u_moves # The cell changes it makes are the only ones included.
+        else: # We are labelling multiple user moves, each making one cell change
+            match_u_moves = u_moves[i : i + num_matches] # We match on the number of matches
+            check_moves = check_moves[0:num_matches] # And we take all those cell changes.
 
-        update = deepcopy(curr_state)
+        update = deepcopy(curr_state) # The state after applying all the user moves that are being labelled
         for u_move in check_moves[0:num_matches]:
             update.answer(*u_move)
 
@@ -410,6 +449,8 @@ def get_possible_labeled_moves_at_state(
         possible_moves.append(poss_move)
         recovered = True
     if not recovered:
+        # There is no tactic that explains the next user move; 
+        # we create a possible move that says the tactic is unknown 
         (_, _, next_u_moves) = u_moves[i]
         update = deepcopy(curr_state)
         SOLVER.apply_multi_move(update, {"moves": next_u_moves})
@@ -426,11 +467,11 @@ def get_possible_labeled_moves_at_state(
 
     return possible_moves
 
-
+# Sort all the hint insights the user has made so that users reaching insights in different orders are considered to reach the same state.
+# Used by the node graph only, which is not currently being meaningfully analyzed.
 def get_insight_node_id(
     user_history, curr_grid_value, puzzle_id, node_df, state_to_node_id, curr_move_id
 ):
-    # Sort all the hint insights the user has made so that users reaching insights in different orders are considered to reach the same state.
     move_ids = {curr_move_id}
     for move_id, _ in user_history.values():
         if (
@@ -456,12 +497,12 @@ def get_insight_node_id(
 
     return state_to_node_id[state]
 
-
+# Convert a location to a string.
 def get_loc_str(loc):
     (cat1, cat2, ent1_idx, ent2_idx) = loc
     return f"{cat1.title}:{cat2.title}:{ent1_idx}:{ent2_idx}"
 
-
+# Based on the hint index, set the hint type.
 def get_type_str(hint_idx):
     typestr = "hint"
     if hint_idx == -100:
@@ -498,7 +539,7 @@ def dedupe_user_moves(puzzle, u_moves):
             deduped_u_moves.append((time, raw_str, deduped_rec_moves))
     return deduped_u_moves
 
-
+# Convert a list of cell changes to a string.
 def get_move_list_str(moves):
     move_str = ""
     for move in moves:
@@ -510,26 +551,27 @@ def get_move_list_str(moves):
 
 # Analyze user data to hypothesize which insights participants used.
 def recover_moves(
-    puzzle_id,
-    puzzle,
-    hints,
-    user_id,
-    prompt_mode,
-    level_mode,
-    u_moves,
-    u_success,
-    state_to_node_id,
-    node_df,
-    edge_df,
-    action_json,
-    session_id,
-    session_outcome_json,
-    match_on_one,
-    multi_moves_dict,
+    puzzle_id, # The id of the puzzle
+    puzzle,    # The Puzzle object
+    hints,     # Hints for the puzzle
+    user_id,   # User id
+    prompt_mode, # The prompt mode of the user in the study
+    level_mode,  # The level mode.
+    u_moves,     # The list of user moves, each one is (time, raw_str, rec_moves) where rec_moves is a list of (loc, sy) cell changes
+    u_success, # Whether the user solved the puzzle or conceded.
+    state_to_node_id, # dictionary tracking the mapping of grid states to node ids, for the node graph
+    node_df, # node graph
+    edge_df, # edge graph
+    action_json, # The original json for the online move data
+    session_id, # The session id representing a particular user solving a particular puzzle at a particular time
+    session_outcome_json, # JSON representing the end state of each session (success/concede and tactics available from the final state)
+    match_on_one, # Whether to allow labelling single user cell changes with a tactic for an oracle move that suggested multiple cell changes
+    multi_moves_dict, # Dictionary tracking how often single vs multiple user moves were labelled
 ):
+    # Remove any user moves that don't make any changes to the grid state
     u_moves = dedupe_user_moves(puzzle, u_moves)
 
-    # The history of which insights and composite moves are associated with which moves for this user.
+    # The history of which tactics and composite moves are associated with which moves for this user.
     user_history = {}
 
     # Empty state node.
@@ -547,28 +589,30 @@ def recover_moves(
     )
 
     blank_puzzle = deepcopy(puzzle)
-
     solution, _, _ = SOLVER.apply_hints(puzzle, hints)
 
+    # Keep track of how many times multiple user moves are assigned a label together
+    # vs single move:single label
     count_multi_moves = 0
     count_single_moves = 0
 
-    r_moves = []
+    r_moves = [] # Moves labelled with a tactic (or with unknown)
     mi = 0
     i = 0
     j = 0
     while i < len(u_moves):
+        # Make sure we haven't inadvertantly created an infinite loop bug
         j += 1
         if j >= 500:
             print(f"{len(u_moves)} - {i}")
         assert j < 500
-        # for i, (time, raw_str, rec_moves) in enumerate(u_moves):
+
         # Copy that will have moves applied.
         result = deepcopy(puzzle)
-        available_moves = get_solver_moves(puzzle, hints)  # All solver-aware moves
+        available_moves = get_solver_moves(puzzle, hints)  # Oracle suggested moves
         composite_moves, _ = get_composite_moves(
             puzzle_id, puzzle, solution, available_moves
-        )  # Available solver moves collapsed into individual insights
+        )  # Moves collapsed into the simplest tactics among those possible
 
         possible_moves = []
         move_value = "neutral"
@@ -619,14 +663,16 @@ def recover_moves(
             i += 1
             continue
 
-        possible_moves = get_possible_labeled_moves_at_state(
+        possible_moves = get_possible_labeled_moves_at_state( # All possible tactics that could be applied at this state
             result, (u_moves, i), available_moves, match_on_one
         )
-        likely_move = choose_likeliest_move(possible_moves)
+        likely_move = choose_likeliest_move(possible_moves) # The move that labels the most user cell changes and is lowest in the tactic ordering.
 
-        move_count = len(likely_move["min_moves"])
+        move_count = len(likely_move["min_moves"]) # How many user cell changes are labelled
 
-        if match_on_one:
+        if match_on_one: 
+            # If we allow matching on single cell changes for tactics that make multiple, 
+            # calculate what would've happened if we didn't allow that (checking for bugs in the labeller)
             alt_possible = get_possible_labeled_moves_at_state(
                 result, (u_moves, i), available_moves, not match_on_one
             )
@@ -640,20 +686,26 @@ def recover_moves(
                 print(f"next user move: {u_moves[i]}")
                 _ = input("continue:")
 
+        # Update the move counts.
         if likely_move["insight"] != None:
             if move_count > 1:
                 count_multi_moves += 1
             else:
                 count_single_moves += 1
 
+        # Process all the moves that are being labelled. 
+        # Even if multiple moves are being labelled at once, each is labelled separately in the data.
         for j, (t, raw_s, rec_moves) in enumerate(likely_move["full_moves"]):
             move_value = get_move_list_value(result, rec_moves, solution)
             if j > 0:
+                # For moves that are being labelled together, record their available and possible moves
+                # as if they were being labelled separately.
                 available_moves = get_solver_moves(puzzle, hints)  # All solver-aware moves
                 possible_moves = get_possible_labeled_moves_at_state(
                     result, (u_moves, i), available_moves, match_on_one
                 )
 
+            # Track available and possible tactics for each move, for data analysis
             available_insights = []
             possible_insights = []
 
@@ -690,6 +742,7 @@ def recover_moves(
                     move_idx = m
                     break
 
+            # Record the tactic label
             action_json[session_id][move_idx]["insight"] = None
             likely_insight = None
             likely_source = None
@@ -732,6 +785,7 @@ def recover_moves(
                 loc_str = get_loc_str(loc)
                 user_history[loc_str] = (move_id, sy)
 
+            # Add to the node graph
             target_id = get_insight_node_id(
                 user_history,
                 curr_grid_value,
@@ -780,7 +834,7 @@ def recover_moves(
         level_mode,
     ]
 
-    # Get available insights at the end.
+    # Get available tactics at the end.
     available_insights = set()
     if u_success != "success":
         # If the user was successful, ignore any optional insights.
@@ -798,6 +852,7 @@ def recover_moves(
 
     edge_df.loc[len(edge_df)] = edge_row
 
+    # Record the multi vs single moves.
     howmany = "many"
     if match_on_one:
         howmany = "one"
@@ -819,7 +874,7 @@ def recover_moves(
     multi_moves_dict[puzzle_id][user_id][howmany]["single"] = count_single_moves
     return u_success, r_moves
 
-
+# Make vr data usable.
 def clean_vr_data(raw_df, start_time):
     puzzle_name_mapping = {
         "spoke_pasta": "Pasta in Sauce",
@@ -857,7 +912,7 @@ def clean_vr_data(raw_df, start_time):
 
     return clean_data
 
-
+# Make online data usable
 def clean_online_moves(puzzle, hints, raw_moves):
     user_puzzle = deepcopy(puzzle)
     clean_moves = []
@@ -918,7 +973,7 @@ def clean_online_moves(puzzle, hints, raw_moves):
             user_success = "partial"
     return clean_moves, user_success
 
-
+# Make vr data usable
 def clean_vr_moves(clean_key, raw_moves):
     session = None
     match clean_key:
@@ -951,7 +1006,7 @@ def clean_vr_moves(clean_key, raw_moves):
 
     return session
 
-
+# Make spoke_pasta data usable
 def _clean_vr_moves__spoke_pasta(raw_moves):
     puzzle = PUZZLE_DEFS["spoke_pasta"]["puzzle"]
     hints = PUZZLE_DEFS["spoke_pasta"]["hints"]
@@ -999,7 +1054,7 @@ def _clean_vr_moves__spoke_pasta(raw_moves):
         "moves": clean_moves,
     }
 
-
+# Make spoke_sunlight data usable
 def _clean_vr_moves__spoke_sunlight(raw_moves):
     puzzle = PUZZLE_DEFS["spoke_sunlight"]["puzzle"]
     hints = PUZZLE_DEFS["spoke_sunlight"]["hints"]
@@ -1055,7 +1110,7 @@ def _clean_vr_moves__spoke_sunlight(raw_moves):
         "moves": clean_moves,
     }
 
-
+# Make spoke_water data usable
 def _clean_vr_moves__spoke_water(raw_moves):
     puzzle = PUZZLE_DEFS["spoke_water"]["puzzle"]
     hints = PUZZLE_DEFS["spoke_water"]["hints"]
@@ -1118,7 +1173,7 @@ def _clean_vr_moves__spoke_water(raw_moves):
         "moves": clean_moves,
     }
 
-
+# Make spoke_protein data usable.
 def _clean_vr_moves__spoke_protein(raw_moves):
     puzzle = PUZZLE_DEFS["spoke_protein"]["puzzle"]
     hints = PUZZLE_DEFS["spoke_protein"]["hints"]
@@ -1146,7 +1201,7 @@ def _clean_vr_moves__spoke_protein(raw_moves):
         "moves": clean_moves,
     }
 
-
+# Make hub_soup data usable.
 def _clean_vr_moves__hub_soup(raw_moves):
     puzzle = PUZZLE_DEFS["hub_soup_alt"]["puzzle"]
     hints = PUZZLE_DEFS["hub_soup_alt"]["hints"]
@@ -1222,7 +1277,8 @@ def _clean_vr_moves__hub_soup(raw_moves):
         "moves": clean_moves,
     }
 
-
+# Print to a file the user moves made, 
+# including possible and labelled tactics
 def print_moves(file, puzzle, hints, moves, insight_contexts):
     file.write("Puzzle:\n")
     file.write(puzzle.print_grid())
@@ -1285,7 +1341,7 @@ def print_moves(file, puzzle, hints, moves, insight_contexts):
 
         file.write(f"\n\n")
 
-
+# Load in VR data
 def load_vr_data(file):
     df = pd.read_csv(file)
 
@@ -1312,7 +1368,7 @@ def load_vr_data(file):
 
     return df, start_time
 
-
+# Load in online puzzles from string json into python Puzzle and hint objects.
 def load_online_puzzles(dir):
     puzzle_names = [
         "helper1_1",
@@ -1460,7 +1516,7 @@ def load_online_puzzles(dir):
         }
     return puzzles
 
-
+# Load in online data
 def load_online_data(dir):
     action_json = None
     with open(f"{dir}/action_data.json") as f:
@@ -1494,6 +1550,8 @@ def load_online_data(dir):
                 "puzzles": {},
             }
         cleaned_moves, user_success = clean_online_moves(puzzle, hints, raw_moves)
+
+        # A usable format.
         clean_data[user_id]["puzzles"][puzzle_id] = {
             "puzzle": puzzle,
             "hints": hints,
@@ -1504,7 +1562,8 @@ def load_online_data(dir):
         }
     return clean_data, action_json
 
-
+# Get data from the node graphs.
+# Currently get_user_counts is used for this data instead.
 def gen_data_views(dir, edge_df, node_df):
     # print("generating data views")
     # print(edge_df)
@@ -2142,7 +2201,7 @@ def gen_data_views(dir, edge_df, node_df):
 
     return user_success_lookup
 
-
+# Convert a list of moves to a movelist so it may be saved to the action json
 def action_json_movelist_from_moves(moves):
     action_list = []
     for time, raw_move, _ in moves:
@@ -2152,7 +2211,7 @@ def action_json_movelist_from_moves(moves):
         })
     return action_list
 
-
+# Reformat the VR action json to be usable
 def reformat_vr_action_json(action_json):
     for session in action_json.values():
         for move_data in session:
@@ -2163,7 +2222,7 @@ def reformat_vr_action_json(action_json):
             move_data["move_no"] = move_no
     return action_json
 
-
+# Track how many players use each tactic at least once.
 def inc_insight_counts(insight_counts, puzzle_id, success, moves):
     if puzzle_id not in insight_counts:
         insight_counts[puzzle_id] = {}
@@ -2184,7 +2243,7 @@ def inc_insight_counts(insight_counts, puzzle_id, success, moves):
             insights_seen.add(insight)
             insight_counts[puzzle_id][insight][success] += 1
 
-
+# Recover tactics for VR data
 def insight_recovery__vr(vr_dir, match_on_one, multi_moves_dict):
     howmany = "many"
     if match_on_one:
@@ -2312,7 +2371,7 @@ def insight_recovery__vr(vr_dir, match_on_one, multi_moves_dict):
         json.dump(insight_counts, f)
     return counts
 
-
+# Recover tactics for online data
 def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
     counts = {}
     howmany = "many"
@@ -2321,6 +2380,8 @@ def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
     insight_contexts = {}
     on_clean_data, on_action_json = load_online_data(online_dir)
     on_session_outcome_json = {}
+    # Initialize dataframe for stategraph that may eventually be used to compare
+    # playthroughs
     on_node_df = pd.DataFrame(
         columns=["Id", "PuzzleId", "State", "GridValue", "MoveIds"]
     )
@@ -2368,6 +2429,7 @@ def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
                 multi_moves_dict,
             )
             assert len(recovered_moves) > 0
+            # Get stats from recovered moves
             assert "end_state" not in counts[puzzle_id]["user_stats"][user_id]
             rec_success = u_success
             if rec_success != "success":
@@ -2380,6 +2442,8 @@ def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
             counts[puzzle_id]["user_stats"][user_id]["counts"] = get_user_counts(
                 recovered_moves
             )
+
+            # Save moves to a file
             output_path = f"{online_dir}/recovered_moves/{user_id}/recovered_moves_{puzzle_id}_{howmany}.txt"
             output_file = Path(output_path)
             output_file.parent.mkdir(exist_ok=True, parents=True)
@@ -2391,6 +2455,8 @@ def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
                 recovered_moves,
                 insight_contexts,
             )
+
+    # Save data to files.
     with open(f"{online_dir}/updated_action_data_{howmany}.json", "w") as f:
         json.dump(on_action_json, f)
     with open(f"{online_dir}/session_outcome_{howmany}.json", "w") as f:
@@ -2398,10 +2464,13 @@ def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
     with open(f"{online_dir}/insight_contexts_{howmany}.json", "w") as f:
         json.dump(insight_contexts, f)
 
+    # Save the node graph
     on_edge_df.to_csv(f"{online_dir}/edgegraph_{howmany}.csv", index=False)
     on_node_df.to_csv(f"{online_dir}/nodegraph_{howmany}.csv", index=False)
     on_edge_df = pd.read_csv(f"{online_dir}/edgegraph_{howmany}.csv")
     on_node_df = pd.read_csv(f"{online_dir}/nodegraph_{howmany}.csv")
+
+    # Update tactic counts
     on_success_lookup = gen_data_views(online_dir, on_edge_df, on_node_df)
     on_action_json = None
     on_session_outcome_json = None
@@ -2441,13 +2510,20 @@ def insight_recovery__online(online_dir, match_on_one, multi_moves_dict):
         json.dump(insight_counts, f)
     return counts
 
-
+# Recover tactics for automated agents.
+# agent_dir: The file directory
+# agents: the list of agents
+# puzzles: puzzle definitions
+# match_on_one: whether to allow multi-move tactics to match on a single player move
+# multi_moves_dict: Track how many times a single move is labeled vs how many times multiple moves are labelled at once.
+# num_trials: how many times to run each agent on each puzzle
 def insight_recovery__agents(agent_dir, agents, puzzles, multi_moves_dict, num_trials = 20):
     counts = {}
     for agent in agents:
         ground_truth = {}
         for puzzle_id, puzzle_info in puzzles.items():
             for t in range(num_trials):
+                # Generate the agent playthrough
                 moves = agent.play_puzzle(
                     puzzle_info["puzzle"], puzzle_info["solution"], puzzle_info["hints"]
                 )
@@ -2462,12 +2538,18 @@ def insight_recovery__agents(agent_dir, agents, puzzles, multi_moves_dict, num_t
         counts[agent.name] = {"one": agent_counts_one, "many": agent_counts_many}
     return counts
 
-
+# Recover tactics for expert data
+# expert_dir: The file directory
+# experts: the list of experts
+# puzzles: puzzle definitions
+# match_on_one: whether to allow multi-move tactics to match on a single player move
+# multi_moves_dict: Track how many times a single move is labeled vs how many times multiple moves are labelled at once.
 def insight_recovery__experts(
     expert_dir, experts, puzzles, match_on_one, multi_moves_dict
 ):
     ground_truth = {}
     for expert in experts:
+        # Pull the ground truth from files
         ground_truth[expert] = {}
         for puzzle_id, puzzle_info in puzzles.items():
             trace_json = None
@@ -2475,6 +2557,7 @@ def insight_recovery__experts(
                 print(f"{expert_dir}/{expert}/{puzzle_id}_ground.json")
                 trace_json = json.load(f)
 
+            # Convert moves using string values only to use the Insight (tactic) and Category datatypes
             trace = []
             for move in trace_json:
                 insight_str = move["insight_str"]
@@ -2492,21 +2575,30 @@ def insight_recovery__experts(
                 move["moves"] = [((cat1, cat2, ent1, ent2), sy)]
                 trace.append(move)
             ground_truth[expert][puzzle_id] = trace
+
+    # Treat this as ground truth data
     counts = insight_recovery__ground_truth_data(
         expert_dir, ground_truth, puzzles, match_on_one, multi_moves_dict
     )
     return counts
 
-
+# Recover tactics for labelled data (expert and agent data)
+# ground_dir: The file directory to save to
+# ground truth: ground truth labels
+# puzzles: puzzle definitions
+# match_on_one: whether to allow multi-move tactics to match on a single player move
+# multi_moves_dict: Track how many times a single move is labeled vs how many times multiple moves are labelled at once.
 def insight_recovery__ground_truth_data(
     ground_dir, ground_truth, puzzles, match_on_one, multi_moves_dict
 ):
-    counts = {}
+    counts = {} # Used to calculate stats for the data
     howmany = "many"
     if match_on_one:
         howmany = "one"
     insight_contexts = {}
     g_session_outcome_json = {}
+
+    # Track the user's state graph, to eventually be used to analyze commonalities in player solutions
     g_node_df = pd.DataFrame(
         columns=["Id", "PuzzleId", "State", "GridValue", "MoveIds"]
     )
@@ -2526,48 +2618,51 @@ def insight_recovery__ground_truth_data(
     )
     g_state_to_node_id = {}
     g_action_json = {}
+
+    # Initialize stat blocks
     blank_by_insight = {}
     for insight in Insight.ALL_INSIGHTS:
         blank_by_insight[insight.name] = 0
     blank_recovery_data = {
-        "cnt_total_moves": 0,
-        "cnt_total_moves_recovered": 0,
-        "pct_total_moves_recovered": 0,
-        "calc_pct_total_moves_recovered": {
+        "cnt_total_moves": 0, # total moves made
+        "cnt_total_moves_recovered": 0, # count moves that are correctly labelled
+        "pct_total_moves_recovered": 0, # pct of moves that are correctly labelled
+        "calc_pct_total_moves_recovered": { # calculator for the pct
             "num": 0,
             "den": 0,
         },
-        "cnt_random_moves": 0,
-        "cnt_random_moves_recovered": 0,
-        "pct_random_moves_recovered": 0,
-        "calc_pct_random_moves_recovered": {
+        "cnt_random_moves": 0, # count random moves in ground truth data
+        "cnt_random_moves_recovered": 0, # count random moves correctly not assigned a label
+        "pct_random_moves_recovered": 0, # pct of random moves that are correctly not assigned a label
+        "calc_pct_random_moves_recovered": { # calculator
             "num": 0,
             "den": 0,
         },
-        "cnt_insight_moves": 0,
-        "cnt_insight_moves_recovered": 0,
-        "pct_insight_moves_recovered": 0,
-        "calc_pct_insight_moves_recovered": {
+        "cnt_insight_moves": 0, # tactic moves in ground truth data
+        "cnt_insight_moves_recovered": 0, # number tactic moves that are correctly labelled
+        "pct_insight_moves_recovered": 0, # pct tactic moves that are correctly labelled
+        "calc_pct_insight_moves_recovered": { # calculator
             "num": 0,
             "den": 0,
         },
-        "cnt_moves_by_insight": deepcopy(blank_by_insight),
-        "cnt_moves_by_insight_recovered": deepcopy(blank_by_insight),
-        "pct_moves_by_insight_recovered": deepcopy(blank_by_insight),
-        "cnt_insight_moves_wrong_label": 0,
-        "cnt_lower_than_ground": 0,
-        "cnt_higher_than_ground": 0,
-        "pct_lower_than_ground": 0,
-        "pct_higher_than_ground": 0,
-        "calc_pct_lower_than_ground": {
+        "cnt_moves_by_insight": deepcopy(blank_by_insight), # number of moves labelled in the ground truth with each tactic
+        "cnt_moves_by_insight_recovered": deepcopy(blank_by_insight), # number of moves for each tactic that are correctly labelled
+        "pct_moves_by_insight_recovered": deepcopy(blank_by_insight), # pct of moves for each tactic that are correctly labelled
+        "cnt_insight_moves_wrong_label": 0, # number of ground truth tactic moves that are labelled with the wrong tactic
+        "cnt_lower_than_ground": 0, # number that are labelled with a tactic lower in the ordering
+        "cnt_higher_than_ground": 0, # number that are labelled with a tactic higher in the ordering
+        "pct_lower_than_ground": 0, # pct that are labelled lower
+        "pct_higher_than_ground": 0, # pct labelled higher
+        "calc_pct_lower_than_ground": { # calculator
             "num": 0,
             "den": 0,
         },
-        "calc_pct_higher_than_ground": {
+        "calc_pct_higher_than_ground": { # calculator
             "num": 0,
             "den": 0,
         },
     }
+
     for agent_name, agent_data in ground_truth.items():
         print(f"recovering data for {agent_name}")
         recovery_data = {"totals": deepcopy(blank_recovery_data)}
@@ -2583,12 +2678,15 @@ def insight_recovery__ground_truth_data(
             puzzle_info = puzzles[puzzle_id]
             clean_moves = []
             curr_state = deepcopy(puzzle_info["puzzle"])
+
+            # Convert the data to a format usable by the tactic recovery process
             for i, move in enumerate(moves):
                 SOLVER.apply_multi_move(curr_state, move)
                 clean_moves.append((f"{i}", curr_state.print_grid(), move["moves"]))
 
             g_action_json[session_id] = action_json_movelist_from_moves(clean_moves)
 
+            # Check the end state of the agent.
             solution, _, _ = SOLVER.apply_hints(
                 puzzle_info["puzzle"], puzzle_info["hints"]
             )
@@ -2601,6 +2699,7 @@ def insight_recovery__ground_truth_data(
                 else:
                     agent_success = "partial"
 
+            # Run the tactic labeller.
             _, recovered_moves = recover_moves(
                 puzzle_id,
                 puzzle_info["puzzle"],
@@ -2620,12 +2719,14 @@ def insight_recovery__ground_truth_data(
                 multi_moves_dict,
             )
 
+            # Set the agent end state and counts.
             assert "end_state" not in counts[puzzle_id]["user_stats"][agent_name]
             counts[puzzle_id]["user_stats"][agent_name]["end_state"] = agent_success
             counts[puzzle_id]["user_stats"][agent_name]["counts"] = get_user_counts(
                 recovered_moves
             )
 
+            # Save the recovery data to a file.
             output_path = (
                 f"{ground_dir}/{agent_name}/recovered_moves_{puzzle_id}_{howmany}.txt"
             )
@@ -2639,6 +2740,8 @@ def insight_recovery__ground_truth_data(
                 recovered_moves,
                 insight_contexts,
             )
+
+            # Check the labels against the ground truth.
             for i, (_, _, r_move) in enumerate(recovered_moves):
                 ground_truth = moves[i]
                 compare_to = r_move["likely_move"]
@@ -2829,6 +2932,7 @@ def insight_recovery__ground_truth_data(
     with open(f"{ground_dir}/insight_contexts_{howmany}.json", "w") as f:
         json.dump(insight_contexts, f)
 
+    # Save the node graph
     g_edge_df.to_csv(f"{ground_dir}/edgegraph_{howmany}.csv", index=False)
     g_node_df.to_csv(f"{ground_dir}/nodegraph_{howmany}.csv", index=False)
     g_edge_df = pd.read_csv(f"{ground_dir}/edgegraph_{howmany}.csv")
@@ -2836,6 +2940,8 @@ def insight_recovery__ground_truth_data(
     g_success_lookup = gen_data_views(ground_dir, g_edge_df, g_node_df)
     g_action_json = None
     g_session_outcome_json = None
+
+    # Calculate tactic label counts
     with open(f"{ground_dir}/updated_action_data_{howmany}.json") as f:
         g_action_json = json.load(f)
     with open(f"{ground_dir}/session_outcome_{howmany}.json") as f:
@@ -2864,30 +2970,12 @@ def insight_recovery__ground_truth_data(
 
     return counts
 
+# Value groups that may be iterated over when calculating stats
 move_values = ["correct", "incorrect", "neutral"]
 end_states = ["success", "concede", "partial"]
 sources = ["original", "augmentation", "multi_move"]
 
-def new_stat_block():
-    new_stat_block = {
-        "total_moves": 0,
-        "cnt_labelled": 0,
-        "cnt_unlabelled": 0,
-        "label_breakdown": {},
-        "available_label_breakdown": {},
-        "possible_label_matrix": {}
-    }
-    for insight in Insight.ALL_INSIGHTS:
-        new_stat_block["label_breakdown"][f"cnt_{insight.name}"] = 0
-        new_stat_block["available_label_breakdown"][f"cnt_{insight.name}"] = 0
-        new_stat_block["possible_label_matrix"][insight.name] = {}
-        for ins in Insight.ALL_INSIGHTS:
-            new_stat_block["possible_label_matrix"][insight.name][f"cnt_{ins}"] = 0
-    for source in sources:
-        new_stat_block[f"cnt_{source}"] = 0
-    return new_stat_block
-
-
+# Set dict[keys] to val, even if not all keys exist yet in dict
 def r__set(dict, keys, val):
     d = dict
     for key in keys[:-1]:
@@ -2898,7 +2986,7 @@ def r__set(dict, keys, val):
     d[keys[-1]] = val
     return d
 
-# Returns value (or the default)
+# Returns value (or the default) even if keys do not exist
 def r__get_default(dict, keys, default, create=True):
     if len(keys) == 0:
         return dict
@@ -2916,11 +3004,12 @@ def r__get_default(dict, keys, default, create=True):
         d[keys[-1]] = default
     return d[keys[-1]]
 
-
+# If keys don't exist, initialize them. Then add val to the value at dict[keys].
 def r__add(dict, keys, val):
     curr = r__get_default(dict, keys, 0)
     r__set(dict, keys, curr + val)
 
+# Get a default stat block for insight counts.
 def get_default_insight_counts():
     cnts = {}
     for insight in Insight.ALL_INSIGHTS:
@@ -2955,7 +3044,7 @@ def get_user_counts(moves):
         r__set(counts[grp], ["tot_moves"], r__get_default(counts[grp], ["grp_label_status", "tot_unlabelled"], 0) + r__get_default(counts[grp], ["grp_label_status", "tot_labelled"], 0))
     return counts
 
-
+# Division function that doesn't bork if dividing by 0
 def div0(num, den):
     if den > 0:
         return num / den
@@ -2971,7 +3060,8 @@ def r__add_tots(from_grp, to_grp):
         elif key.startswith("tot_"):
             r__add(to_grp, [key], val)
 
-# Make sure each insa has all possible insbs.
+# Initialize a possible label matrix such that every tactic has a value for every other tactic,
+# even if they are never seen together.
 def r__init_possible_label_matrix(grp):
     for key, val in grp.items():
         if key == "grp_possible_label_matrix":
@@ -2981,16 +3071,19 @@ def r__init_possible_label_matrix(grp):
         elif key.startswith("grp_"):
             r__init_possible_label_matrix(val)
 
+# Standard deviation that doesn't bork if there aren't enough values
 def safe_stdev(vals):
     if len(vals) < 2:
         return None
     return stdev(vals)
 
+# Mean that doesn't bork if there aren't enough values
 def safe_mean(vals):
     if len(vals) == 0:
         return 0
     return mean(vals)
 
+# Calculate means and stdevs for the tree.
 def r__calc_avgs(grp):
     for key, val in grp.items():
         if key.startswith("grp_"):
@@ -3000,6 +3093,7 @@ def r__calc_avgs(grp):
             val["avg"] = safe_mean(vals)
             val["sd"] = safe_stdev(vals)
 
+# Collect lists of values to be averaged.
 def r__collect_vals(from_grp, to_grp):
     for key, val in from_grp.items():
         if key.startswith("grp_"):
@@ -3010,6 +3104,7 @@ def r__collect_vals(from_grp, to_grp):
             statname = key.removeprefix("calc_")
             r__extend(to_grp, [f"calc_avg_{statname}", "vals"], [val["avg"]])
 
+# Initialize mean/stdev calculation for all labels
 def r__init_statnames(from_grp, to_grp, grp_key = ""):
     for key, val in from_grp.items():
         if key.startswith("grp_"):
@@ -3023,6 +3118,7 @@ def r__init_statnames(from_grp, to_grp, grp_key = ""):
             statname = key.removeprefix("calc_")
             r__get_default(to_grp, [f"calc_avg_{statname}", "vals"], [])
 
+# Make sure the label breakdown and available at end structures include all tactics that are ever possible (in suggested moves) in their counts.
 def r__init_labelnames(root_grp, depth, grp_key = ""):
     from_grp = r__get_default(root_grp, depth, {})
     for key in deepcopy(from_grp).keys():
@@ -3032,7 +3128,9 @@ def r__init_labelnames(root_grp, depth, grp_key = ""):
             r__init_labelnames(root_grp, new_depth, key)
         if "available_label_breakdown" not in grp_key:
             continue
-        # Available label breakdown percentages only apply to users that actually saw the label available.
+        # Available label breakdown percentages only apply to users that actually saw the label available,
+        # so we only use available labels to initialize values for label_breakdown and available_at_end, 
+        # and not the combined available_label_breakdown
         elif key.startswith("tot_") or key.startswith("pct_"):
             new_depth = depth[:-1]
             new_depth.extend(["grp_label_breakdown", key])
@@ -3051,6 +3149,7 @@ def r__norm_val_lists(grp, norm_cnt):
             for _ in range(norm_cnt - len(vals)):
                 vals.append(0.0)
 
+# Find all values for which percentages may be calculated in root_group
 def r__calc_pcts(root_grp, depth, root_to_grp, to_depth):
     from_grp = r__get_default(root_grp, depth, {})
     for key, val in deepcopy(from_grp).items():
@@ -3061,6 +3160,7 @@ def r__calc_pcts(root_grp, depth, root_to_grp, to_depth):
             new_to_depth.append(key)
             r__calc_pcts(root_grp, new_depth, root_to_grp, new_to_depth)
         elif key.startswith("tot_"):
+            # Calculate the percentage for this key, with denominator found for the given stat label.
             stat_name = key.removeprefix("tot_")
             num = val
             den = -1
@@ -3100,11 +3200,13 @@ def r__calc_pcts(root_grp, depth, root_to_grp, to_depth):
             if den > 0:
                 r__set(root_to_grp, new_to_depth, div0(num, den))
 
+# Extend the list at dict[keys]
 def r__extend(dict, keys, vals):
     all_vals = r__get_default(dict, keys, [])
     all_vals.extend(vals)
     r__set(dict, keys, all_vals)
 
+# Merge values from from_group into lists in to_group
 def r__calc_val_lists(from_grp, to_grp):
     for key, val in from_grp.items():
         if key.startswith("grp_"):
@@ -3112,13 +3214,14 @@ def r__calc_val_lists(from_grp, to_grp):
         elif key.startswith("tot_") or key.startswith("pct_"):
             r__extend(to_grp, [f"calc_{key}", "values"], [val])
 
-    
+# Generate fine-grained statistics, so that when we decide how to analyze the data, we can immediately pull the relevant values.
 def gen_stats(stats, dir, match_on_one):
     howmany = "many"
     if match_on_one:
         howmany = "one"
 
     for puzzle, puzzle_stats in deepcopy(stats).items():
+        # Initialize values to calculate
         merged_counts = r__get_default(stats, ["calc_merged_counts"], {})
         merged_pcts = r__get_default(stats, ["calc_merged_pcts"], {})
         overall_insight_agreement = r__get_default(stats, ["calc_merged_pcts", "insight_agreement"], {"vals": []})
@@ -3126,19 +3229,26 @@ def gen_stats(stats, dir, match_on_one):
         merged_pcts_all = r__get_default(merged_pcts, ["grp_all"], {})
         insight_agreement = r__get_default(stats[puzzle], ["insight_agreement"], {})
         for user, user_stats in puzzle_stats["user_stats"].items():
+            # Pull values from the finest grained level (individual users)
             user_all = r__get_default(stats[puzzle]["user_stats"][user]["counts"], ["grp_all"], {})
             for key in user_stats["counts"].keys():
                 if key.startswith("grp_"):
+                    # A subgroup of the data, such as the group of values pertaining to correct user moves.
                     val = stats[puzzle]["user_stats"][user]["counts"][key]
                     r__init_possible_label_matrix(val)
                     r__add_tots(val, user_all)
+            # Initialize the group of values pertaining to users who had a given end state (e.g. success)
             end_state = user_stats["end_state"]
             puzz_end_state = r__get_default(stats[puzzle], ["counts", f"grp_{end_state}"], {})
-            available_at_end = user_stats["available_at_end"]
+            available_at_end = user_stats["available_at_end"] # List of tactics that were suggested when the user finished
             stats_avail_at_end = r__get_default(stats[puzzle]["user_stats"][user]["counts"],["grp_available_at_end"], {})
+            # For every tactic listed, set the available at end count for that user to 1
             for ins in available_at_end:
                 stats_avail_at_end[f"tot_{ins}"] = 1
 
+            # Calculate the insight agreement for successful users only.
+            # The insight agreement is the likelihood that a tactic labelled in one successful user's moves
+            # is also labelled for other successful users on the same puzzle.
             if end_state == "success":
                 label_breakdown = stats[puzzle]["user_stats"][user]["counts"]["grp_all"]["grp_label_breakdown"]
                 for ins, cnt in label_breakdown.items():
@@ -3146,27 +3256,36 @@ def gen_stats(stats, dir, match_on_one):
                         r__add(insight_agreement, ["ins_counts", ins], 1)
                 r__add(insight_agreement, ["tot_users"], 1)
 
+            # Initialize stat blocks for the user's move groups
             user_counts = stats[puzzle]["user_stats"][user]["counts"]
             r__get_default(user_counts, ["grp_correct", "tot_moves"], 0)
             r__get_default(user_counts, ["grp_incorrect", "tot_moves"], 0)
             r__get_default(user_counts, ["grp_neutral", "tot_moves"], 0)
             r__init_labelnames(user_counts, [])
-            
+
+            # Add all the user's counts to the puzzle's counts for the user's end state, and to all.
             r__add_tots(stats[puzzle]["user_stats"][user], puzz_end_state)
             r__add_tots(stats[puzzle]["user_stats"][user]["counts"], puzz_end_state)
 
             end_all = r__get_default(stats[puzzle]["counts"], ["grp_all"], {})
             r__add(end_all, ["grp_end_states", f"tot_{end_state}"], 1)
             r__add(end_all, [f"tot_users"], 1)
-            user_pcts = r__get_default(stats[puzzle]["user_stats"][user], ["pcts"], {})
 
+            # Calculate percentage stats for the user (e.g. %correct of total moves, %tactic of total labelled moves)
+            user_pcts = r__get_default(stats[puzzle]["user_stats"][user], ["pcts"], {})
             r__calc_pcts(stats[puzzle]["user_stats"][user], ["counts"], user_pcts, [])
+
+            # Initialize stat groups to collect average and stdev from value counts and percentages for this puzzle only.
             puzz_calc_counts_end = r__get_default(stats[puzzle], ["calc_counts", f"grp_{end_state}"], {})
             puzz_calc_counts_all = r__get_default(stats[puzzle], ["calc_counts", "grp_all"], {})
             puzz_calc_pcts_end = r__get_default(stats[puzzle], ["calc_pcts", f"grp_{end_state}"], {})
             puzz_calc_pcts_all = r__get_default(stats[puzzle], ["calc_pcts", "grp_all"], {})
+
+            # Initialize stat groups to collect average and stdev from value counts and percentages, for all puzzles combined.
             merged_counts_end = r__get_default(merged_counts, [f"grp_{end_state}"], {})
             merged_pcts_end = r__get_default(merged_pcts, [f"grp_{end_state}"], {})
+
+            # Add all values to their appropriate list for calculating avg and stdev
             r__collect_vals(user_counts, puzz_calc_counts_end)
             r__collect_vals(user_counts, puzz_calc_counts_all)
             r__collect_vals(user_counts, merged_counts_end)
@@ -3175,7 +3294,10 @@ def gen_stats(stats, dir, match_on_one):
             r__collect_vals(user_pcts, puzz_calc_pcts_all)
             r__collect_vals(user_pcts, merged_pcts_end)
             r__collect_vals(user_pcts, merged_pcts_all)            
-            
+
+            # Make sure all users in both groups for the puzzle get any tactics labelled for at least one user in either group.
+            # The purpose of this is if we are calculating the percentage of users who were labelled with a tactic at least once,
+            # we include all relevant tactics for the puzzle. (So, when those values are averaged across puzzles, we include a 0 instead of nothing in the case where a successful user was labelled with a tactic but no conceding users were.)
             alt_end_state = "success"
             if end_state == "success":
                 alt_end_state = "failure"
@@ -3185,11 +3307,13 @@ def gen_stats(stats, dir, match_on_one):
             r__init_statnames(user_counts, puzz_calc_counts_alt)
             r__init_statnames(user_pcts, puzz_calc_pcts_alt)
 
+        # Calculate the tactic agreement for this puzzle.
         for ins, cnt in insight_agreement["ins_counts"].items():
             r__get_default(insight_agreement, ["ins_pcts", ins], cnt/insight_agreement["tot_users"])
         insight_agreement["avg"] = mean(insight_agreement["ins_pcts"].values())
         overall_insight_agreement["vals"].append(insight_agreement["avg"])
 
+        # Fill value lists with 0s so that stats are calculated over the correct number of users
         puzz_calc_counts_all = stats[puzzle]["calc_counts"]["grp_all"]
         num_users_all = stats[puzzle]["counts"]["grp_all"]["tot_users"]
         r__norm_val_lists(puzz_calc_counts_all, num_users_all)
@@ -3201,35 +3325,46 @@ def gen_stats(stats, dir, match_on_one):
             r__norm_val_lists(puzz_calc_counts_end, num_users_end)
             r__norm_val_lists(puzz_calc_pcts_end, num_users_end)
 
+        # Calculate avg and stdev for all value lists.
         r__calc_avgs(stats[puzzle]["calc_counts"])
         r__calc_avgs(stats[puzzle]["calc_pcts"])
 
+        # Copy counts for all end states into the "all" group for the puzzle.
         end_all = r__get_default(stats[puzzle]["counts"], ["grp_all"], {})
         for key, val in deepcopy(stats[puzzle]["counts"]).items():
             if key.startswith("grp_") and key != "grp_all":
                 r__add_tots(val, end_all)
+
+        # Copy counts for the puzzle into the overall data (all puzzles combined)
         all_counts = r__get_default(stats, ["counts"], {})
         r__add_tots(stats[puzzle]["counts"], all_counts)
+
+        # Calculate percentages for the puzzle.
         puzz_pcts = r__get_default(stats[puzzle], ["pcts"], {})
         r__calc_pcts(stats[puzzle], ["counts"], puzz_pcts, [])
 
+        # Add values from the puzzle into the avg/stdev calculator for all puzzles combined
         overall_calc_counts = r__get_default(stats, ["calc_counts"], {})
         overall_calc_pcts = r__get_default(stats, ["calc_pcts"], {})
         puzz_counts = stats[puzzle]["counts"]
         r__collect_vals(puzz_counts, overall_calc_counts)
         r__collect_vals(puzz_pcts, overall_calc_pcts)
 
+        # Add averages from the puzzle into the calculator averaging the averages of the puzzles
         overall_calc_avg_counts = r__get_default(stats, ["calc_avg_counts"], {})
         overall_calc_avg_pcts = r__get_default(stats, ["calc_avg_pcts"], {})
         r__collect_vals(stats[puzzle]["calc_counts"], overall_calc_avg_counts)
         r__collect_vals(stats[puzzle]["calc_pcts"], overall_calc_avg_pcts)
 
+    # Calculate insight agreement averaged over all puzzles
     overall_insight_agreement = r__get_default(stats, ["calc_merged_pcts", "insight_agreement"], {"vals": []})
     overall_insight_agreement["avg"] = mean(overall_insight_agreement["vals"])
 
+    # Calculate overall percentages
     all_pcts = r__get_default(stats, ["pcts"], {})
     r__calc_pcts(stats, ["counts"], all_pcts, [])    
 
+    # Normalize value lists to calculate stats over all puzzles.
     num_puzzles = len(stats.keys()) - 8
     overall_calc_counts = stats["calc_counts"]
     overall_calc_pcts = stats["calc_pcts"]
@@ -3240,11 +3375,13 @@ def gen_stats(stats, dir, match_on_one):
     r__norm_val_lists(overall_calc_avg_counts, num_puzzles)
     r__norm_val_lists(overall_calc_avg_pcts, num_puzzles)
 
+    # Calc stats over all puzzles
     r__calc_avgs(stats["calc_counts"])
     r__calc_avgs(stats["calc_pcts"])
     r__calc_avgs(stats["calc_avg_counts"])
     r__calc_avgs(stats["calc_avg_pcts"])
 
+    # Calculate overall stats (combined puzzles), with lists normalized to the overall number of users
     num_users_all = stats["counts"]["grp_all"]["tot_users"]
     r__norm_val_lists(merged_counts_all, num_users_all)
     r__norm_val_lists(puzz_calc_pcts_all, num_users_all)
@@ -3261,6 +3398,9 @@ def gen_stats(stats, dir, match_on_one):
     with open(f"{dir}/stats_{howmany}.json", "w") as f:
         json.dump(stats, f)
 
+# Generate overview statistics,
+# significance testing,
+# and heatmap for the data.
 def significance_testing(match_on_one):
     howmany = "one"
     if not match_on_one:
@@ -3275,6 +3415,7 @@ def significance_testing(match_on_one):
     with open(f"{online_dir}/stats_{howmany}.json") as f:
         online_stats = json.load(f)
 
+    # ANOVA for the percentage of moves labelled, where each user group is a sample.
     for end_state in ["success", "failure"]:
         e_stats = online_stats["calc_merged_pcts"][f"grp_{end_state}"]["grp_correct"]["grp_label_status"]["calc_pct_labelled"]["vals"]
         anova_samples.append(e_stats)
@@ -3303,6 +3444,7 @@ def significance_testing(match_on_one):
     tukey_res = tukey_hsd(*anova_samples, equal_var=False)
     print(tukey_res)
 
+    # False positive corrected p-values for comparing successful and conceding users' tactic counts.
     print("bonferroni")
     bonferroni_by_tactic = {}
     bonferroni_results = {}
@@ -3339,6 +3481,7 @@ def significance_testing(match_on_one):
         bonferroni_by_tactic[p_names[i]]["corr_p"] = p
         bonferroni_results[p_names[i]]["corr_p"] = p
 
+    # False positive corrected p-values for the percentage of the time a tactic was chosen when it was available.
     bonferroni_avail_by_tactic = {}
     bonferroni_avail_results = {}
     for insight in Insight.ALL_INSIGHTS:
@@ -3374,6 +3517,7 @@ def significance_testing(match_on_one):
         bonferroni_avail_by_tactic[p_names[i]]["corr_p"] = p
         bonferroni_avail_results[p_names[i]]["corr_p"] = p
 
+    # Get overall percentage of moves that were labelled for different groups.
     selected_stats = {}
     pct_labelled_results = {
         "online": {},
@@ -3403,6 +3547,7 @@ def significance_testing(match_on_one):
 
     selected_stats["pct_labelled_results"] = pct_labelled_results
 
+    # Get counts for how often a tactic was available in the final suggested moves of a conceding user.
     available_at_end = {}
     avail_stats = online_stats["calc_merged_counts"]["grp_failure"]["grp_available_at_end"]
     for insight in Insight.ALL_INSIGHTS:
@@ -3412,6 +3557,7 @@ def significance_testing(match_on_one):
 
     selected_stats["available_at_end"] = available_at_end
 
+    # Compile statistics into a report.
     with open(f"sig_tests.txt", "w") as f:
         f.write(f"ANOVA: {anova_res}\n\nTUKEY: ")
         f.write("Groups:\n")
@@ -3424,6 +3570,7 @@ def significance_testing(match_on_one):
     with open(f"selected_stats.json", "w") as f:
         json.dump(selected_stats, f)
 
+    # Create a heatmap for how often each tactic was possible at the same time as each other tactic.
     possible_label_matrix = {}
     poss_label_matrix_data = online_stats["calc_merged_pcts"][f"grp_all"]["grp_all"]["grp_possible_label_matrix"]
     
@@ -3487,12 +3634,13 @@ def significance_testing(match_on_one):
     plt.tight_layout()
     plt.show()
 
-
+# Run the analyzer on the labelled agent data
 def gen_stats__agent(agent_counts, agent_dir):
     for agent, agent_data in agent_counts.items():
         gen_stats(agent_data["one"], f"{agent_dir}/{agent}", True)
         gen_stats(agent_data["many"], f"{agent_dir}/{agent}", False)
 
+# Extract information on how long users spent on puzzles.
 def get_online_timing_data(online_dir):
     puzzle_timing_data = {
         "hub": {
@@ -3578,7 +3726,8 @@ def get_online_timing_data(online_dir):
 
     return puzzle_timing_data
             
-
+# Extract counts for experience with logic puzzles 
+# from the survey data.
 def get_online_survey_data(online_dir):
 
     on_clean_data, _ = load_online_data(online_dir)
@@ -3616,6 +3765,7 @@ def get_online_survey_data(online_dir):
     return survey_data
 
 
+# Run the labeller / analysis
 if __name__ == "__main__":
     vr_dir = "user_data/vr_study"
     online_dir = "user_data/online_puzzle_study"
@@ -3698,4 +3848,4 @@ if __name__ == "__main__":
     # with open(f"multi_moves.json", "w") as f:
     #     json.dump(multi_moves_dict, f)
 
-    significance_testing(False)
+    # significance_testing(False)

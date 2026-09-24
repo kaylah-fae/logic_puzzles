@@ -1,0 +1,90 @@
+Puzzle:
+      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    *    *    *  |
+    --------------------
+Hints:
+0. Either the water 60oz is the plant Potatoes or the water 80oz is the plant Broccoli 
+1. The plant Eggplant is 2 waters before the plant Green Onions 
+2. The plant Eggplant was not the water 20oz 
+
+User Move 1 (None): ------
+|**X*|
+|****|
+|****|
+|****|
+
+Available Moves: 
+0:APPLY_OR - [((water, plant, '60oz', 'Potatoes'), 'Y'), ((water, plant, '80oz', 'Broccoli'), 'Y')]1:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X'), ((plant, water, 'Green Onions', '40oz'), 'X')]2:APPLY_NOT - [((plant, water, 'Eggplant', '20oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    X    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 2 (None): ------
+|**X*|
+|***X|
+|****|
+|****|
+
+Available Moves: 
+0:APPLY_OR - [((water, plant, '80oz', 'Broccoli'), 'O')]1:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X'), ((plant, water, 'Green Onions', '40oz'), 'X')]2:APPLY_NOT - [((plant, water, 'Eggplant', '20oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    x    *  |
+Gre|  *    *    *    X  |
+Egg|  *    *    *    *  |
+Bro|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 3 (None): ------
+|**X*|
+|***X|
+|*X**|
+|****|
+
+Available Moves: 
+0:APPLY_OR - [((water, plant, '80oz', 'Broccoli'), 'O')]1:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X'), ((plant, water, 'Green Onions', '40oz'), 'X')]1:BEFORE_N_SPOTS_SHIFT - [((plant, water, 'Eggplant', '40oz'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '40oz'), 'X')]2:APPLY_NOT - [((plant, water, 'Eggplant', '20oz'), 'X')]-3:OPENING - [((water, plant, '60oz', 'Green Onions'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    x    *  |
+Gre|  *    *    *    x  |
+Egg|  *    X    *    *  |
+Bro|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The plant Eggplant is 2 waters before the plant Green Onions" - BEFORE_N_SPOTS_SHIFT
+2: hint - "The plant Eggplant is 2 waters before the plant Green Onions" - BEFORE_N_SPOTS_CROSSCHECK
+Likely Reasoning: hint:The plant Eggplant is 2 waters before the plant Green Onions:BEFORE_N_SPOTS_SHIFT (insight)
+
+
+User Move 4 (None): ------
+|**X*|
+|***X|
+|*X**|
+|X***|
+
+Available Moves: 
+0:APPLY_OR - [((water, plant, '80oz', 'Broccoli'), 'O')]1:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X'), ((plant, water, 'Green Onions', '40oz'), 'X')]2:APPLY_NOT - [((plant, water, 'Eggplant', '20oz'), 'X')]-3:OPENING - [((water, plant, '60oz', 'Green Onions'), 'O')]-3:OPENING - [((water, plant, '20oz', 'Eggplant'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    x    *  |
+Gre|  *    *    *    x  |
+Egg|  *    x    *    *  |
+Bro|  X    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+

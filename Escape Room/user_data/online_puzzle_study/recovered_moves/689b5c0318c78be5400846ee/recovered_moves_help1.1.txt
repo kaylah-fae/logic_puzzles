@@ -1,0 +1,564 @@
+Puzzle:
+      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    *    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    *    *  |
+    --------------------
+Hints:
+0. Either the shape Elbow is the sauce Carbonara or the shape Shell is the sauce Alfredo 
+1. The shape Shell was not the sauce Tomato 
+2. The sauce Alfredo is the shape Bowtie 
+
+User Move 1 (None): ------
+|****|
+|*O**|
+|****|
+|****|
+
+Available Moves: 
+0:APPLY_OR - [((shape, sauce, 'Elbow', 'Carbonara'), 'Y'), ((shape, sauce, 'Shell', 'Alfredo'), 'Y')]1:APPLY_NOT - [((shape, sauce, 'Shell', 'Tomato'), 'X')]2:APPLY_IS - [((sauce, shape, 'Alfredo', 'Bowtie'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    *  |
+Alf|  *    O    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The sauce Alfredo is the shape Bowtie" - APPLY_IS
+Likely Reasoning: hint:The sauce Alfredo is the shape Bowtie:APPLY_IS (insight)
+
+
+User Move 2 (None): ------
+|***X|
+|*O**|
+|****|
+|****|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Elbow', 'Carbonara'), 'Y'), ((shape, sauce, 'Shell', 'Alfredo'), 'Y')]1:APPLY_NOT - [((shape, sauce, 'Shell', 'Tomato'), 'X')]0:APPLY_OR - [((shape, sauce, 'Elbow', 'Carbonara'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    X  |
+Alf|  *    o    *    *  |
+Pes|  *    *    *    *  |
+Car|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The shape Shell was not the sauce Tomato" - APPLY_NOT
+Likely Reasoning: hint:The shape Shell was not the sauce Tomato:APPLY_NOT (insight)
+
+
+User Move 3 (None): ------
+|***X|
+|*O**|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Elbow', 'Carbonara'), 'Y'), ((shape, sauce, 'Shell', 'Alfredo'), 'Y')]0:APPLY_OR - [((shape, sauce, 'Elbow', 'Carbonara'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    x  |
+Alf|  *    o    *    *  |
+Pes|  *    *    *    *  |
+Car|  O    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: hint - "Either the shape Elbow is the sauce Carbonara or the shape Shell is the sauce Alfredo" - APPLY_OR
+Likely Reasoning: hint:Either the shape Elbow is the sauce Carbonara or the shape Shell is the sauce Alfredo:APPLY_OR (insight)
+
+
+User Move 4 (None): ------
+|***X|
+|*O*!|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    x  |
+Alf|  *    o    *    Y  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 5 (None): ------
+|***X|
+|*O*?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    x  |
+Alf|  *    o    *    N  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 6 (None): ------
+|X**X|
+|*O*?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  X    *    *    x  |
+Alf|  *    o    *    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 7 (None): ------
+|XX*X|
+|*O*?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    X    *    x  |
+Alf|  *    o    *    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 8 (None): ------
+|XXXX|
+|*O*?|
+|****|
+|O***|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    X    x  |
+Alf|  *    o    *    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 9 (None): ------
+|XXXX|
+|*OX?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  *    o    X    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 10 (None): ------
+|XXXX|
+|XOX?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  X    o    x    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 11 (None): ------
+|XXXX|
+|XOX?|
+|X***|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  X    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 12 (None): ------
+|XXXX|
+|XOX?|
+|XX**|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    X    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 13 (None): ------
+|XXXX|
+|XOX?|
+|XXX*|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    X    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 14 (None): ------
+|XXXX|
+|XOX?|
+|XXXX|
+|O***|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Linguine', 'Carbonara'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    X  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 15 (None): ------
+|XXXX|
+|XOX?|
+|XXXX|
+|O**X|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Linguine', 'Carbonara'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Shell', 'Carbonara'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    x  |
+Car|  o    *    *    X  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 16 (None): ------
+|XXXX|
+|XOX?|
+|XXXX|
+|O*XX|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Linguine', 'Carbonara'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    x  |
+Car|  o    *    X    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 17 (None): ------
+|XXXX|
+|XOX?|
+|XXXX|
+|OXXX|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    x  |
+Car|  o    X    x    x  |
+    --------------------
+Possible Reasonings: 
+1: cross outs - CROSS_OUT
+Likely Reasoning: cross outs::CROSS_OUT (insight)
+
+
+User Move 18 (None): ------
+|XXXX|
+|XOX?|
+|XXXX|
+|O*XX|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    x  |
+Car|  o    _    x    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 19 (None): ------
+|XXXX|
+|XOX?|
+|XXXX|
+|O**X|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    x  |
+Car|  o    *    _    x  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 20 (None): ------
+|XXXX|
+|XOX?|
+|XXXX|
+|O***|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Linguine', 'Carbonara'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    x  |
+Car|  o    *    *    _  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 21 (None): ------
+|XXXX|
+|XOX?|
+|XXX*|
+|O***|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Linguine', 'Carbonara'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Shell', 'Carbonara'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Alfredo'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    x    _  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 22 (None): ------
+|XXXX|
+|XOX?|
+|XX**|
+|O***|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Linguine', 'Carbonara'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    x    _    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 23 (None): ------
+|XXXX|
+|XOX?|
+|X***|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  x    _    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 24 (None): ------
+|XXXX|
+|XOX?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  x    o    x    n  |
+Pes|  _    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 25 (None): ------
+|XXXX|
+|*OX?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  x    x    x    x  |
+Alf|  _    o    x    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 26 (None): ------
+|*XXX|
+|*OX?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  _    x    x    x  |
+Alf|  *    o    x    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 27 (None): ------
+|**XX|
+|*OX?|
+|****|
+|O***|
+
+Available Moves: 
+-3:OPENING - [((shape, sauce, 'Elbow', 'Tomato'), 'O')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    _    x    x  |
+Alf|  *    o    x    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 28 (None): ------
+|***X|
+|*OX?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]-3:OPENING - [((shape, sauce, 'Elbow', 'Tomato'), 'O')]-3:OPENING - [((shape, sauce, 'Bowtie', 'Tomato'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    _    x  |
+Alf|  *    o    x    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 29 (None): ------
+|***X|
+|*O*?|
+|****|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Linguine', 'Alfredo'), 'X'), ((shape, sauce, 'Shell', 'Alfredo'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Tomato'), 'X'), ((shape, sauce, 'Bowtie', 'Pesto'), 'X'), ((shape, sauce, 'Bowtie', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Bowtie', 'Carbonara'), 'X'), ((shape, sauce, 'Linguine', 'Carbonara'), 'X'), ((shape, sauce, 'Shell', 'Carbonara'), 'X')]-2:CROSS_OUT - [((shape, sauce, 'Elbow', 'Tomato'), 'X'), ((shape, sauce, 'Elbow', 'Alfredo'), 'X'), ((shape, sauce, 'Elbow', 'Pesto'), 'X')]0:APPLY_OR - [((shape, sauce, 'Shell', 'Alfredo'), 'X')]-3:OPENING - [((shape, sauce, 'Linguine', 'Tomato'), 'O')]-3:OPENING - [((shape, sauce, 'Shell', 'Pesto'), 'O')]      Elb  Bow  Lin  She
+    --------------------
+Tom|  *    *    *    x  |
+Alf|  *    o    _    n  |
+Pes|  *    *    *    *  |
+Car|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+

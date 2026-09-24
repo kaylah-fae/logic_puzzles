@@ -1,0 +1,9 @@
+{"solution": "------\n|XXXO|\n|XOXX|\n|OXXX|\n|XXOX|\n", "categories": [{"name": "shapes", "entities": ["Elbow", "Bowtie", "Linguine", "Shell"], "is_numeric": false}, 
+{"name": "order", "entities": ["1", "2", "3", "4"], "is_numeric": true}], 
+"hints": ["The Shells are served 2 dishes before the Elbows", 
+"The Shell are served 1st",
+ "Either (but not both) Elbow are served 3rd or the Linguine is served 2nd"], 
+ 
+ "hint_grammar": [{"before": ["shapes", "Shell", "shapes", "Elbow", "order", 2]}, 
+ {"is": ["shapes", "Shell", "order", "1"]}, {"compound_or": [{"is": ["shapes", "Elbow", "order", "3"]}, 
+ {"is": ["shapes", "Linguine", "order", "2"]}]}], "id":"spoke1.2",  "diff": 2, "sol": 0}

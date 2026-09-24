@@ -1,10 +1,10 @@
-# from LogicPuzzles import generate_hint, Puzzle , Category
 import random 
 from string import Template
 
 from copy import deepcopy
 
-
+# This file contains helper functions for converting LogicPuzzle 
+# hints into human readable (ish) text.
 grammar_dict = {
     "suspect": {
         "weapon": {

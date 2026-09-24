@@ -1,0 +1,13 @@
+{"solution": "-----------\n|OXXX|XXOX|\n|XOXX|XXXO|\n|XXOX|OXXX|\n|XXXO|XOXX|\n------\n|XXOX|\n|XXXO|\n|OXXX|\n|XOXX|\n", 
+"categories": [{"name": "order", "entities": ["1st", "2nd", "3rd", "4th"], "is_numeric": true}, 
+{"name": "method", "entities": ["whole", "halved", "chopped", "mashed"], "is_numeric": false}, 
+{"name": "ingredient", "entities": ["Potatoes", "Carrots", "Mushrooms", "Onions"], "is_numeric": false}], 
+"hints": ["The 4th ingredient is halved", 
+"The mashed ingredient is the Carrots", 
+"The Onions is are added 4th", 
+"The chopped ingredient is sometime before the mashed ingredient", 
+"The Carrots is added 1 ingredient before the Mushrooms"], 
+
+"hint_grammar": [{"is": ["order", "4th", "method", "halved"]}, {"is": ["method", "mashed", "ingredient", "Carrots"]}, 
+{"is": ["ingredient", "Onions", "order", "4th"]}, {"before": ["method", "chopped", "method", "mashed", "order"]},
+ {"before": ["ingredient", "Carrots", "ingredient", "Mushrooms", "order", 1]}], "id":"hub2.2", "diff": 2, "sol": 0}

@@ -1,0 +1,13 @@
+{"solution": "-----------\n|XOXX|XXOX|\n|XXXO|XOXX|\n|OXXX|OXXX|\n|XXOX|XXXO|\n------\n|OXXX|\n|XXXO|\n|XOXX|\n|XXOX|\n", 
+"categories": [{"name": "order", "entities": ["1st", "2nd", "3rd", "4th"], "is_numeric": true}, 
+{"name": "method", "entities": ["whole", "halved", "chopped", "mashed"], "is_numeric": false},
+ {"name": "ingredient", "entities": ["Potatoes", "Carrots", "Mushrooms", "Onions"], "is_numeric": false}],
+  "hints": ["The whole ingredient is the mushrooms", 
+            "Either 1st ingredient is mashed or the halved ingredient is the Carrots", 
+            "Either the  Onions or the Potatoes is added second", 
+            "The whole ingredient is added 2 ingredients before the mashed ingredient", 
+             "The Potatoes is added before the Onions"], 
+  "hint_grammar": [{"is": ["method", "whole", "ingredient", "Mushrooms"]}, {"compound_or": [{"is": ["order", "1st", "method", "mashed"]},
+   {"is": ["method", "halved", "ingredient", "Carrots"]}]}, {"simple_or": ["ingredient", "Onions", "ingredient", "Potatoes", "order", "2nd"]}, 
+   {"before": ["method", "whole", "method", "mashed", "order", 2]}, {"before": ["ingredient", "Potatoes", "ingredient", "Onions", "order"]}], 
+   "id":"hub2.1", "diff": 2, "sol": 0}

@@ -1,0 +1,260 @@
+Puzzle:
+      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    *    *    *  |
+    --------------------
+Hints:
+0. Either the plant Green Onions is the water 40oz or the plant Potatoes is the water 20oz 
+1. Either the plant Potatoes is the water 20oz or the plant Broccoli is the water 40oz 
+2. The plant Eggplant is 2 waters before the plant Broccoli 
+
+User Move 1 (None): ------
+|****|
+|****|
+|****|
+|*O**|
+
+Available Moves: 
+0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    O    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 2 (None): ------
+|****|
+|****|
+|****|
+|*OO*|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Potatoes'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'X')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]0:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plant, water, 'Eggplant', '40oz'), 'X'), ((plant, water, 'Eggplant', '20oz'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '20oz'), 'X'), ((plant, water, 'Eggplant', '40oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    o    O    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 3 (None): ------
+|****|
+|****|
+|O***|
+|*OO*|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Potatoes'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '60oz', 'Potatoes'), 'X'), ((water, plant, '60oz', 'Green Onions'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'X')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]0:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plant, water, 'Eggplant', '40oz'), 'X'), ((plant, water, 'Eggplant', '20oz'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '20oz'), 'X'), ((plant, water, 'Eggplant', '40oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  O    *    *    *  |
+Bro|  *    o    o    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 4 (None): ------
+|****|
+|****|
+|O***|
+|*XO*|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '40oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Potatoes'), 'X'), ((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '20oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Potatoes'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '60oz', 'Potatoes'), 'X'), ((water, plant, '60oz', 'Green Onions'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'X')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]-3:OPENING - [((water, plant, '80oz', 'Potatoes'), 'O')]-3:OPENING - [((water, plant, '80oz', 'Green Onions'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plant, water, 'Eggplant', '40oz'), 'X'), ((plant, water, 'Eggplant', '20oz'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '20oz'), 'X'), ((plant, water, 'Eggplant', '40oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  o    *    *    *  |
+Bro|  *    X    o    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 5 (None): ------
+|****|
+|****|
+|O***|
+|**O*|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '40oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Potatoes'), 'X'), ((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '20oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '60oz', 'Potatoes'), 'X'), ((water, plant, '60oz', 'Green Onions'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  o    *    *    *  |
+Bro|  *    _    o    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 6 (None): ------
+|****|
+|****|
+|O***|
+|**OO|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '40oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Potatoes'), 'X'), ((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '20oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '60oz', 'Potatoes'), 'X'), ((water, plant, '60oz', 'Green Onions'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  o    *    *    *  |
+Bro|  *    *    o    O  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 7 (None): ------
+|****|
+|****|
+|O***|
+|**XO|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '40oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Potatoes'), 'X'), ((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '20oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '60oz', 'Potatoes'), 'X'), ((water, plant, '60oz', 'Green Onions'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '80oz', 'Potatoes'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]-3:OPENING - [((water, plant, '40oz', 'Potatoes'), 'O')]-3:OPENING - [((water, plant, '40oz', 'Green Onions'), 'O')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plant, water, 'Eggplant', '40oz'), 'X'), ((plant, water, 'Eggplant', '20oz'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '20oz'), 'X'), ((plant, water, 'Eggplant', '40oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  o    *    *    *  |
+Bro|  *    *    X    o  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 8 (None): ------
+|****|
+|****|
+|O***|
+|***O|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '40oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Potatoes'), 'X'), ((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '20oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '80oz', 'Potatoes'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:APPLY_BEFORE_N_SPOTS - [((plant, water, 'Eggplant', '40oz'), 'O')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '20oz'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  o    *    *    *  |
+Bro|  *    *    _    o  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 9 (None): ------
+|****|
+|****|
+|OO**|
+|***O|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '40oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Potatoes'), 'X'), ((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '20oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '80oz', 'Potatoes'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:APPLY_BEFORE_N_SPOTS - [((plant, water, 'Broccoli', '60oz'), 'O')]2:APPLY_BEFORE_N_SPOTS - [((plant, water, 'Eggplant', '40oz'), 'O')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'O')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '20oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  o    O    *    *  |
+Bro|  *    *    *    o  |
+    --------------------
+Possible Reasonings: 
+1: hint - "The plant Eggplant is 2 waters before the plant Broccoli" - APPLY_BEFORE_N_SPOTS
+Likely Reasoning: hint:The plant Eggplant is 2 waters before the plant Broccoli:APPLY_BEFORE_N_SPOTS (insight)
+
+
+User Move 10 (None): ------
+|****|
+|****|
+|XO**|
+|***O|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '80oz', 'Potatoes'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Potatoes'), 'X'), ((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '20oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Potatoes'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:APPLY_BEFORE_N_SPOTS - [((plant, water, 'Broccoli', '60oz'), 'O')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]-3:OPENING - [((water, plant, '60oz', 'Potatoes'), 'O')]-3:OPENING - [((water, plant, '60oz', 'Green Onions'), 'O')]2:BEFORE_N_SPOTS_SHIFT - [((plant, water, 'Broccoli', '60oz'), 'X'), ((plant, water, 'Broccoli', '80oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  X    o    *    *  |
+Bro|  *    *    *    o  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 11 (None): ------
+|****|
+|****|
+|*O**|
+|***O|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '20oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Potatoes'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '80oz', 'Potatoes'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]2:BEFORE_N_SPOTS_SHIFT - [((plant, water, 'Broccoli', '60oz'), 'X')]2:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Broccoli', '60oz'), 'X')]0:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  _    o    *    *  |
+Bro|  *    *    *    o  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 12 (None): ------
+|****|
+|**O*|
+|*O**|
+|***O|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '20oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Potatoes'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '80oz', 'Potatoes'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]0:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    O    *  |
+Egg|  *    o    *    *  |
+Bro|  *    *    *    o  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+
+User Move 13 (None): ------
+|O***|
+|**O*|
+|*O**|
+|***O|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '20oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X')]-2:CROSS_OUT - [((water, plant, '60oz', 'Potatoes'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Eggplant'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]-2:CROSS_OUT - [((water, plant, '40oz', 'Potatoes'), 'X'), ((water, plant, '40oz', 'Green Onions'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '60oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '80oz', 'Potatoes'), 'X'), ((water, plant, '80oz', 'Green Onions'), 'X'), ((water, plant, '80oz', 'Eggplant'), 'X')]0:APPLY_OR - [((plant, water, 'Green Onions', '40oz'), 'Y'), ((plant, water, 'Potatoes', '20oz'), 'Y')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'Y'), ((plant, water, 'Broccoli', '40oz'), 'Y')]2:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X')]2:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Broccoli', '20oz'), 'X'), ((plant, water, 'Broccoli', '40oz'), 'X')]-3:OPENING - [((water, plant, '20oz', 'Potatoes'), 'O')]0:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]1:APPLY_OR - [((plant, water, 'Potatoes', '20oz'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  O    *    *    *  |
+Gre|  *    *    o    *  |
+Egg|  *    o    *    *  |
+Bro|  *    *    *    o  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (insight)
+
+

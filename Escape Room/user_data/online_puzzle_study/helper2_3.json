@@ -1,0 +1,9 @@
+{"solution": "------\n|XXOX|\n|XOXX|\n|OXXX|\n|XXXO|\n", "categories": [{"name": "light", "entities": ["Full Shade", "Partial Shade", "Partial Sun", "Full Sun"], 
+"is_numeric": false}, {"name": "plant", "entities": ["Potatoes", "Green Onions", "Eggplant", "Broccoli"], "is_numeric": false}], 
+"hints": ["The Potatoes either need Full shade or Partial Sun", 
+"The plan that needs Full Shade is either the Eggplant or the Broccoli. ", 
+"The Broccoli needs Full Sun"], 
+
+"hint_grammar": [{"simple_or": ["light", "Full Shade", "light", "Partial Sun", "plant", "Potatoes"]}, 
+{"compound_or": [{"is": ["light", "Full Shade", "plant", "Eggplant"]}, {"is": ["light", "Full Shade", "plant", "Broccoli"]}]}, 
+{"is": ["light", "Full Sun", "plant", "Broccoli"]}], "id": "help2.3", "diff": 2, "sol": 0}

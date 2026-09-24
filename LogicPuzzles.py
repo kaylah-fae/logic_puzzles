@@ -1,31 +1,6 @@
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:percent
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.15.2
-#   kernelspec:
-#     display_name: Python 3 (ipykernel)
-#     language: python
-#     name: python3
-# ---
-
-# %%
-# Update this version to verify that .py and .ipynb are in sync.
-# Version: 5.0
-
-# %% colab={"base_uri": "https://localhost:8080/"} id="u9fPlqt1JIrO" outputId="046eb385-7b0d-4f86-ed8d-ccf802682a2d"
-# !pip install parsimonious
-
-# %% id="AzB0GRIux4lQ"
 # Imports for DAAAYS
 import itertools
 
-# from parsimonious.grammar import Grammar
-# from parsimonious.nodes import NodeVisitor
 import random
 from copy import deepcopy
 from enum import Enum
@@ -34,6 +9,8 @@ import ultraimport
 ultraimport("__dir__/HintToEnglish.py", package="main")
 from main.HintToEnglish import hint_to_english
 
+# This file handles logic puzzles, including finding and applying tactics.
+
 MOVE_MARKS = {"X", "O", "Y", "N", "_"}
 YES_MARKS = {"O", "Y"}
 NO_MARKS = {"X", "N"}
@@ -41,31 +18,13 @@ TENTATIVE_MARKS = {"Y", "N"}
 BLANK_MARKS = {"*", "_"}
 CONFIDENT_MARKS = {"X", "O"}
 
-# %% [markdown] id="_98_qlHVJX47"
-# # Murder Mystery Puzzle!
-
-# %% [markdown] id="VAgqh9CTJaif"
-# ## Defining a logic puzzle class
-#
-#
-# ### Answer(cat1, cat2, ent1, ent2, symbol)
-#
-# Set the symbol (ex: "X") for ent1 in cat1 and ent2 in cat2
-#
-# ### is_valid()
-# Return true if there are no logical contradictions in puzzle
-#
-# Types of contradicitons:
-# * grid: more than 1 "O" in one row or column
-# * truth: if scarlet has a knife and the knife is in the study, then scarlet should be in the study
-#
-# ### is_complete()
-#
-# Returns true if is_valid and there is exactly one "O" in each row and column.
-
-
-# %% id="YxoXVU28JZaw"
+# A logic puzzle category
 class Category:
+    # title: the name of the category
+    # entities: list of strings/numbers representing the entities in the category 
+    # (e.g. ["dog", "cat", "bird"]; [1, 2, 3]; ["two hours", "four hours", "six hours"])
+    # is_numeric: whether the category is ordered or not 
+    # increment: the increment of an ordered category (how far apart the values are)
     def __init__(self, title, entities, is_numeric=False, increment=1):
         self.title = title
         self.entities = entities
@@ -97,11 +56,10 @@ class Category:
             f"{self.title}:{self.is_numeric}:{self.increment}:{sorted(self.entities)}"
         )
 
-
-# %% id="EFhbSHGwKlRs"
-
-
+# A logic puzzle grid state
 class Puzzle:
+    # categories: list of Category objects for the logic puzzle. 
+    # Each Category should have the same number of entities.
     def __init__(self, categories):
         """
         Set up a blank puzzle
@@ -113,9 +71,10 @@ class Puzzle:
         This can be used to determine how to arrange grids so that each category
         is matched with each other exactly once
 
-        In the dictory every pair of categories is represented as "cat1:cat2"
+        The grids dictionary represents the puzzle state.
+        In the grids dictionary every subgrid (pair of categories) is represented as key "cat1:cat2"
         where cat1 is the category on the top and cat2 is one the left. The value
-        of the diction is a 2d array, such that grid[x][y] represents the symbol
+        of each key is a 2d array, such that grid[x][y] represents the symbol
         for the xth entitity in cat2 and the yth entity in cat1.
         """
         self.categories = categories
@@ -124,10 +83,11 @@ class Puzzle:
         for i in range(len(self.categories) - 1, 0, -1):
             self.top_bottom.append(self.categories[i])
         self.grids = {}
-        self.history = [deepcopy(self.grids)]
+        self.history = [deepcopy(self.grids)] # Track changes to the puzzle grid over time
 
         rows = len(self.top_bottom)
 
+        # Initialize category subgrids to "*"
         for top_category in self.left_right:
             for i in range(rows):
                 left_cat = self.top_bottom[i]
@@ -141,8 +101,7 @@ class Puzzle:
 
     def get_category(self, entity):
         """
-        return a category where entity
-        belong to it
+        return the category that entity belongs to
         """
         for cat in self.categories:
             if entity in cat.entites:
@@ -151,7 +110,7 @@ class Puzzle:
 
     def get_grid(self, cat1, cat2):
         """
-        Get the grid for cat1 and cat2
+        Get the subgrid for cat1 and cat2
         assuming cat1 is the top category
         """
         if self._to_key(cat1, cat2) in self.grids:
@@ -161,8 +120,8 @@ class Puzzle:
 
     def trim_ent(self, ent):
         """
-        trim an entity to three character
-        to be able to print
+        trim an entity to three characters
+        to be able to print to console
         """
         if len(ent) > 3:
             return ent[0:3]
@@ -179,14 +138,20 @@ class Puzzle:
 
     def answer(self, loc, new_symbol):
         """
-        given ent1 in cat1 and ent2 in cat1
-        change the symbol in the grid.
+        Set the value of a location in the grid.
+
+        loc: (cat1, cat2, ent1, ent2)
+        new_symbol: the symbol to place at the location
 
         This works regardless of the order of cat1 and cat2
-        ex: you don't need to put the top category first
+        - cat1 is not assumed to be the top category
+
+        Returns
+        changed: whether the grid has been changed by the new symbol
+        diff: a Puzzle whose grid is just the change made
         """
         cat1, cat2, ent1, ent2 = loc
-        diff = Puzzle(self.categories)
+        diff = Puzzle(self.categories) # Track the change made to the grid.
         if self.get_symbol(cat1, cat2, ent1, ent2) == new_symbol:
             return False, diff
         index1 = cat1.entities.index(ent1)
@@ -213,9 +178,9 @@ class Puzzle:
 
     def _print_row(self, top_cats, cat2, remove_top=False):
         """
-        return a singular row for the puzzle,
+        return the string representation of a singular row for the puzzle,
         given the columns (top_cats) and the row (cat2)
-        should be used internally
+        remove_top: whether to give the entity names at the top of the row
         """
 
         top_ents = []
@@ -247,9 +212,8 @@ class Puzzle:
 
     def _print_row_small(self, top_cats, cat2):
         """
-        return a singular row for the puzzle,
+        return the minimal string representation of a singular row for the puzzle,
         given the columns (top_cats) and the row (cat2)
-        should be used internally
         """
 
         top_ents = []
@@ -275,8 +239,9 @@ class Puzzle:
 
     def print_row(self, row, small=False):
         """
-        find the top categories and the vertical categories
-        for a single row
+        return the string representation of a given row of the puzzle
+        row: the index of the category in top_bottom
+        small: whether to use the minimal representation (_print_row_small)
         """
         left_cat = self.top_bottom[row]
         num_top = len(self.left_right) - row
@@ -288,7 +253,7 @@ class Puzzle:
 
     def print_grid(self):
         """
-        return the entire puzzle string
+        return the string representation of the entire puzzle
         """
         return_str = ""
         for i in range(len(self.top_bottom)):
@@ -304,9 +269,7 @@ class Puzzle:
 
     def print_grid_small(self):
         """
-        return the entire puzzle string
-
-        TODO: add category names?
+        return the minimal string representation of the entire puzzle
         """
         return_str = ""
         for i in range(len(self.top_bottom)):
@@ -314,6 +277,7 @@ class Puzzle:
 
         return return_str
 
+    # Ensure that the one to one constraint is not violated by the puzzle grid.
     def _grid_is_valid(self, grid):
         """
         Check that there are one or less "O"s
@@ -335,6 +299,8 @@ class Puzzle:
 
         return True
 
+    # Ensure that the one to one constraint is not violated, 
+    # and every row and column has a value.
     def _grid_is_complete(self, grid):
         """
            Check that there is exactly 1 "O"
@@ -356,6 +322,7 @@ class Puzzle:
 
         return True
 
+    # Check that every category obeys the one to one constraint.
     def cats_is_valid(self, cat1, cat2):
         """
         Return true if there is at most 1 "O"
@@ -368,9 +335,10 @@ class Puzzle:
 
         return self._grid_is_valid(grid)
 
+    # Find all the entities that ent in category is known to be related to.
     def find_truths(self, category, ent):
         """
-        return an dictionary where the
+        return a dictionary where the
         keys are category names where the
         value of the entity is known, and the values
         are which entity in that category "ent" is
@@ -394,6 +362,7 @@ class Puzzle:
 
         return truths
 
+    # Get all known relationships for ent in category
     def get_known_relations(self, category, ent):
         """
         return {
@@ -432,6 +401,8 @@ class Puzzle:
 
         return relations
 
+    # Get the grid symbol at the intersection of cat1:ent1 and cat2:ent2, 
+    # regardless of which category is on top.
     def get_symbol(self, cat1, cat2, ent1, ent2):
         """
         return the symbol at ent1 and ent2
@@ -448,6 +419,7 @@ class Puzzle:
 
         return None
 
+    # Get the category with the given title.
     def get_category(self, title):
         """
         get category object from title
@@ -469,6 +441,7 @@ class Puzzle:
 
         return ents
 
+    # Find the number of violations of the one to one and transitive constraints.
     def num_violations(self):
         """
         Return the number of truth violations
@@ -537,6 +510,7 @@ class Puzzle:
                         return False
         return True
 
+    # Check whether the one to one and transitive constraints are followed.
     def is_valid(self):
         """
         return true if there there is at
@@ -553,10 +527,13 @@ class Puzzle:
         # make sure truths have no violations
         return self._truths_valid()
 
+    # Check that every entity has a true relationship with at least one entity
+    # in each other category, 
+    # and the one to one and transitive constraints are satisfied.
     def is_complete(self):
         """
         return true if there is exactly 1 "O"
-        in each row and column after depth = 1all possible TRANS_ABC_TRUE moves have been applied (in a loop)
+        in each row and column after depth = all possible TRANS_ABC_TRUE moves have been applied (in a loop)
 
         and there are no truth violations
         """
@@ -602,6 +579,7 @@ class Puzzle:
             l += len(row)
         return s / l, v / (len(grid))
 
+    # Percent of the grid that has been filled with a confident mark.
     def percent_complete(self):
         """
         return the ratio of cells that
@@ -617,12 +595,18 @@ class Puzzle:
             grid_len += 1
         return grid_sums / grid_len, valid_sums / grid_len
 
-
+# Check that the puzzle and hints satisfy the requirements.
+# num_cats: number - the puzzle has at least this number of categories
+# num_ents: number - the categories have at least this number of entities
+# numeric: at least one of the categories is numeric
+# hint: a list of hint types. A hint of at least one of these types should be included in the hints. 
 def validate__default(requirements, puzzle, hints):
     cats = puzzle.categories
     if len(cats) < requirements["num_cats"]:
         return False
     if len(cats[0].entities) < requirements["num_ents"]:
+        return False
+    if get_valid_cats(requirements, cats) == None:
         return False
     hint_types = requirements["hint"]
     if len(hint_types) == 0:
@@ -650,7 +634,10 @@ def validate__default(requirements, puzzle, hints):
                 return True
     return False
 
-
+# Get a list of categories that satisfy the requirements:
+# num_cats: number - at least this number of categories satisfies the num_ents requirement
+# num_ents: the minimum number of entities required for each category
+# numeric: at least one of the categories is numeric
 def get_valid_cats(requirements, categories):
     num_cats = requirements["num_cats"]
     num_ents = requirements["num_ents"]
@@ -672,7 +659,10 @@ def get_valid_cats(requirements, categories):
     return None
 
 
-# Randomly select num_ents entities from num_cats categories
+# Randomly select a minimum list of categories and entities that satisfy the requirements.
+# num_cats: number - the number of categories required
+# num_ents: the number of entities required per category
+# numeric: at least one of the categories is numeric
 def get_rand_cats(requirements, categories):
     num_cats = requirements["num_cats"]
     num_ents = requirements["num_ents"]
@@ -694,15 +684,18 @@ def get_rand_cats(requirements, categories):
 
     for cat in valid_cats[:num_cats]:
         ents = deepcopy(cat.entities)
-        random.shuffle(ents)
+        if not cat.is_numeric:
+            random.shuffle(ents)
         ents = ents[:num_ents]
         trunc_cat = deepcopy(cat)
         trunc_cat.entities = ents
         cats.append(trunc_cat)
 
 
-# Take in categories; return puzzle, hints for a minimal insight problem.
-# Returns None, None if a valid puzzle cannot be created.
+# Return a random minimal tactic puzzle from categories.
+# requirements: the category and hint requirements of the tactic
+# validate: a validator for the puzzle and hints generated
+# categories: available categories to use
 def gen_min_puzzle__default(requirements, validate, categories):
     hint_types = requirements["hint"]
 
@@ -726,19 +719,53 @@ def gen_min_puzzle__default(requirements, validate, categories):
         valid = validate(requirements, puzzle, [hint])
     return puzzle, [hint]
 
+# Return a list such that 
+# for all entities val in val_cat, 
+# add the location (cat, val_cat, ent, val) to the list
+# if val could be related to ent.
+def get_poss_true_locs(puzzle, cat, ent, val_cat):
+    poss_true_locs = []
+    poss_vals = val_cat.entities
+    for val in poss_vals:
+        loc = (cat, val_cat, ent, val)
+        if puzzle.get_symbol(*loc) != "X":
+            poss_true_locs.append(loc)
+        if puzzle.get_symbol(*loc) == "O":
+            return [loc]
+    return poss_true_locs
 
+# Get the categories and entities of an "is" hint
+def parse_is(is_hint):
+    terms = is_hint["is"]
+    cat1 = terms[0]
+    ent1 = terms[1]
+    cat2 = terms[2]
+    ent2 = terms[3]
+    ents = [(cat1, ent1), (cat2, ent2)]
+    return ents
+
+# Get the categories and entities of a "before" hint
+def parse_before(bef_hint):
+    terms = bef_hint["before"]
+
+    num_cat = terms[4]
+
+    ents = parse_is({"is": terms})
+    return ents, num_cat
+
+# Class representing "insights" (tactics)
 class Insight:
     ALL_INSIGHTS = set()
 
     # Maintain an insight DAG in which each node points to its descendants (and its parents)
     def __init__(
         self,
-        name,
-        value,
-        parents=set(),
-        requirements={},
-        validate=validate__default,
-        gen_min_puzzle=gen_min_puzzle__default,
+        name, # The name of the tactic
+        value, # The position in the tactic ordering
+        parents=set(), # The parents in the DAG
+        requirements={}, # The requirements for a puzzle to potentially use this tactic
+        validate=validate__default, # A validator to check that a puzzle could use this tactic
+        gen_min_puzzle=gen_min_puzzle__default, # Generator to produce a minimal puzzle requiring this tactic
     ):
         self.name = name
         self.value = value
@@ -753,7 +780,7 @@ class Insight:
             "hint": [],
             "superceded_by": [],
         }
-        self.gen_min_puzzle = gen_min_puzzle__default
+        self.gen_min_puzzle = gen_min_puzzle
         for parent in parents:
             for key, value in parent.requirements.items():
                 if not self.requirements[key] or value > self.requirements[key]:
@@ -783,6 +810,7 @@ class Insight:
             return True
         return self.value < other.value
 
+    # The depth of the tactic in the DAG
     def depth(self):
         return self._depth(0)
 
@@ -798,7 +826,8 @@ class Insight:
 
     # An insight and all its descendants in the DAG.
     # WARNING: This will infinitely loop if there is a cycle in the insight graph.
-    # There are ways I could get around an infinite loop, but it's more elegant this way,
+    # There are ways I could get around an infinite loop, 
+    # but this code is nice and clean,
     # and we really shouldn't have looping dependencies.
     def sub_dag(self, children_only=False):
         to_visit = {self}
@@ -814,21 +843,19 @@ class Insight:
         return sub_dag
 
 
-# Apply an is hint (given)
+# APPLY_IS: Apply an is hint (given)
 Insight.APPLY_IS = Insight("APPLY_IS", 1, set(), {"hint": ["is"]})
 
-
+# CROSS_OUT: If there is an O in a row/column, the rest of the row/column must be X (given)
 def gen_min_puzzle__cross_out(requirements, categories):
     puzzle, hints = gen_min_puzzle__default(requirements, categories)
     is_hint = Grammar.generate_hint_of_type(puzzle.categories, "is")
     SOLVER.apply_hint(puzzle, is_hint, True)
     return puzzle, hints
 
-
-# If there is an O in a row/column, the rest of the row/column must be X (given)
 Insight.CROSS_OUT = Insight("CROSS_OUT", 2, gen_min_puzzle=gen_min_puzzle__cross_out)
 
-
+# OPENING: If a row/column has one opening and the rest are Xs, it must be O (given)
 def gen_min_puzzle__opening(requirements, categories):
     cats = get_rand_cats(requirements, categories)
     if not cats:
@@ -842,14 +869,13 @@ def gen_min_puzzle__opening(requirements, categories):
     SOLVER.apply_multi_moves(puzzle, cross_out_moves)
     return puzzle, []
 
-
-# If a row/column has one opening and the rest are Xs, it must be O (given)
 Insight.OPENING = Insight("OPENING", 3, gen_min_puzzle=gen_min_puzzle__opening)
 
-# Apply a not hint (given)
+# APPLY_NOT: Apply a not hint (given)
 Insight.APPLY_NOT = Insight("APPLY_NOT", 4, set(), {"num_ents": 3, "hint": ["not"]})
 
 
+# APPLY_OR: Apply an or hint once one of the clauses has been answered. (given)
 def gen_min_puzzle__apply_or(requirements, categories):
     puzzle, or_hint = gen_min_puzzle__default(requirements, categories)
     if not puzzle:
@@ -870,8 +896,6 @@ def gen_min_puzzle__apply_or(requirements, categories):
     puzzle.answer(loc, sy)
     return puzzle, or_hint
 
-
-# Apply an or hint once one of the clauses has been answered. (given)
 Insight.APPLY_OR = Insight(
     "APPLY_OR",
     5,
@@ -881,35 +905,7 @@ Insight.APPLY_OR = Insight(
 )
 
 
-def get_poss_true_locs(puzzle, cat, ent, val_cat):
-    poss_true_locs = []
-    poss_vals = val_cat.entities
-    for val in poss_vals:
-        loc = (cat, val_cat, ent, val)
-        if puzzle.get_symbol(*loc) != "X":
-            poss_true_locs.append(loc)
-
-
-def parse_is(is_hint):
-    terms = is_hint["is"]
-    cat1 = terms[0]
-    ent1 = terms[1]
-    cat2 = terms[2]
-    ent2 = terms[3]
-    ents = [(cat1, ent1), (cat2, ent2)]
-    return ents
-
-
-def parse_simple_hint(bef_hint):
-    terms = bef_hint["before"]
-
-    num_cat = terms[4]
-
-    ents = parse_is({"is": terms})
-    return ents, num_cat
-
-
-# If A is answered and B is 1 after A, then answer B is the next one after A (given)
+# Generator for minimal before tactic puzzles
 def gen_min_puzzle__before(requirements, categories):
     puzzle, bef_hint = gen_min_puzzle__default(requirements, categories)
     if not puzzle:
@@ -927,7 +923,7 @@ def gen_min_puzzle__before(requirements, categories):
 
     return puzzle, bef_hint
 
-
+# APPLY_BEFORE_ONE_SPOT: If A is answered and B is 1 after A, then answer B is the next one after A (given)
 Insight.APPLY_BEFORE_ONE_SPOT = Insight(
     "APPLY_BEFORE_ONE_SPOT",
     6,
@@ -936,7 +932,7 @@ Insight.APPLY_BEFORE_ONE_SPOT = Insight(
     gen_min_puzzle=gen_min_puzzle__before,
 )
 
-# If A is answered and B is N after A, then answer B is N after A (given)
+# APPLY_BEFORE_N_SPOTS: If A is answered and B is N after A, then answer B is N after A (given)
 Insight.APPLY_BEFORE_N_SPOTS = Insight(
     "APPLY_BEFORE_N_SPOTS",
     7,
@@ -945,7 +941,7 @@ Insight.APPLY_BEFORE_N_SPOTS = Insight(
     gen_min_puzzle=gen_min_puzzle__before,
 )
 
-# If A is answered then B must be one of the spots after A and vice versa (X where that is not true)
+# APPLY_BEFORE_UNDEFINED_SPOTS: If A is answered then B must be one of the spots after A and vice versa (X where that is not true)
 # Can be derived from APPLY_BEFORE_N_SPOTS by considering the possible values for N and finding that regardless of the N,
 # this must be true.
 Insight.APPLY_BEFORE_UNDEFINED_SPOTS = Insight(
@@ -956,7 +952,7 @@ Insight.APPLY_BEFORE_UNDEFINED_SPOTS = Insight(
     gen_min_puzzle=gen_min_puzzle__before,
 )
 
-# The transitive property applies (A -> B and B -> C, so A -> C) (given)
+# TRANS_ABC_TRUE: Apply the transitive property (A -> B and B -> C, so A -> C) (given)
 Insight.TRANS_ABC_TRUE = Insight("TRANS_ABC_TRUE", 14, set(), {"num_cats": 3})
 # A -> B and B !> C, so A !> C (given)
 # Can be derived from TRANS_ABC_TRUE (if A -> B and A -> C then B -> C, which is a contradiction)
@@ -969,7 +965,7 @@ Insight.TRANS_ABC_FALSE = Insight(
 )
 
 
-# If A or B from category 0 is C then no other entity from category 0 is C
+# SIMPLE_OR_SAME_CAT: If A or B from category 0 is C then no other entity from category 0 is C
 # Can be derived by considering A -> C and B -> C and seeing that either way, all other entities from 0 are X.
 Insight.SIMPLE_OR_SAME_CAT = Insight(
     "SIMPLE_OR_SAME_CAT",
@@ -979,7 +975,7 @@ Insight.SIMPLE_OR_SAME_CAT = Insight(
 )
 
 
-# If A or B is C then A is not B
+# SIMPLE_OR_DIFF_CAT: If A or B is C then A is not B
 # Can be derived by applying the OR rule in turn and seeing that by TRANS_ABC_FALSE, A is not B either way.
 Insight.SIMPLE_OR_DIFF_CAT = Insight(
     "SIMPLE_OR_DIFF_CAT",
@@ -988,7 +984,7 @@ Insight.SIMPLE_OR_DIFF_CAT = Insight(
     {"hint": ["simple_or__diff_cat"]},
 )
 
-# The before entity can't be in the last spot (and vice versa for the after entity) Same for undefined spots
+# BEFORE_NOINFO: The before entity can't be in the last spot (and vice versa for the after entity) Same for undefined spots
 # Can be derived by considering each possible value for A with APPLY_BEFORE_UNDEFINED_SPOTS and seeing that in the last spot,
 # there is no remaining possible value for B.
 Insight.BEFORE_NOINFO = Insight(
@@ -998,7 +994,7 @@ Insight.BEFORE_NOINFO = Insight(
     {"hint": ["before"]},
 )
 
-# The before entity can't be in the last N spots (and vice versa for the after entity)
+# BEFORE_N_SPOTS_NOINFO: The before entity can't be in the last N spots (and vice versa for the after entity)
 # The general case of BEFORE_NOINFO. It could also be derived directly from APPLY_BEFORE_N_SPOTS,
 # but expert knowledge suggests it will be easier for users to encounter BEFORE_NOINFO first.
 Insight.BEFORE_N_SPOTS_NOINFO = Insight(
@@ -1008,7 +1004,7 @@ Insight.BEFORE_N_SPOTS_NOINFO = Insight(
     {"hint": ["before__n"]},
 )
 
-# A streak of Xs at the beginning/end forces the first available position for the other entity to shift.
+# BEFORE_N_SPOTS_SHIFT: A streak of Xs at the beginning/end forces the first available position for the other entity to shift.
 # Can be derived in the same way as BEFORE_N_SPOTS_NOINFO;
 # again, it will be easier for users to encounter BEFORE_N_SPOTS_NOINFO first.
 Insight.BEFORE_N_SPOTS_SHIFT = Insight(
@@ -1019,7 +1015,7 @@ Insight.BEFORE_N_SPOTS_SHIFT = Insight(
 )
 
 
-# For a position to be a valid answer, the corresponding position +/- num must be valid for the other entity
+# BEFORE_N_SPOTS_CROSSCHECK: For a position to be a valid answer, the corresponding position +/- num must be valid for the other entity
 # The most complex case of BEFORE_NOINFO.
 def gen_min_puzzle__before_crosscheck(requirements, categories):
     puzzle, hints = gen_min_puzzle__default(requirements, categories)
@@ -1049,7 +1045,7 @@ Insight.BEFORE_N_SPOTS_CROSSCHECK = Insight(
 )
 
 
-# A and B don't share any possibilities; A != B
+# TRANS_SETS: A and B don't share any possibilities; A != B
 # Can be derived by considering all possible values for A and applying TRANS_ABC_FALSE.
 # Another kind of crosscheck.
 def gen_min_puzzle__trans_sets(requirements, categories):
@@ -1088,7 +1084,7 @@ Insight.TRANS_SETS = Insight(
 )
 
 
-# If A < B and A, B are not in the same category, then A is not B.
+# BEFORE_DIFF_CAT: If A < B and A, B are not in the same category, then A is not B.
 # Can be derived by considering each possible value for A with APPLY_BEFORE_UNDEFINED_SPOTS and applying TRANS_ABC_FALSE
 Insight.BEFORE_DIFF_CAT = Insight(
     "BEFORE_DIFF_CAT",
@@ -1391,7 +1387,7 @@ class Grammar:
 
 
 # ## Using hints to solve puzzles
-# Giving a list of hints you can solve the puzzle (as much as the information in the hints will allow). This can be done by iteratively applying indivual hints untill they are all completed (ex: the "not" rule is completed after putting an "X" on the board, but the "before" rule may still have information after placing a symbol) or the rules stopping changing the game state (ex: the "or" rule cannot change the same state if it doesn't know which rule is correct). Hint can also be invalid, which will terminate the process (ex: if there is a "not" rule over a spot that another hint already placed an "O).
+# Giving a list of hints you can solve the puzzle (as much as the information in the hints will allow). This can be done by iteratively applying individual hints until they are all completed (ex: the "not" rule is completed after putting an "X" on the board, but the "before" rule may still have information after placing a symbol) or the rules stopping changing the game state (ex: the "or" rule cannot change the same state if it doesn't know which rule is correct). Hint can also be invalid, which will terminate the process (ex: if there is a "not" rule over a spot that another hint already placed an "O).
 #
 #
 # ```
@@ -1403,7 +1399,7 @@ class Grammar:
 #     if hint or game state is invalid --> exit
 #     if hint is complete hint remove from queue
 #
-#   if no hints changed gamestate --> exit
+#   if no hints changed --> exit
 #
 # ```
 #
@@ -1413,6 +1409,12 @@ class Solver:
         self.allow_uncertain_moves = allow_uncertain_moves
         return
 
+    # Add a multi_move to the list of available multi_moves.
+    # puzzle: the puzzle
+    # moves: the individual grid cell changes that make up the multi_move
+    # insight: the tactic that is being used to make the moves
+    # multi_moves: the list of available moves to add to
+    # contradiction: whether a contradiction has already been seen in the multi_moves
     def add_multi_move(self, puzzle, moves, insight, multi_moves, contradiction):
         deduped_moves = []
         for move in moves:
@@ -1435,6 +1437,7 @@ class Solver:
             multi_moves.append(multi_move)
         return contradiction
 
+    # Apply all multi_moves to the puzzle.
     def apply_multi_moves(self, puzzle, multi_moves):
         applied = False
         for move in multi_moves:
@@ -1442,6 +1445,7 @@ class Solver:
                 applied = True
         return applied
 
+    # Apply a single multi_move to the puzzle.
     def apply_multi_move(self, puzzle, multi_move):
         applied = False
         for move in multi_move["moves"]:
@@ -1449,6 +1453,8 @@ class Solver:
                 applied = True
         return applied
 
+    # Extend the list of available multi_moves with the mo_moves.
+    # contradiction: whether a contradiction has already been found in the multi_moves
     def extend_multi_moves(
         self, mo_contradiction, mo_moves, contradiction, multi_moves
     ):
@@ -1456,6 +1462,11 @@ class Solver:
         multi_moves.extend(mo_moves)
         return contradiction
 
+    # Get all moves to cross out the puzzle at loc
+    # (X all cells in the row and column except loc)
+    # apply: whether to apply the moves to the puzzle now
+    # Return the multi moves for the cross out. 
+    # There will be one multi move for the row and one for the column.
     def cross_out(self, puzzle, loc, apply=False):
         """
         crosses out the rest of the row and column for an O
@@ -1467,8 +1478,8 @@ class Solver:
 
         cat1, cat2, ent1, ent2 = loc
 
+        # One way
         cat1_insight_marks = []
-        # x out the cross sections
         for ent in cat1.entities:
             if ent != ent1:
                 cat1_insight_marks.append(((cat1, cat2, ent, ent2), "X"))
@@ -1476,6 +1487,7 @@ class Solver:
             puzzle, cat1_insight_marks, insight, multi_moves, contradiction
         )
 
+        # The other way
         cat2_insight_marks = []
         for ent in cat2.entities:
             if ent != ent2:
@@ -1489,7 +1501,8 @@ class Solver:
 
         return contradiction, multi_moves
 
-    # remove errors (discrepancies between the current puzzle and the canonical solution)
+    # Get all moves that would be required to erase errors in the puzzle grid
+    # (discrepancies between the current puzzle and the canonical solution)
     def repair(self, puzzle, solution, apply=False):
         multi_moves = []
         contradiction = False  # If this is true, then there is a mark that doesn't match the solution
@@ -1517,6 +1530,7 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to apply an "is" hint.
     def apply_is(self, puzzle, terms, apply=False):
         """
         Apply the is rule to puzzle, will always complete in one step
@@ -1542,6 +1556,7 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to apply a "not" hint.
     def apply_not(self, puzzle, terms, apply=False):
         """
         Apply the not rule to puzzle, will always complete in one step
@@ -1567,6 +1582,8 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to apply the cross out tactic to the whole puzzle
+    # (each location has its own row and column moves)
     # If a row/column has 1 O then fill the rest with X.
     # If a row/column has more than one O then contradiction.
     def apply_cross_out(self, puzzle, apply=False):
@@ -1624,6 +1641,8 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to apply the OPENING insight.
+    # (each location gets its own move)
     # If a row/column has 1 * and the rest are X then fill out a O there.
     # If a row/column is all X or has more than one O then contradiction.
     def apply_opening(self, puzzle, apply=False):
@@ -1701,6 +1720,7 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Apply a given cell change move to puzzle.
     def apply_move(self, puzzle, move):
         diff = move["move_diff"]
         for cat1 in puzzle.left_right:
@@ -1721,6 +1741,8 @@ class Solver:
                                 move_grid[ent2_idx][ent1_idx],
                             )
 
+    # Get the moves required to apply the transitive property
+    # to the whole puzzle. Each application is its own move.
     # If A is B and B is C then A is C
     # If A is B and B is not C then A is not C
     # ...
@@ -1828,6 +1850,8 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to follow a before hint,
+    # with a different move per applicable "before" tactic.
     def apply_before(self, puzzle, terms, apply=False):
         """
         apply the before rule to the puzzle
@@ -2077,6 +2101,8 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to follow a "simple or" hint,
+    # where each "or" tactic gets its own move.
     def apply_simple_or(self, puzzle, terms, apply=False):
         """
         Apply the or rule to puzzle, will be incomplete if not enough information is known
@@ -2169,6 +2195,8 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to follow a "compound or" hint,
+    # where each "or" tactic gets its own move.
     def apply_compound_or(self, puzzle, options, apply=False):
         """
         Apply the compound or rule to puzzle, will be incomplete if not enough information is known
@@ -2264,6 +2292,7 @@ class Solver:
             self.apply_multi_moves(puzzle, multi_moves)
         return contradiction, multi_moves
 
+    # Get the moves to apply a hint.
     def apply_hint(self, puzzle, hint, apply=False):
         """
         Given a hint dictionary and a puzzle, apply next step of the hint to the puzzle
@@ -2304,6 +2333,8 @@ class Solver:
 
         return contradiction, multi_moves
 
+    # Get all available tactic moves for the current puzzle state and hints.
+    # include_forbidden: whether to include moves that apply forbidden tactics.
     def get_available_moves(self, puzzle, hints, include_forbidden=False):
         """
         get all possible next moves in the solution:
@@ -2349,6 +2380,9 @@ class Solver:
             available_moves = without_forbidden
         return contradiction, available_moves
 
+    # Get a puzzle grid representing the changes made between before and after.
+    # changes_only: whether to include only the changes made 
+    # (if True, the rest of the grid is set to a "*". Else, the rest of the grid is lowercased)
     def get_move_diff(self, before, after, changes_only=True):
         diff = deepcopy(after)
         changed = False
@@ -2401,6 +2435,8 @@ class Solver:
                                 )
         return diff, changed
 
+    # The lowercase representation of grid symbol S,
+    # used in a move diff.
     def lowercase_grid_symbol(self, S):
         if S == "X":
             return "x"
@@ -2421,6 +2457,9 @@ class Solver:
     # - maybe have subfunctions for each insight
     # Potentially also pass in an insight DAG instead of just using the class DAG
     # - the DAG itself could be a class? Or it could be represented via a dict as initially
+
+    # Apply available moves until there are no more moves available, 
+    # or a contradiction is found
     def fast_forward(self, puzzle, hints):
         """
         solver
@@ -2440,6 +2479,8 @@ class Solver:
 
         return copy, is_valid
 
+    # Repeatedly loop through the hints and apply all available moves per hint,
+    # until there are no more moves to be made or a contradiction is found.
     def apply_hints(self, puzzle, hints, print_soln=False):
         """
         loop-based solver
@@ -2577,6 +2618,8 @@ class Solver:
 
         return copy, is_valid, loop
 
+    # Find the unmissable tactics for a given puzzle and hints,
+    # assuming that forbidden insights are unknown and can't be used.
     def unmissable_insights(self, puzzle, hints):
         if not self.can_solve_without_forbidden(puzzle, hints):
             # The puzzle is incomplete; checking insight needs doesn't make any sense.
@@ -2596,11 +2639,14 @@ class Solver:
 
         return unmissables
 
+    # Determine whether the puzzle with hints can be solved without using 
+    # forbidden tactics.
     def can_solve_without(self, puzzle, hints, forbidden):
         forbidden_solver = Solver(forbidden)
         completed_puzzle, is_valid = forbidden_solver.fast_forward(puzzle, hints)
         return completed_puzzle.is_complete() and is_valid
 
+    # Determine whether the puzzle with hints can be solved without using this solver's forbidden hints.
     def can_solve_without_forbidden(self, puzzle, hints):
         # expanded_forbidden_insights = set()
         # for insight in self.forbidden_insights:

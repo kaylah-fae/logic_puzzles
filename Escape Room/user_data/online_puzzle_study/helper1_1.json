@@ -1,0 +1,7 @@
+{"solution": "------\n|XXOX|\n|XOXX|\n|XXXO|\n|OXXX|\n", 
+"categories": [{"name": "shape", "entities": ["Elbow", "Bowtie", "Linguine", "Shell"], "is_numeric": false},
+ {"name": "sauce", "entities": ["Tomato", "Alfredo", "Pesto", "Carbonara"], "is_numeric": false}], 
+ "hints": ["Either the Elbow pasta goes with Carbonara or Shells go with Alfredo (but not both).", 
+ "Shells are not with Tomato sauce.", "Alfredo goes on the Bowtie pasta"], 
+ "hint_grammar": [{"compound_or": [{"is": ["shape", "Elbow", "sauce", "Carbonara"]}, {"is": ["shape", "Shell", "sauce", "Alfredo"]}]}, 
+        {"not": [{"is": ["shape", "Shell", "sauce", "Tomato"]}]}, {"is": ["sauce", "Alfredo", "shape", "Bowtie"]}], "diff": 2, "sol": 0, "id":"help1.1"}

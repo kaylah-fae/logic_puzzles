@@ -1,0 +1,252 @@
+Puzzle:
+      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  *    *    *    *  | *    *    *    *  |
+Car|  *    *    *    *  | *    *    *    *  |
+Mus|  *    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  *    *    *    *  |
+hal|  *    *    *    *  |
+cho|  *    *    *    *  |
+mas|  *    *    *    *  |
+    --------------------
+Hints:
+0. The order 4th is the method halved 
+1. The method mashed is the ingredient Carrots 
+2. The ingredient Onions is the order 4th 
+3. The method chopped is 1 orders before the method mashed 
+4. The ingredient Carrots is 1 orders before the ingredient Mushrooms 
+
+User Move 1 (correct): -----------
+|O***|****|
+|****|****|
+|****|****|
+|****|****|
+------
+|****|
+|****|
+|****|
+|****|
+
+Available Moves: 
+0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  O    *    *    *  | *    *    *    *  |
+Car|  *    *    *    *  | *    *    *    *  |
+Mus|  *    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  *    *    *    *  |
+hal|  *    *    *    *  |
+cho|  *    *    *    *  |
+mas|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 2 (correct): -----------
+|O***|****|
+|****|****|
+|****|****|
+|****|****|
+------
+|****|
+|****|
+|O***|
+|****|
+
+Available Moves: 
+-2:CROSS_OUT - [((order, ingredient, '2nd', 'Potatoes'), 'X'), ((order, ingredient, '3rd', 'Potatoes'), 'X'), ((order, ingredient, '4th', 'Potatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Mushrooms', '2nd'), 'X')]4:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Mushrooms', '2nd'), 'X')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  o    *    *    *  | *    *    *    *  |
+Car|  *    *    *    *  | *    *    *    *  |
+Mus|  *    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  *    *    *    *  |
+hal|  *    *    *    *  |
+cho|  O    *    *    *  |
+mas|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-correct)
+
+
+User Move 3 (incorrect): -----------
+|O***|****|
+|O***|****|
+|****|****|
+|****|****|
+------
+|****|
+|****|
+|O***|
+|****|
+
+Available Moves: 
+-2:CROSS_OUT - [((order, method, '2nd', 'chopped'), 'X'), ((order, method, '3rd', 'chopped'), 'X'), ((order, method, '4th', 'chopped'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Potatoes'), 'X'), ((order, ingredient, '3rd', 'Potatoes'), 'X'), ((order, ingredient, '4th', 'Potatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'chopped', 'Potatoes'), 'O')]0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((method, order, 'mashed', '2nd'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]-1:TRANS_ABC_FALSE - [((method, ingredient, 'chopped', 'Carrots'), 'X')]-1:TRANS_ABC_FALSE - [((method, ingredient, 'chopped', 'Mushrooms'), 'X')]-1:TRANS_ABC_FALSE - [((method, ingredient, 'chopped', 'Onions'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, method, 'Potatoes', 'whole'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, method, 'Potatoes', 'halved'), 'X')]-1:TRANS_ABC_FALSE - [((ingredient, method, 'Potatoes', 'mashed'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Potatoes'), 'X')]3:BEFORE_N_SPOTS_CROSSCHECK - [((method, order, 'mashed', '3rd'), 'X')]4:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Mushrooms', '2nd'), 'X')]4:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Mushrooms', '2nd'), 'X')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  o    *    *    *  | *    *    *    *  |
+Car|  O    *    *    *  | *    *    *    *  |
+Mus|  *    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  *    *    *    *  |
+hal|  *    *    *    *  |
+cho|  o    *    *    *  |
+mas|  *    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 4 (incorrect): -----------
+|O***|****|
+|O***|****|
+|****|****|
+|****|****|
+------
+|****|
+|****|
+|O***|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((order, method, '2nd', 'chopped'), 'X'), ((order, method, '3rd', 'chopped'), 'X'), ((order, method, '4th', 'chopped'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Potatoes'), 'X'), ((order, ingredient, '3rd', 'Potatoes'), 'X'), ((order, ingredient, '4th', 'Potatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Carrots'), 'X'), ((order, ingredient, '3rd', 'Carrots'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'chopped', 'Carrots'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Potatoes', 'chopped'), 'O')]0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((method, order, 'mashed', '2nd'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:APPLY_BEFORE_ONE_SPOT - [((ingredient, order, 'Mushrooms', '2nd'), 'O')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Carrots'), 'X')]3:BEFORE_N_SPOTS_CROSSCHECK - [((method, order, 'mashed', '3rd'), 'X')]4:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Mushrooms', '2nd'), 'X'), ((ingredient, order, 'Mushrooms', '3rd'), 'X'), ((ingredient, order, 'Mushrooms', '4th'), 'X')]4:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Mushrooms', '2nd'), 'X'), ((ingredient, order, 'Mushrooms', '3rd'), 'X')]4:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]4:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]4:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]4:OPENING - [((order, ingredient, '4th', 'Mushrooms'), 'O')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  o    *    *    *  | *    *    *    *  |
+Car|  o    *    *    *  | *    *    *    *  |
+Mus|  *    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  *    *    *    *  |
+hal|  *    *    *    *  |
+cho|  o    *    *    *  |
+mas|  O    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 5 (incorrect): -----------
+|O***|****|
+|O***|****|
+|O***|****|
+|****|****|
+------
+|****|
+|****|
+|O***|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((order, method, '2nd', 'chopped'), 'X'), ((order, method, '3rd', 'chopped'), 'X'), ((order, method, '4th', 'chopped'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '2nd', 'mashed'), 'X'), ((order, method, '3rd', 'mashed'), 'X'), ((order, method, '4th', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'chopped'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Potatoes'), 'X'), ((order, ingredient, '3rd', 'Potatoes'), 'X'), ((order, ingredient, '4th', 'Potatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Carrots'), 'X'), ((order, ingredient, '3rd', 'Carrots'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'chopped', 'Carrots'), 'O')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'mashed', 'Carrots'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Potatoes', 'mashed'), 'O')]0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((method, order, 'mashed', '2nd'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:APPLY_BEFORE_ONE_SPOT - [((ingredient, order, 'Mushrooms', '2nd'), 'O')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Onions'), 'X')]4:BEFORE_N_SPOTS_SHIFT - [((ingredient, order, 'Mushrooms', '2nd'), 'X'), ((ingredient, order, 'Mushrooms', '3rd'), 'X'), ((ingredient, order, 'Mushrooms', '4th'), 'X')]4:BEFORE_N_SPOTS_CROSSCHECK - [((ingredient, order, 'Mushrooms', '2nd'), 'X'), ((ingredient, order, 'Mushrooms', '3rd'), 'X')]4:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]4:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]4:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]4:OPENING - [((order, ingredient, '4th', 'Mushrooms'), 'O')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  o    *    *    *  | *    *    *    *  |
+Car|  o    *    *    *  | *    *    *    *  |
+Mus|  O    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  *    *    *    *  |
+hal|  *    *    *    *  |
+cho|  o    *    *    *  |
+mas|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 6 (incorrect): -----------
+|O***|****|
+|O***|****|
+|O***|****|
+|****|****|
+------
+|O***|
+|****|
+|O***|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((order, method, '2nd', 'chopped'), 'X'), ((order, method, '3rd', 'chopped'), 'X'), ((order, method, '4th', 'chopped'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '2nd', 'mashed'), 'X'), ((order, method, '3rd', 'mashed'), 'X'), ((order, method, '4th', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'chopped'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Potatoes'), 'X'), ((order, ingredient, '3rd', 'Potatoes'), 'X'), ((order, ingredient, '4th', 'Potatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Carrots'), 'X'), ((order, ingredient, '3rd', 'Carrots'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Mushrooms'), 'X'), ((order, ingredient, '3rd', 'Mushrooms'), 'X'), ((order, ingredient, '4th', 'Mushrooms'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'chopped', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'mashed', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Potatoes', 'mashed'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Carrots', 'mashed'), 'O')]0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((method, order, 'mashed', '2nd'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:APPLY_BEFORE_ONE_SPOT - [((ingredient, order, 'Mushrooms', '2nd'), 'O')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]-3:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]-3:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]-3:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Onions'), 'X')]-1:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]-1:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]-1:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  o    *    *    *  | *    *    *    *  |
+Car|  o    *    *    *  | *    *    *    *  |
+Mus|  o    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  O    *    *    *  |
+hal|  *    *    *    *  |
+cho|  o    *    *    *  |
+mas|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 7 (incorrect): -----------
+|O***|****|
+|O***|****|
+|O***|****|
+|****|****|
+------
+|O***|
+|O***|
+|O***|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((order, method, '2nd', 'whole'), 'X'), ((order, method, '3rd', 'whole'), 'X'), ((order, method, '4th', 'whole'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'chopped'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '2nd', 'chopped'), 'X'), ((order, method, '3rd', 'chopped'), 'X'), ((order, method, '4th', 'chopped'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '2nd', 'mashed'), 'X'), ((order, method, '3rd', 'mashed'), 'X'), ((order, method, '4th', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'chopped'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Potatoes'), 'X'), ((order, ingredient, '3rd', 'Potatoes'), 'X'), ((order, ingredient, '4th', 'Potatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Carrots'), 'X'), ((order, ingredient, '3rd', 'Carrots'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Mushrooms'), 'X'), ((order, ingredient, '3rd', 'Mushrooms'), 'X'), ((order, ingredient, '4th', 'Mushrooms'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'whole', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'chopped', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'mashed', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Potatoes', 'mashed'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Carrots', 'mashed'), 'O')]0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((method, order, 'mashed', '2nd'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:APPLY_BEFORE_ONE_SPOT - [((ingredient, order, 'Mushrooms', '2nd'), 'O')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]-3:OPENING - [((order, method, '2nd', 'halved'), 'O')]-3:OPENING - [((order, method, '3rd', 'halved'), 'O')]-3:OPENING - [((order, method, '4th', 'halved'), 'O')]-3:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]-3:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]-3:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Onions'), 'X')]-1:OPENING - [((order, method, '2nd', 'halved'), 'O')]-1:OPENING - [((order, method, '3rd', 'halved'), 'O')]-1:OPENING - [((order, method, '4th', 'halved'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]-1:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]-1:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  o    *    *    *  | *    *    *    *  |
+Car|  o    *    *    *  | *    *    *    *  |
+Mus|  o    *    *    *  | *    *    *    *  |
+Oni|  *    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  o    *    *    *  |
+hal|  O    *    *    *  |
+cho|  o    *    *    *  |
+mas|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 8 (incorrect): -----------
+|O***|****|
+|O***|****|
+|O***|****|
+|O***|****|
+------
+|O***|
+|O***|
+|O***|
+|O***|
+
+Available Moves: 
+-2:CROSS_OUT - [((order, method, '2nd', 'whole'), 'X'), ((order, method, '3rd', 'whole'), 'X'), ((order, method, '4th', 'whole'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'chopped'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '2nd', 'halved'), 'X'), ((order, method, '3rd', 'halved'), 'X'), ((order, method, '4th', 'halved'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'chopped'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '2nd', 'chopped'), 'X'), ((order, method, '3rd', 'chopped'), 'X'), ((order, method, '4th', 'chopped'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '2nd', 'mashed'), 'X'), ((order, method, '3rd', 'mashed'), 'X'), ((order, method, '4th', 'mashed'), 'X')]-2:CROSS_OUT - [((order, method, '1st', 'whole'), 'X'), ((order, method, '1st', 'halved'), 'X'), ((order, method, '1st', 'chopped'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Potatoes'), 'X'), ((order, ingredient, '3rd', 'Potatoes'), 'X'), ((order, ingredient, '4th', 'Potatoes'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Carrots'), 'X'), ((order, ingredient, '3rd', 'Carrots'), 'X'), ((order, ingredient, '4th', 'Carrots'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Mushrooms'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-2:CROSS_OUT - [((order, ingredient, '2nd', 'Mushrooms'), 'X'), ((order, ingredient, '3rd', 'Mushrooms'), 'X'), ((order, ingredient, '4th', 'Mushrooms'), 'X')]-2:CROSS_OUT - [((order, ingredient, '1st', 'Potatoes'), 'X'), ((order, ingredient, '1st', 'Carrots'), 'X'), ((order, ingredient, '1st', 'Onions'), 'X')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'whole', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'halved', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'chopped', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((method, ingredient, 'mashed', 'Mushrooms'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Potatoes', 'mashed'), 'O')]-1:TRANS_ABC_TRUE - [((ingredient, method, 'Carrots', 'mashed'), 'O')]0:APPLY_IS - [((order, method, '4th', 'halved'), 'O')]1:APPLY_IS - [((method, ingredient, 'mashed', 'Carrots'), 'O')]2:APPLY_IS - [((ingredient, order, 'Onions', '4th'), 'O')]3:APPLY_BEFORE_ONE_SPOT - [((method, order, 'mashed', '2nd'), 'O')]3:BEFORE_NOINFO - [((method, order, 'mashed', '1st'), 'X')]3:BEFORE_N_SPOTS_NOINFO - [((method, order, 'chopped', '4th'), 'X'), ((method, order, 'mashed', '1st'), 'X')]4:APPLY_BEFORE_ONE_SPOT - [((ingredient, order, 'Mushrooms', '2nd'), 'O')]4:BEFORE_NOINFO - [((ingredient, order, 'Mushrooms', '1st'), 'X')]4:BEFORE_N_SPOTS_NOINFO - [((ingredient, order, 'Carrots', '4th'), 'X'), ((ingredient, order, 'Mushrooms', '1st'), 'X')]-3:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]-3:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]-3:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]-1:TRANS_SETS - [((order, ingredient, '2nd', 'Onions'), 'X')]-1:TRANS_SETS - [((order, ingredient, '3rd', 'Onions'), 'X')]-1:TRANS_SETS - [((order, ingredient, '4th', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'whole', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'halved', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'chopped', 'Onions'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Potatoes'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Carrots'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Mushrooms'), 'X')]-1:TRANS_SETS - [((method, ingredient, 'mashed', 'Onions'), 'X')]-1:OPENING - [((order, ingredient, '3rd', 'Onions'), 'O')]-1:OPENING - [((order, ingredient, '4th', 'Onions'), 'O')]-1:OPENING - [((order, ingredient, '2nd', 'Onions'), 'O')]      1st  2nd  3rd  4th  who  hal  cho  mas
+    ----------------------------------------
+Pot|  o    *    *    *  | *    *    *    *  |
+Car|  o    *    *    *  | *    *    *    *  |
+Mus|  o    *    *    *  | *    *    *    *  |
+Oni|  O    *    *    *  | *    *    *    *  |
+    ----------------------------------------
+who|  o    *    *    *  |
+hal|  o    *    *    *  |
+cho|  o    *    *    *  |
+mas|  o    *    *    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+

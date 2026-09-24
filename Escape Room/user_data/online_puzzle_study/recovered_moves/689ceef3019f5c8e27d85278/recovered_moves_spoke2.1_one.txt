@@ -1,0 +1,51 @@
+Puzzle:
+      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    *    *    *  |
+    --------------------
+Hints:
+0. Either the water 60oz is the plant Potatoes or the water 80oz is the plant Broccoli 
+1. The plant Eggplant is 2 waters before the plant Green Onions 
+2. The plant Eggplant was not the water 20oz 
+
+User Move 1 (incorrect): ------
+|****|
+|****|
+|****|
+|**O*|
+
+Available Moves: 
+0:APPLY_OR - [((water, plant, '60oz', 'Potatoes'), 'Y'), ((water, plant, '80oz', 'Broccoli'), 'Y')]1:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X'), ((plant, water, 'Green Onions', '40oz'), 'X')]2:APPLY_NOT - [((plant, water, 'Eggplant', '20oz'), 'X')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    *    *    *  |
+Bro|  *    *    O    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+
+User Move 2 (incorrect): ------
+|****|
+|****|
+|*X**|
+|**O*|
+
+Available Moves: 
+-2:CROSS_OUT - [((water, plant, '20oz', 'Broccoli'), 'X'), ((water, plant, '40oz', 'Broccoli'), 'X'), ((water, plant, '80oz', 'Broccoli'), 'X')]-2:CROSS_OUT - [((water, plant, '60oz', 'Potatoes'), 'X'), ((water, plant, '60oz', 'Green Onions'), 'X'), ((water, plant, '60oz', 'Eggplant'), 'X')]0:APPLY_OR - [((water, plant, '60oz', 'Potatoes'), 'Y'), ((water, plant, '80oz', 'Broccoli'), 'Y')]1:BEFORE_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X')]1:BEFORE_N_SPOTS_NOINFO - [((plant, water, 'Eggplant', '60oz'), 'X'), ((plant, water, 'Eggplant', '80oz'), 'X'), ((plant, water, 'Green Onions', '20oz'), 'X'), ((plant, water, 'Green Onions', '40oz'), 'X')]2:APPLY_NOT - [((plant, water, 'Eggplant', '20oz'), 'X')]1:BEFORE_N_SPOTS_CROSSCHECK - [((plant, water, 'Eggplant', '20oz'), 'X')]1:OPENING - [((water, plant, '80oz', 'Green Onions'), 'O')]      20o  40o  60o  80o
+    --------------------
+Pot|  *    *    *    *  |
+Gre|  *    *    *    *  |
+Egg|  *    X    *    *  |
+Bro|  *    *    o    *  |
+    --------------------
+Possible Reasonings: 
+1: unknown - None
+Likely Reasoning: unknown::None (unknown-incorrect)
+
+

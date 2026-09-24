@@ -1,0 +1,10 @@
+{"solution": "------\n|OXXX|\n|XXOX|\n|XOXX|\n|XXXO|\n", "categories": [{"name": "water", "entities": ["20oz", "40oz", "60oz", "80oz"], "is_numeric": true}, 
+{"name": "plant", "entities": ["Potatoes", "Green Onions", "Eggplant", "Broccoli"], "is_numeric": false}], 
+
+"hints": ["Either the Green Onions need 40oz of water or the Potatoes need 20oz", 
+"Either the Potatoes need 20oz of water or the Broccoli needs 40oz", 
+"The  Eggplant needs 40 ounces less water then the Broccoli"], 
+
+"hint_grammar": [{"compound_or": [{"is": ["plant", "Green Onions", "water", "40oz"]}, {"is": ["plant", "Potatoes", "water", "20oz"]}]},
+ {"compound_or": [{"is": ["plant", "Potatoes", "water", "20oz"]}, {"is": ["plant", "Broccoli", "water", "40oz"]}]}, 
+ {"before": ["plant", "Eggplant", "plant", "Broccoli", "water", 2]}],"id":"spoke2.2",  "diff": 2, "sol": 0}

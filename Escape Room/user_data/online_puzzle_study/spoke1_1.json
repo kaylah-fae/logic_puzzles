@@ -1,0 +1,9 @@
+{"solution": "------\n|XOXX|\n|XXOX|\n|XXXO|\n|OXXX|\n", 
+"categories": [{"name": "shapes", "entities": ["Elbow", "Bowtie", "Linguine", "Shell"], "is_numeric": false}, 
+{"name": "order", "entities": ["1", "2", "3", "4"], "is_numeric": true}], 
+"hints": ["The Bowtie is served 2 dishes before the Shells", 
+"The 2nd dish is either the Bowtie or the Linguine.", 
+"The Bowtie is served 1st"], 
+"hint_grammar": [{"before": ["shapes", "Bowtie", "shapes", "Shell", "order", 2]}, 
+{"simple_or": ["shapes", "Bowtie", "shapes", "Linguine", "order", "2"]}, 
+{"is": ["shapes", "Bowtie", "order", "1"]}], "diff": 2, "id":"spoke1.1", "sol": 0}

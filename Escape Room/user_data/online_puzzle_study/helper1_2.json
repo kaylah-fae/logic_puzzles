@@ -1,0 +1,13 @@
+{"solution": "------\n|XXOX|\n|XOXX|\n|OXXX|\n|XXXO|\n", 
+    "categories": [{"name": "shape", "entities": ["Elbow", "Bowtie", "Linguine", "Shell"], "is_numeric": false}, 
+            {"name": "sauce", "entities": ["Tomato", "Alfredo", "Pesto", "Carbonara"], "is_numeric": false}], 
+            "hints": ["The Linguine does not have the Carbonara sauce", 
+            "Either Elbow pasta is with Pesto or the Bowtie pasta is with Tomato sauce", 
+            "The Bowtie pasta is with Alfredo sauce"], 
+            
+            "hint_grammar": [{"not": [{"is": ["shape", "Linguine", "sauce", "Carbonara"]}]}, 
+            {"compound_or": [{"is": ["shape", "Elbow", "sauce", "Pesto"]}, {"is": ["shape", "Bowtie", "sauce", "Tomato"]}]}, 
+            {"is": ["shape", "Bowtie", "sauce", "Alfredo"]}], 
+            
+            
+            "diff": 2, "id": "help1.2", "sol": 0}
