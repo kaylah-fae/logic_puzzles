@@ -13,11 +13,11 @@ AIIDE 2026 - https://github.com/kaylah-fae/logic_puzzles/releases/tag/tv1.0.0
 
 ## Data
 
-AIIDE 2026 user data is in the Escape Room folder under "expert_data" (for the author expert) and "user_data" (for the anonymous online study users).
+AIIDE 2026 user data is in the Escape Room folder under "expert_data" (for the author expert), "agent_data" (for the automated agents), and "user_data/online_puzzle_study" (for the anonymous online study users).
 
-expert_data: e1_kf/*_ground.json
-
-user_data: user_data.csv, action_data.json
+expert data: e1_kf/*_ground.json, stats_many.json (data analysis results)
+agent data: stats_many.json (data analysis results)
+user data: user_data.csv, action_data.json, stats_many.json (data analysis results)
 
 # Logic Puzzle Solving
 This project defines the structure of logic grid puzzles and defines logic for solving them.
