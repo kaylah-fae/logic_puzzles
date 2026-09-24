@@ -8,7 +8,9 @@ Papers related to this project are in the Papers folder.
 ## Tags
 
 GECCO 2024 - https://github.com/kaylah-fae/logic_puzzles/releases/tag/v1.0.0
+
 AIIDE 2024 - https://github.com/kaylah-fae/logic_puzzles/releases/tag/v2.0.0
+
 AIIDE 2026 - https://github.com/kaylah-fae/logic_puzzles/releases/tag/tv1.0.0
 
 ## Data
