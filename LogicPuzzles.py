@@ -603,10 +603,13 @@ class Puzzle:
 def validate__default(requirements, puzzle, hints):
     cats = puzzle.categories
     if len(cats) < requirements["num_cats"]:
+        print("invalid len cats")
         return False
     if len(cats[0].entities) < requirements["num_ents"]:
+        print("invalid len ents")
         return False
     if get_valid_cats(requirements, cats) == None:
+        print("no valid set of cats found")
         return False
     hint_types = requirements["hint"]
     if len(hint_types) == 0:
@@ -615,7 +618,7 @@ def validate__default(requirements, puzzle, hints):
         rule = list(hint.keys())[0]
         if rule in hint_types:
             return True
-        if rule == "before":
+        elif rule == "before":
             terms = hint[rule]
             if terms[0] != terms[2] and "before__diff_cat" in hint_types:
                 return True
@@ -626,7 +629,7 @@ def validate__default(requirements, puzzle, hints):
                     return True
                 elif "before__n" in hint_types:
                     return True
-        if rule == "simple_or":
+        elif rule == "simple_or":
             terms = hint[rule]
             if terms[0] == terms[2] and "simple_or__same_cat" in hint_types:
                 return True
@@ -680,7 +683,7 @@ def get_rand_cats(requirements, categories):
         for cat in valid_cats:
             if cat.is_numeric:
                 valid_cats.remove(cat)
-                valid_cats.insert(cat, 0)
+                valid_cats.insert(0, cat)
 
     for cat in valid_cats[:num_cats]:
         ents = deepcopy(cat.entities)
@@ -691,6 +694,22 @@ def get_rand_cats(requirements, categories):
         trunc_cat.entities = ents
         cats.append(trunc_cat)
 
+    return cats
+
+def generate_random_hint(hint_type, puzzle, requirements, validate):
+    cats = puzzle.categories
+    if "before" in hint_type:
+        hint_type = "before"
+    if "simple_or" in hint_type:
+        hint_type = "simple_or"
+    valid = False
+    i = 0
+    while not valid:
+        i += 1
+        hint = Grammar.generate_hint_of_type(cats, hint_type)
+        valid = validate(requirements, puzzle, [hint])
+
+    return hint
 
 # Return a random minimal tactic puzzle from categories.
 # requirements: the category and hint requirements of the tactic
@@ -709,14 +728,8 @@ def gen_min_puzzle__default(requirements, validate, categories):
         return puzzle, []
 
     hint_type = random.choice(hint_types)
-    if "before" in hint_type:
-        hint_type = "before"
-    if "simple_or" in hint_type:
-        hint_type = "simple_or"
-    valid = False
-    while not valid:
-        hint = Grammar.generate_hint_of_type(cats, hint_type)
-        valid = validate(requirements, puzzle, [hint])
+    hint = generate_random_hint(hint_type, puzzle, requirements, validate)
+    
     return puzzle, [hint]
 
 # Return a list such that 
@@ -780,7 +793,7 @@ class Insight:
             "hint": [],
             "superceded_by": [],
         }
-        self.gen_min_puzzle = gen_min_puzzle
+        self._gen_min_puzzle = gen_min_puzzle
         for parent in parents:
             for key, value in parent.requirements.items():
                 if not self.requirements[key] or value > self.requirements[key]:
@@ -842,13 +855,16 @@ class Insight:
 
         return sub_dag
 
+    def gen_min_puzzle(self, categories):
+        return self._gen_min_puzzle(self.requirements, self.validate, categories)
+
 
 # APPLY_IS: Apply an is hint (given)
 Insight.APPLY_IS = Insight("APPLY_IS", 1, set(), {"hint": ["is"]})
 
 # CROSS_OUT: If there is an O in a row/column, the rest of the row/column must be X (given)
-def gen_min_puzzle__cross_out(requirements, categories):
-    puzzle, hints = gen_min_puzzle__default(requirements, categories)
+def gen_min_puzzle__cross_out(requirements, validate, categories):
+    puzzle, hints = gen_min_puzzle__default(requirements, validate, categories)
     is_hint = Grammar.generate_hint_of_type(puzzle.categories, "is")
     SOLVER.apply_hint(puzzle, is_hint, True)
     return puzzle, hints
@@ -856,7 +872,7 @@ def gen_min_puzzle__cross_out(requirements, categories):
 Insight.CROSS_OUT = Insight("CROSS_OUT", 2, gen_min_puzzle=gen_min_puzzle__cross_out)
 
 # OPENING: If a row/column has one opening and the rest are Xs, it must be O (given)
-def gen_min_puzzle__opening(requirements, categories):
+def gen_min_puzzle__opening(requirements, validate, categories):
     cats = get_rand_cats(requirements, categories)
     if not cats:
         return None, None
@@ -866,7 +882,11 @@ def gen_min_puzzle__opening(requirements, categories):
     is_puzzle = deepcopy(puzzle)
     SOLVER.apply_hint(is_puzzle, is_hint, True)
     _, cross_out_moves = SOLVER.apply_cross_out(is_puzzle)
-    SOLVER.apply_multi_moves(puzzle, cross_out_moves)
+    move = random.choice(cross_out_moves)
+    if random.random() < .66:
+        SOLVER.apply_multi_move(puzzle, move)
+    else:
+        SOLVER.apply_multi_moves(puzzle, cross_out_moves)
     return puzzle, []
 
 Insight.OPENING = Insight("OPENING", 3, gen_min_puzzle=gen_min_puzzle__opening)
@@ -874,15 +894,14 @@ Insight.OPENING = Insight("OPENING", 3, gen_min_puzzle=gen_min_puzzle__opening)
 # APPLY_NOT: Apply a not hint (given)
 Insight.APPLY_NOT = Insight("APPLY_NOT", 4, set(), {"num_ents": 3, "hint": ["not"]})
 
-
 # APPLY_OR: Apply an or hint once one of the clauses has been answered. (given)
-def gen_min_puzzle__apply_or(requirements, categories):
-    puzzle, or_hint = gen_min_puzzle__default(requirements, categories)
+def gen_min_puzzle__apply_or(requirements, validate, categories):
+    puzzle, [or_hint] = gen_min_puzzle__default(requirements, validate, categories)
     if not puzzle:
         return None, None
 
     uncertain_solver = Solver(allow_uncertain_moves=True)
-    or_moves = uncertain_solver.apply_hint(puzzle, or_hint)
+    _, or_moves = uncertain_solver.apply_hint(puzzle, or_hint)
 
     poss_locs = []
     for multi_move in or_moves:
@@ -892,9 +911,9 @@ def gen_min_puzzle__apply_or(requirements, categories):
             poss_locs.append(loc)
 
     loc = random.choice(poss_locs)
-    sy = random.choice(CONFIDENT_MARKS)
+    sy = random.choice(list(CONFIDENT_MARKS))
     puzzle.answer(loc, sy)
-    return puzzle, or_hint
+    return puzzle, [or_hint]
 
 Insight.APPLY_OR = Insight(
     "APPLY_OR",
@@ -906,13 +925,13 @@ Insight.APPLY_OR = Insight(
 
 
 # Generator for minimal before tactic puzzles
-def gen_min_puzzle__before(requirements, categories):
-    puzzle, bef_hint = gen_min_puzzle__default(requirements, categories)
+def gen_min_puzzle__before(requirements, validate, categories):
+    puzzle, [bef_hint] = gen_min_puzzle__default(requirements, validate, categories)
     if not puzzle:
         return None, None
 
     bef_puzzle = deepcopy(puzzle)
-    SOLVER.apply_hint(puzzle, bef_hint, True)
+    SOLVER.apply_hint(bef_puzzle, bef_hint, True)
 
     poss_ents, num_cat = parse_before(bef_hint)
     ent = random.choice(poss_ents)
@@ -921,7 +940,7 @@ def gen_min_puzzle__before(requirements, categories):
     loc = random.choice(poss_locs)
     puzzle.answer(loc, "O")
 
-    return puzzle, bef_hint
+    return puzzle, [bef_hint]
 
 # APPLY_BEFORE_ONE_SPOT: If A is answered and B is 1 after A, then answer B is the next one after A (given)
 Insight.APPLY_BEFORE_ONE_SPOT = Insight(
@@ -952,16 +971,42 @@ Insight.APPLY_BEFORE_UNDEFINED_SPOTS = Insight(
     gen_min_puzzle=gen_min_puzzle__before,
 )
 
+def gen_min_puzzle__trans_sy(requirements, validate, categories, sy):
+    puzzle, hints = gen_min_puzzle__default(requirements, validate, categories)
+    if not puzzle: 
+        return None, None
+    is_hint = Grammar.generate_hint_of_type(puzzle.categories, "is")
+    SOLVER.apply_hint(puzzle, is_hint, True)
+    is_terms = is_hint["is"]
+    (cat1, ent1, cat2, ent2) = is_terms
+    ents = [(cat1, ent1), (cat2, ent2)]
+    ent = random.choice(ents)
+    (cat, ent) = ent
+    cats = puzzle.categories
+    cat3 = cat1
+    while cat3 in [cat1, cat2]:
+        cat3 = random.choice(cats)
+    ent3 = random.choice(cat3.entities)
+    puzzle.answer((cat, cat3, ent, ent3), sy)
+    return puzzle, hints
+
 # TRANS_ABC_TRUE: Apply the transitive property (A -> B and B -> C, so A -> C) (given)
-Insight.TRANS_ABC_TRUE = Insight("TRANS_ABC_TRUE", 14, set(), {"num_cats": 3})
+def gen_min_puzzle__trans_true(requirements, validate, categories):
+    return gen_min_puzzle__trans_sy(requirements, validate, categories, "O")
+
+Insight.TRANS_ABC_TRUE = Insight("TRANS_ABC_TRUE", 14, set(), {"num_cats": 3}, gen_min_puzzle=gen_min_puzzle__trans_true)
+
 # A -> B and B !> C, so A !> C (given)
 # Can be derived from TRANS_ABC_TRUE (if A -> B and A -> C then B -> C, which is a contradiction)
+def gen_min_puzzle__trans_false(requirements, validate, categories):
+    return gen_min_puzzle__trans_sy(requirements, validate, categories, "X")
+
 Insight.TRANS_ABC_FALSE = Insight(
     "TRANS_ABC_FALSE",
     15,
     {Insight.TRANS_ABC_TRUE},
     {"num_ents": 4},
-    gen_min_puzzle=gen_min_puzzle__cross_out,
+    gen_min_puzzle=gen_min_puzzle__trans_false,
 )
 
 
@@ -1007,34 +1052,69 @@ Insight.BEFORE_N_SPOTS_NOINFO = Insight(
 # BEFORE_N_SPOTS_SHIFT: A streak of Xs at the beginning/end forces the first available position for the other entity to shift.
 # Can be derived in the same way as BEFORE_N_SPOTS_NOINFO;
 # again, it will be easier for users to encounter BEFORE_N_SPOTS_NOINFO first.
+def gen_min_puzzle__before_shift(requirements, validate, categories):
+    max_n = 0
+    i = 0
+    while max_n == 0 and i < 100:
+        i = i+1
+        puzzle, [bef_hint] = gen_min_puzzle__default(requirements, validate, categories)
+
+        bef_puzzle = deepcopy(puzzle)
+        SOLVER.apply_hint(bef_puzzle, bef_hint, True)
+
+        poss_ents, num_cat = parse_before(bef_hint)
+        ent = random.choice(poss_ents)
+
+        poss_locs = get_poss_true_locs(bef_puzzle, *ent, num_cat)
+        max_n = len(poss_locs) - 2
+
+    if max_n == 0:
+        return None, None
+    num_xs = random.randint(1, max_n)
+    start = random.choice([0, -num_xs])
+    for i in range(start, start + num_xs):
+        puzzle.answer(poss_locs[i], "X")
+
+    return puzzle, [bef_hint]
+
 Insight.BEFORE_N_SPOTS_SHIFT = Insight(
     "BEFORE_N_SPOTS_SHIFT",
     16,
     {Insight.BEFORE_N_SPOTS_NOINFO},
     {"hint": ["before"]},
+    gen_min_puzzle=gen_min_puzzle__before_shift
 )
 
 
 # BEFORE_N_SPOTS_CROSSCHECK: For a position to be a valid answer, the corresponding position +/- num must be valid for the other entity
 # The most complex case of BEFORE_NOINFO.
-def gen_min_puzzle__before_crosscheck(requirements, categories):
-    puzzle, hints = gen_min_puzzle__default(requirements, categories)
-    if not puzzle:
+def gen_min_puzzle__before_crosscheck(requirements, validate, categories):
+    max_n = 0
+    i = 0
+    while max_n == 0 and i < 100:
+        i = i+1
+        puzzle, [bef_hint] = gen_min_puzzle__default(requirements, validate, categories)
+        if not puzzle:
+            return None, None
+
+        bef_puzzle = deepcopy(puzzle)
+        SOLVER.apply_hint(bef_puzzle, bef_hint, True)
+
+        poss_ents, num_cat = parse_before(bef_hint)
+        ent = random.choice(poss_ents)
+
+        poss_locs = get_poss_true_locs(bef_puzzle, *ent, num_cat)
+        max_n = len(poss_locs) - 2
+
+    if max_n == 0:
         return None, None
+    n = random.randint(1, max_n)
+    for _ in range(n):
+        poss_locs = get_poss_true_locs(bef_puzzle, *ent, num_cat)
+        loc = random.choice(poss_locs)
+        puzzle.answer(loc, "X")
 
-    bef_hint = hints[0]
-    bef_puzzle = deepcopy(puzzle)
-    SOLVER.apply_hint(bef_puzzle, bef_hint, True)
-
-    poss_ents, num_cat = parse_before(bef_hint)
-    ent = random.choice(poss_ents)
-
-    poss_locs = get_poss_true_locs(bef_puzzle, *ent, num_cat)
-    loc = random.choice(poss_locs)
-    puzzle.answer(loc, "X")
-
-    return puzzle, hints
-
+    return puzzle, [bef_hint]
 
 Insight.BEFORE_N_SPOTS_CROSSCHECK = Insight(
     "BEFORE_N_SPOTS_CROSSCHECK",
@@ -1048,33 +1128,43 @@ Insight.BEFORE_N_SPOTS_CROSSCHECK = Insight(
 # TRANS_SETS: A and B don't share any possibilities; A != B
 # Can be derived by considering all possible values for A and applying TRANS_ABC_FALSE.
 # Another kind of crosscheck.
-def gen_min_puzzle__trans_sets(requirements, categories):
-    puzzle, hints = gen_min_puzzle__default(requirements, categories)
+def gen_min_puzzle__trans_sets(requirements, validate, categories):
+    puzzle, hints = gen_min_puzzle__default(requirements, validate, categories)
     if not puzzle:
         return None, None
 
-    is_hint = Grammar.generate_hint_of_type(puzzle.categories, "is")
-    SOLVER.apply_hint(puzzle, is_hint, True)
+    cat1 = random.choice(puzzle.categories)
+    ent1 = random.choice(cat1.entities)
 
-    poss_ents = parse_is(is_hint)
-    ent = random.choice(poss_ents)
+    cat2 = cat1
+    while cat2 == cat1:
+        cat2 = random.choice(puzzle.categories)
+    ent2 = random.choice(cat2.entities)
 
-    cat1 = poss_ents[0][0]
-    cat2 = poss_ents[1][0]
+    cat3 = cat1
+    while cat3 in [cat1, cat2]:
+        cat3 = random.choice(puzzle.categories)
 
-    valid_cats = []
-    for cat in puzzle.categories:
-        if cat not in [cat1, cat2]:
-            valid_cats.append(cat)
+    split = random.randint(2, len(cat1.entities) - 2)
 
-    cat3 = random.choice(valid_cats)
-    ent3 = random.choice(cat3.entities)
+    print(f"{cat1}, {ent1}; {cat2}, {ent2}; {cat3}")
+    print(split)
 
-    not_hint = {"hint": {"not": {"is": [*ent, cat3, ent3]}}}
-    puzzle.apply_hint(not_hint, True)
+    a_cross = []
+    # A is not a set of entities in cat3
+    for _ in range(split):
+        ent3 = random.choice(cat3.entities)
+        while ent3 in a_cross:
+            ent3 = random.choice(cat3.entities)
+        a_cross.append(ent3)
+        puzzle.answer((cat1, cat3, ent1, ent3), "X")
 
+    # B is not any of the remaining options for A (so A !> B)
+    for ent3 in cat3.entities:
+        if ent3 not in a_cross:
+            puzzle.answer((cat2, cat3, ent2, ent3), "X")
+    
     return puzzle, hints
-
 
 Insight.TRANS_SETS = Insight(
     "TRANS_SETS",
@@ -1138,7 +1228,8 @@ class Grammar:
         "num2",
         "num3",
         "num4",
-        "num5" "alp",
+        "num5",
+        "alp",
         "alp1",
         "alp2",
         "alp3",
@@ -1211,6 +1302,10 @@ class Grammar:
         for word in production:
             if word in Grammar.TERMINALS:
                 terms.append(word)
+            elif word in Grammar.GRAMMAR["hint"].keys():
+                terms.append({
+                    word: Grammar.generate_word(Grammar.sub_grammar(Grammar.GRAMMAR, word), Grammar.GRAMMAR)
+                })
             else:
                 terms.append({
                     word: Grammar.generate_word(
@@ -1231,9 +1326,14 @@ class Grammar:
         random.shuffle(li)
         cats = []
         for cat in li:
-            shuf_ents = cat.entities[:]
-            random.shuffle(shuf_ents)
-            cats.append([cat, shuf_ents])
+            if isinstance(cat, Category):
+                shuf_ents = cat.entities[:]
+                random.shuffle(shuf_ents)
+                cats.append([cat, shuf_ents])
+            else:
+                shuf_ents = cat[0].entities[:]
+                random.shuffle(shuf_ents)
+                cats.append([cat[0], shuf_ents])
         return cats
 
     def get_alps(categories):
@@ -1267,45 +1367,50 @@ class Grammar:
                 cats = Grammar.shuffled_cat_list(categories)
                 alps = Grammar.get_alps(cats)
                 nums = Grammar.get_num(cats)
+
+                unused_cats = deepcopy(cats) # Used for any term
+                unused_alps = deepcopy(alps)
+                unused_nums = deepcopy(nums)
+
+                unclaimed_cats = deepcopy(cats) # Used for a unique term
+                unclaimed_alps = deepcopy(alps)
+                unclaimed_nums = deepcopy(nums)
+
                 last_cat = None
+                mapping = {}
 
                 for term in value:
                     if isinstance(term, dict):
                         new_terms.append(Grammar.fill_in_word(term, cats))
                     else:
                         if term == "cat":
-                            last_cat = random.choice(cats)
-                            new_terms.append(last_cat[0])
-                        elif term == "cat1":
-                            if len(cats) < 1:
+                            if len(unclaimed_cats) == 0:
+                                raise Exception("CAT_COUNT")
+                            last_cat = random.choice(unclaimed_cats)
+                        elif term in ["cat1", "cat2", "cat3"]:
+                            if term in mapping:
+                                last_cat = mapping[term]
+                            elif len(unused_cats) == 0:
                                 raise Exception("CAT_COUNT")
                             else:
-                                last_cat = cats[0]
-                                new_terms.append(last_cat[0])
-                        elif term == "cat2":
-                            if len(cats) < 2:
-                                raise Exception("CAT_COUNT")
-                            else:
-                                last_cat = cats[1]
-                                new_terms.append(last_cat[0])
-                        elif term == "cat3":
-                            if len(cats) < 3:
-                                raise Exception("CAT_COUNT")
-                            else:
-                                last_cat = cats[2]
-                                new_terms.append(last_cat[0])
+                                last_cat = random.choice(unused_cats)
                         elif term == "alp":
-                            if len(alps) == 0:
+                            if len(unclaimed_alps) == 0:
                                 raise Exception("ALPH_COUNT")
                             else:
-                                last_cat = random.choice(alps)
-                                new_terms.append(last_cat[0])
+                                last_cat = random.choice(unclaimed_alps)
                         elif term == "num":
-                            if len(nums) == 0:
+                            if len(unclaimed_nums) == 0:
                                 raise Exception("NUM_COUNT")
                             else:
                                 last_cat = random.choice(nums)
-                                new_terms.append(last_cat[0])
+                        elif term == "num1":
+                            if term in mapping:
+                                last_cat = mapping[term]
+                            if len(unused_nums) == 0:
+                                raise Exception("NUM_COUNT")
+                            else:
+                                last_cat = random.choice(unused_nums)
                         elif term == "ent":
                             new_terms.append(random.choice(last_cat[1]))
                         elif term == "ent1":
@@ -1327,6 +1432,23 @@ class Grammar:
                             new_terms.append(
                                 random.randrange(1, len(last_cat[1]) - 1)
                             )  # 2 spaces to make decision
+
+                        if "cat" in term or "num" in term or "alp" in term:
+                            if last_cat in unused_cats:
+                                unused_cats.remove(last_cat)
+                            if last_cat in unused_alps:
+                                unused_alps.remove(last_cat)
+                            if last_cat in unused_nums:
+                                unused_nums.remove(last_cat)
+                            new_terms.append(last_cat[0])
+                            if term not in ["cat", "num", "alp"]:
+                                if last_cat in unclaimed_cats:
+                                    unclaimed_cats.remove(last_cat)
+                                if last_cat in unclaimed_alps:
+                                    unclaimed_alps.remove(last_cat)
+                                if last_cat in unclaimed_nums:
+                                    unclaimed_nums.remove(last_cat)
+                                mapping[term] = last_cat
                 filled_word[key] = new_terms
         return filled_word
 
@@ -1339,7 +1461,7 @@ class Grammar:
         except Exception as e:
             if depth > 100:
                 raise e
-            return Grammar.generate_hint(categories, depth + 1)
+            return Grammar.generate_hint_of_type(categories, hint_type, depth + 1)
 
     def generate_hint(categories, depth=0):
         """
