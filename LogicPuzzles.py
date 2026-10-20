@@ -856,7 +856,24 @@ class Insight:
         return sub_dag
 
     def gen_min_puzzle(self, categories):
-        return self._gen_min_puzzle(self.requirements, self.validate, categories)
+        changed = False
+        i = 0
+        while not changed and i < 100:
+            i += 1
+            puzzle, hints = self._gen_min_puzzle(self.requirements, self.validate, categories)
+            # Check that generated puzzle actually requires the tactic to find the partial solution.
+            solved, _ = SOLVER.fast_forward(puzzle, hints)
+            forbidden_solver = Solver(self.sub_dag())
+            alt, _ = forbidden_solver.fast_forward(puzzle, hints)
+            _, changed = SOLVER.get_move_diff(solved, alt)
+            print(alt)
+            print(solved)
+
+        if i >= 100:
+            print(f"Unable to generate valid tactics puzzle for ${self}")
+            # We were not able to find a valid tactics puzzle
+            return None, None
+        return puzzle, hints
 
 
 # APPLY_IS: Apply an is hint (given)
@@ -947,7 +964,7 @@ Insight.APPLY_BEFORE_ONE_SPOT = Insight(
     "APPLY_BEFORE_ONE_SPOT",
     6,
     set(),
-    {"numeric": True, "num_ents": 4, "hint": ["before__one"]},
+    {"numeric": True, "num_ents": 3, "hint": ["before__one"]},
     gen_min_puzzle=gen_min_puzzle__before,
 )
 
@@ -956,7 +973,7 @@ Insight.APPLY_BEFORE_N_SPOTS = Insight(
     "APPLY_BEFORE_N_SPOTS",
     7,
     {Insight.APPLY_BEFORE_ONE_SPOT},
-    {"num_ents": 6, "hint": ["before__n"]},
+    {"num_ents": 4, "hint": ["before__n"]},
     gen_min_puzzle=gen_min_puzzle__before,
 )
 
@@ -1005,7 +1022,7 @@ Insight.TRANS_ABC_FALSE = Insight(
     "TRANS_ABC_FALSE",
     15,
     {Insight.TRANS_ABC_TRUE},
-    {"num_ents": 4},
+    {"num_ents": 3},
     gen_min_puzzle=gen_min_puzzle__trans_false,
 )
 
@@ -1187,6 +1204,7 @@ Insight.BEFORE_DIFF_CAT = Insight(
             Insight.TRANS_SETS,
             Insight.TRANS_ABC_TRUE,
         ],
+        "num_ents": 3,
     },
 )
 Insight.USER_INSIGHT = Insight("USER_INSIGHT", 100)
