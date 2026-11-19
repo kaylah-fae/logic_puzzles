@@ -208,7 +208,7 @@ Install code onto your computer and go to that directory in your terminal.
 Start a python virtual environment with the following code: 
 
 ```
-python3 -m venv
+python3 -m venv .
 ```
 
 Run the environment with the following command 

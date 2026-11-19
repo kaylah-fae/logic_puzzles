@@ -543,15 +543,14 @@ class Puzzle:
             is_valid = True
             solver = Solver({Insight.TRANS_ABC_FALSE})
             i = 0
-            while applied and is_valid:
+            while applied and is_valid and i < 1000:
                 i += 1
-                assert i < 1000  # Break the infinite loop, if there is one.
                 contradiction, multi_moves = solver.apply_transitives(copy, True)
                 if contradiction:
                     is_valid = False
                 if len(multi_moves) == 0:
                     applied = False
-            if not is_valid:
+            if not is_valid or i >= 1000:
                 return False
 
             solved = True
@@ -704,11 +703,12 @@ def generate_random_hint(hint_type, puzzle, requirements, validate):
         hint_type = "simple_or"
     valid = False
     i = 0
-    while not valid:
+    while not valid and i < 1000:
         i += 1
         hint = Grammar.generate_hint_of_type(cats, hint_type)
         valid = validate(requirements, puzzle, [hint])
-
+    if not valid:
+        return None
     return hint
 
 # Return a random minimal tactic puzzle from categories.
@@ -1001,8 +1001,12 @@ def gen_min_puzzle__trans_sy(requirements, validate, categories, sy):
     (cat, ent) = ent
     cats = puzzle.categories
     cat3 = cat1
-    while cat3 in [cat1, cat2]:
+    i = 0
+    while cat3 in [cat1, cat2] and i < 100:
+        i += 1
         cat3 = random.choice(cats)
+    if cat3 in [cat1, cat2]:
+        return None, None
     ent3 = random.choice(cat3.entities)
     puzzle.answer((cat, cat3, ent, ent3), sy)
     return puzzle, hints
@@ -1154,14 +1158,21 @@ def gen_min_puzzle__trans_sets(requirements, validate, categories):
     ent1 = random.choice(cat1.entities)
 
     cat2 = cat1
-    while cat2 == cat1:
+    i = 0
+    while cat2 == cat1 and i < 100:
+        i += 1
         cat2 = random.choice(puzzle.categories)
+    if cat2 == cat1:
+        return None, None
     ent2 = random.choice(cat2.entities)
 
     cat3 = cat1
-    while cat3 in [cat1, cat2]:
+    i = 0
+    while cat3 in [cat1, cat2] and i < 100:
+        i += 1
         cat3 = random.choice(puzzle.categories)
-
+    if cat3 in [cat1, cat2]:
+        return None, None
     split = random.randint(2, len(cat1.entities) - 2)
 
     print(f"{cat1}, {ent1}; {cat2}, {ent2}; {cat3}")
@@ -1171,8 +1182,12 @@ def gen_min_puzzle__trans_sets(requirements, validate, categories):
     # A is not a set of entities in cat3
     for _ in range(split):
         ent3 = random.choice(cat3.entities)
-        while ent3 in a_cross:
+        i = 0
+        while ent3 in a_cross and i < 100:
+            i += 1
             ent3 = random.choice(cat3.entities)
+        if ent3 in a_cross:
+            break
         a_cross.append(ent3)
         puzzle.answer((cat1, cat3, ent1, ent3), "X")
 
